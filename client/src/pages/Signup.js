@@ -4,10 +4,15 @@ import { Button } from '@material-ui/core';
 import { TextField } from 'final-form-material-ui';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { AccountCircle, Mail, Lock, LockOpen } from '@material-ui/icons';
+import axios from 'axios';
+import _ from 'lodash';
+import { useHistory } from 'react-router-dom';
 
 const Signup = () => {
   const [errors, setErrors] = useState({});
-  const onSubmit = (values) => {
+  const history = useHistory();
+
+  const onSubmit = async (values) => {
     const { fullName, password, confirmPassword } = values;
     let finalErrors = {};
 
@@ -24,7 +29,15 @@ const Signup = () => {
 
     if (Object.keys(finalErrors).length === 0) {
       // No errors we continue
-      console.log(values);
+      const data = _.omit(values, ['confirmPassword']);
+      try {
+        await axios.post('http://localhost:5000/user/signup', data);
+        history.push('/login');
+      } catch (error) {
+        if (error.response.data.error === 'Not unique email') {
+          setErrors({ email: 'Email already in use' });
+        }
+      }
     }
   };
   return (
