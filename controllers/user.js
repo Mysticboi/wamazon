@@ -14,8 +14,7 @@ exports.signup = async (req, res) => {
   } catch (error) {
     let response = { message: 'Failed SigningUp user' };
 
-    console.error('Start of error', Object.keys(error.errors.email));
-    if (error.errors.email.kind === 'unique') {
+    if (error?.errors?.email?.kind === 'unique') {
       response.error = 'Not unique email';
     }
     res.status(400).json(response);
