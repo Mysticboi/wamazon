@@ -13,11 +13,15 @@ const Signup = () => {
   const history = useHistory();
 
   const onSubmit = async (values) => {
-    const { fullName, password, confirmPassword } = values;
+    const { fullName, email, password, confirmPassword } = values;
     let finalErrors = {};
 
     if (fullName.split(' ').length < 2) {
       finalErrors.fullName = 'At least 2 words';
+    }
+
+    if (!validateEmail(email)) {
+      finalErrors.email = 'Invalid email';
     }
 
     if (password.length < 7) {
@@ -51,6 +55,7 @@ const Signup = () => {
             <form
               onSubmit={handleSubmit}
               className="w-full flex-col flex items-center"
+              noValidate
             >
               <div className="m-3 w-3/4">
                 <Field
@@ -160,6 +165,7 @@ const Signup = () => {
                   type="submit"
                   color="primary"
                   disabled={submitting || pristine}
+                  className="hover:scale-110 transform"
                 >
                   Sign Up
                 </Button>
@@ -170,6 +176,12 @@ const Signup = () => {
       </div>
     </div>
   );
+};
+
+const validateEmail = (email) => {
+  const re =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
 };
 
 export default Signup;
