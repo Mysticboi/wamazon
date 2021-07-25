@@ -2,6 +2,7 @@ import React from 'react';
 import Header from './components/Header';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Signup from './pages/Signup';
+import Login from './pages/Login';
 
 function App() {
   return (
@@ -14,6 +15,10 @@ function App() {
 
         <Route path="/signup">
           <Signup />
+        </Route>
+
+        <Route path="/login">
+          <Login />
         </Route>
       </Switch>
     </BrowserRouter>
