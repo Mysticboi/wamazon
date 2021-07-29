@@ -5,6 +5,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import { UserContextProvider } from './context/UserContext';
 import Account from './pages/Account';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -13,7 +14,7 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/">
-            Home
+            <Home />
           </Route>
 
           <Route path="/signup">

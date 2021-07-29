@@ -6,18 +6,24 @@ import { UserContext } from '../context/UserContext';
 const Header = () => {
   const { userName, isUserConnected, logOut } = useContext(UserContext);
   return (
-    <div className="bg-gray-500 h-32">
-      <h2 className="text-3xl font-bold text-blue-800 text-center">
+    <div className="bg-gray-500 h-24">
+      <div className="text-3xl font-bold text-green-400 h-0 absolute left-5">
+        <Link to="/" className="text-left">
+          Wamazon
+        </Link>
+      </div>
+
+      <h1 className="text-3xl font-bold text-blue-800 text-center h-5">
         The e-commerce website for the people
-      </h2>
+      </h1>
 
       {isUserConnected && (
-        <div className="text-white text-2xl w-100 text-center mt-2">
+        <div className="text-white text-2xl w-100 text-center mt-3 h-5">
           Hello {userName}
         </div>
       )}
       {isUserConnected ? (
-        <div className="text-right mr-5 space-x-5">
+        <div className="text-right mr-5 space-x-5 h-5">
           <Link to="/account">
             <Button variant="contained" color="secondary">
               My Account
@@ -30,7 +36,7 @@ const Header = () => {
           </Link>
         </div>
       ) : (
-        <div className="text-right w-50 space-x-10 mt-10 mr-5">
+        <div className="text-right w-50 space-x-10 mr-5 h-5 mt-7">
           <Link to="/login">
             <Button variant="contained" color="secondary">
               Login

@@ -153,7 +153,7 @@ const UpdatePasswordForm = ({ token, setIsUpdateOpen, setChangedPassword }) => {
 
               {errors?.password && (
                 <span className="text-red-600 font-bold underline text-sm">
-                  {errors.oldPassword}
+                  {errors.password}
                 </span>
               )}
             </div>
