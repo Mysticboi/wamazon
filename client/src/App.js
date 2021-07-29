@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import { UserContextProvider } from './context/UserContext';
+import Account from './pages/Account';
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
 
           <Route path="/login">
             <Login />
+          </Route>
+
+          <Route path="/account">
+            <Account />
           </Route>
         </Switch>
       </BrowserRouter>

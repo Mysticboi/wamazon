@@ -52,3 +52,23 @@ exports.login = async (req, res) => {
     res.status(500).json({ error: 'Unkown server error' });
   }
 };
+
+exports.updatePassword = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    const valid = await bcrypt.compare(req.body.oldPassword, user.password);
+    if (!valid) {
+      res.status(401).json({
+        message: "Failed update user's password",
+        error: 'Wrong Password',
+      });
+    } else {
+      const hash = await bcrypt.hash(req.body.password, 10);
+      await User.updateOne({ _id: req.body.userId }, { password: hash });
+      res.status(200).json({ message: "Sucess updating user's password" });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Unkown server error' });
+  }
+};

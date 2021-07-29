@@ -21,8 +21,9 @@ const Login = () => {
     if (!validateEmail(email)) {
       finalErrors.email = 'Invalid email';
     }
-
-    if (password.length < 7) {
+    if (!password) {
+      finalErrors.password = 'Empty';
+    } else if (password?.length < 7) {
       finalErrors.password = 'Atleast 7 characters';
     }
 

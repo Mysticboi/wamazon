@@ -17,7 +17,12 @@ const Header = () => {
         </div>
       )}
       {isUserConnected ? (
-        <div className="text-right mr-5">
+        <div className="text-right mr-5 space-x-5">
+          <Link to="/account">
+            <Button variant="contained" color="secondary">
+              My Account
+            </Button>
+          </Link>
           <Link to="/">
             <Button variant="contained" color="secondary" onClick={logOut}>
               Log Out
