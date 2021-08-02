@@ -3,18 +3,61 @@ import { Form, Field } from 'react-final-form';
 import { Button } from '@material-ui/core';
 import { TextField } from 'final-form-material-ui';
 import InputAdornment from '@material-ui/core/InputAdornment';
-import { Lock, LockOpen } from '@material-ui/icons';
+import {
+  Lock,
+  LockOpen,
+  Home,
+  Search,
+  Payment,
+  Store,
+} from '@material-ui/icons';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
+import { Link } from 'react-router-dom';
 
 const Account = () => {
   useEffect(() => (document.title = 'My Account'));
+
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [changedPassword, setChangedPassword] = useState(false);
   const { token } = useContext(UserContext);
   return (
     <div className="mt-5">
-      <p className="text-4xl text-center">My Account</p>
+      <p className="text-4xl text-center mb-10">My Account</p>
+
+      <div className="mt-5 w-2/3 flex m-auto space-x-5 justify-center items-center">
+        <div className="space-x-1">
+          <Card
+            title="Your Orders"
+            description="View your in progress and delivered orders "
+            link="/home"
+            icon={<Search color="primary" style={{ fontSize: 60 }} />}
+          />
+
+          <Card
+            title="Your Payments"
+            description="Configure your payment methods and parameters, show your balance "
+            link="/home"
+            icon={<Payment color="primary" style={{ fontSize: 60 }} />}
+          />
+        </div>
+
+        <div className="space-x-1">
+          <Card
+            title="Adresses"
+            description="Change your adresses of delivery"
+            link="/home"
+            icon={<Home color="primary" style={{ fontSize: 60 }} />}
+          />
+          <Card
+            title="Your Stock"
+            description="View your currently on sale and solds items"
+            link="/home"
+            icon={<Store color="primary" style={{ fontSize: 60 }} />}
+          />
+        </div>
+      </div>
+
       <div className="text-center mt-10">
         <Button
           variant="contained"
@@ -212,6 +255,20 @@ const UpdatePasswordForm = ({ token, setIsUpdateOpen, setChangedPassword }) => {
         )}
       ></Form>
     </div>
+  );
+};
+
+const Card = ({ title, description, link, icon }) => {
+  return (
+    <Link to={link}>
+      <div className="border-2 rounded-xl border-gray-300 m-auto w-80 h-28 hover:bg-gray-200 flex">
+        {icon}
+        <div className="ml-3">
+          <p className="font-bold text-xl">{title}</p>
+          <p className="text-sm text-gray-700">{description}</p>
+        </div>
+      </div>
+    </Link>
   );
 };
 
