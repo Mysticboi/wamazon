@@ -12,7 +12,7 @@ const userSchema = mongoose.Schema({
     {
       country: { type: String },
       fullName: { type: String },
-      adress: { type: String },
+      address: { type: String },
       city: { type: String },
       region: { type: String },
       zipCode: { type: String },

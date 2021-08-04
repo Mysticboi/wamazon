@@ -53,6 +53,7 @@ exports.login = async (req, res) => {
   }
 };
 
+/** Updating user's password */
 exports.updatePassword = async (req, res) => {
   try {
     const user = await User.findById(req.body.userId);
@@ -67,6 +68,34 @@ exports.updatePassword = async (req, res) => {
       await User.updateOne({ _id: req.body.userId }, { password: hash });
       res.status(200).json({ message: "Sucess updating user's password" });
     }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Unkown server error' });
+  }
+};
+
+/** Getting user's addresses */
+exports.getAllAddresses = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    const { addresses } = user;
+    res.status(200).json({ addresses });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Unkown server error' });
+  }
+};
+
+/** Adding user's address */
+exports.createAddress = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    const address = req.body;
+    delete address.userId;
+
+    user.addresses.push(address);
+    await user.save();
+    res.status(200).json({ message: 'Sucess creating address' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Unkown server error' });

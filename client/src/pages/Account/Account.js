@@ -12,10 +12,11 @@ import {
   Store,
 } from '@material-ui/icons';
 import axios from 'axios';
-import { UserContext } from '../context/UserContext';
-import { Link } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
+import { Link, useRouteMatch, Switch, Route } from 'react-router-dom';
+import Addresses from './Addresses/Addresses';
 
-const Account = () => {
+const AccountPage = () => {
   useEffect(() => (document.title = 'My Account'));
 
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
@@ -44,9 +45,9 @@ const Account = () => {
 
         <div className="space-x-1">
           <Card
-            title="Adresses"
-            description="Change your adresses of delivery"
-            link="/home"
+            title="Addresses"
+            description="Change your addresses of delivery"
+            link="/account/addresses"
             icon={<Home color="primary" style={{ fontSize: 60 }} />}
           />
           <Card
@@ -269,6 +270,21 @@ const Card = ({ title, description, link, icon }) => {
         </div>
       </div>
     </Link>
+  );
+};
+
+const Account = () => {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path}>
+        <AccountPage />
+      </Route>
+
+      <Route path={`${path}/addresses`}>
+        <Addresses />
+      </Route>
+    </Switch>
   );
 };
 
