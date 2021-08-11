@@ -1,12 +1,142 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import { UserContext } from '../../../context/UserContext';
+import { Add } from '@material-ui/icons';
+import {
+  useRouteMatch,
+  Switch,
+  Route,
+  useHistory,
+  Link,
+} from 'react-router-dom';
+import AddAddress from './AddAddress';
+import UpdateAddress from './UpdateAddress';
 
-const Addresses = () => {
+const AddressesPage = ({ path }) => {
   const [addresses, setAddresses] = useState([]);
+  const { token } = useContext(UserContext);
+  const history = useHistory();
+
+  useEffect(() => {
+    document.title = 'My Addresses';
+  }, []);
+
+  useEffect(() => {
+    const getAddresses = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/user/address', {
+          headers: {
+            authorization: token,
+          },
+        });
+        const { addresses } = response.data;
+        console.log(('addresess', addresses));
+        setAddresses(addresses);
+      } catch (error) {
+        console.error('Failed fetch addresses:', error);
+      }
+    };
+
+    getAddresses();
+  }, [token]);
+
+  const className =
+    addresses.length === 0
+      ? 'flex space-x-4 m-auto w-80'
+      : 'flex space-x-4 m-auto w-1/2';
 
   return (
     <div className="mt-5">
       <p className="text-4xl text-center mb-10">My Addresses</p>
+      <div className={className}>
+        <div
+          className="border-2 border-gray-300 w-80 h-60 justify-center items-center flex flex-col cursor-pointer"
+          onClick={() => history.push(`${path}/addAddress`)}
+        >
+          <Add color="primary" style={{ fontSize: 80 }} />
+          <p className="text-2xl text-center text-blue-500">Add Address</p>
+        </div>
+
+        {addresses.map((address, i) => (
+          <AddressCard
+            {...address}
+            key={i}
+            token={token}
+            addresses={addresses}
+            setAddresses={setAddresses}
+          />
+        ))}
+      </div>
     </div>
+  );
+};
+
+const AddressCard = ({
+  _id,
+  address,
+  city,
+  country,
+  region,
+  zipCode,
+  phoneNumber,
+  token,
+  addresses,
+  setAddresses,
+}) => {
+  const { path } = useRouteMatch();
+  const handleClick = async () => {
+    try {
+      console.log('token', token);
+      await axios.delete('http://localhost:5000/user/address', {
+        headers: {
+          authorization: token,
+        },
+        data: { addressId: _id },
+      });
+
+      setAddresses([...addresses.filter((address) => address._id !== _id)]);
+    } catch (error) {
+      console.error('Failed removing address', error);
+    }
+  };
+
+  return (
+    <div className="border-2 border-gray-300 w-80 h-60">
+      <div className="ml-3">
+        <p>{address}</p>
+        <p>{`${region}, ${city} ${zipCode}`}</p>
+        <p>{country}</p>
+        <p>Phone number: {phoneNumber}</p>
+        <div className="relative top-24">
+          <Link to={`${path}/${_id}`} className="text-blue-600">
+            Edit
+          </Link>{' '}
+          |{' '}
+          <button className="text-blue-600" onClick={handleClick}>
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Addresses = () => {
+  const { path } = useRouteMatch();
+  return (
+    <Switch>
+      <Route exact path={path}>
+        <AddressesPage path={path} />
+      </Route>
+
+      <Route path={`${path}/addAddress`}>
+        <AddAddress />
+      </Route>
+
+      <Route path={`${path}/:addressId`}>
+        <UpdateAddress />
+      </Route>
+    </Switch>
   );
 };
 

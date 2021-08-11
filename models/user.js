@@ -11,7 +11,6 @@ const userSchema = mongoose.Schema({
   addresses: [
     {
       country: { type: String },
-      fullName: { type: String },
       address: { type: String },
       city: { type: String },
       region: { type: String },

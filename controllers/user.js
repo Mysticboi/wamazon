@@ -66,7 +66,7 @@ exports.updatePassword = async (req, res) => {
     } else {
       const hash = await bcrypt.hash(req.body.password, 10);
       await User.updateOne({ _id: req.body.userId }, { password: hash });
-      res.status(200).json({ message: "Sucess updating user's password" });
+      res.status(200).json({ message: "Success updating user's password" });
     }
   } catch (error) {
     console.error(error);
@@ -95,7 +95,22 @@ exports.createAddress = async (req, res) => {
 
     user.addresses.push(address);
     await user.save();
-    res.status(200).json({ message: 'Sucess creating address' });
+    res.status(200).json({ message: 'Success creating address' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Unkown server error' });
+  }
+};
+
+/** Deleting user's address */
+exports.deleteAddress = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    user.addresses = user.addresses.filter(
+      (address) => address._id.toString() !== req.body.addressId
+    );
+    await user.save();
+    res.status(200).json({ message: 'Success removing address' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Unkown server error' });

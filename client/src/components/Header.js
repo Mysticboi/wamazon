@@ -1,10 +1,22 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { UserContext } from '../context/UserContext';
+import jwt from 'jsonwebtoken';
 
 const Header = () => {
-  const { userName, isUserConnected, logOut } = useContext(UserContext);
+  const { token, userName, isUserConnected, logOut } = useContext(UserContext);
+
+  useEffect(() => {
+    jwt.verify(token, 'RANDOM_TOKEN_SECRET', (err, decoded) => {
+      if (err) {
+        if (err.name === 'TokenExpiredError') {
+          console.log('TokenExpired, logging out...');
+          logOut();
+        }
+      }
+    });
+  });
   return (
     <div className="bg-gray-500 h-24">
       <div className="text-3xl font-bold text-green-400 h-0 absolute left-5">

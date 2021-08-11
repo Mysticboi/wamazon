@@ -5,6 +5,7 @@ const {
   updatePassword,
   getAllAddresses,
   createAddress,
+  deleteAddress,
 } = require('../controllers/user');
 
 const { decode } = require('../middlewares/decodeToken');
@@ -16,5 +17,6 @@ router.post('/login', login);
 router.post('/updatePassword', decode, updatePassword);
 router.get('/address', decode, getAllAddresses);
 router.post('/address', decode, createAddress);
+router.delete('/address', decode, deleteAddress);
 
 module.exports = router;
