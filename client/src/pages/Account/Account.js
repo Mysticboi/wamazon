@@ -112,7 +112,7 @@ const UpdatePasswordForm = ({ token, setIsUpdateOpen, setChangedPassword }) => {
     if (Object.keys(finalErrors).length === 0) {
       // No errors we continue
       try {
-        await axios.post(
+        await axios.put(
           'http://localhost:5000/user/updatePassword',
           { password, oldPassword },
           {

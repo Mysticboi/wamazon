@@ -12,6 +12,7 @@ exports.signup = async (req, res) => {
     });
 
     await user.save();
+    // Or await User.create({...req.body,password: hash});
     res.status(201).json({ message: 'User created' });
   } catch (error) {
     let response = { message: 'Failed SigningUp user' };
@@ -74,7 +75,7 @@ exports.updatePassword = async (req, res) => {
   }
 };
 
-/** Getting user's addresses */
+/** Getting all user's addresses */
 exports.getAllAddresses = async (req, res) => {
   try {
     const user = await User.findById(req.body.userId);
@@ -111,6 +112,48 @@ exports.deleteAddress = async (req, res) => {
     );
     await user.save();
     res.status(200).json({ message: 'Success removing address' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Unkown server error' });
+  }
+};
+
+/** Getting a user's address */
+exports.getAddress = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    const address = user.addresses.find(
+      (adrs) => adrs._id.toString() === req.params.addressId
+    );
+    res.status(200).json({ address });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Unkown server error' });
+  }
+};
+
+/** Updating user's address */
+exports.updateAddress = async (req, res) => {
+  try {
+    const user = await User.findById(req.body.userId);
+    const address = req.body;
+    delete address.userId;
+    const addressId = req.params.addressId;
+    user.addresses = user.addresses.map((adr) => {
+      if (adr._id.toString() === addressId) {
+        adr.address = address.address;
+        adr.city = address.city;
+        adr.region = address.region;
+        adr.zipCode = address.zipCode;
+        adr.phoneNumber = address.phoneNumber;
+        return adr;
+      } else {
+        return adr;
+      }
+    });
+
+    await user.save();
+    res.status(200).json({ message: 'Success updating address' });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Unkown server error' });

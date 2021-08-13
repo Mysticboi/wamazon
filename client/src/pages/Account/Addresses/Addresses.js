@@ -43,14 +43,14 @@ const AddressesPage = ({ path }) => {
   const className =
     addresses.length === 0
       ? 'flex space-x-4 m-auto w-80'
-      : 'flex space-x-4 m-auto w-1/2';
+      : 'flex flex-wrap m-auto max-w-2xl';
 
   return (
     <div className="mt-5">
       <p className="text-4xl text-center mb-10">My Addresses</p>
       <div className={className}>
         <div
-          className="border-2 border-gray-300 w-80 h-60 justify-center items-center flex flex-col cursor-pointer"
+          className="border-2 border-gray-300 w-80 h-60 justify-center items-center flex flex-col cursor-pointer m-1"
           onClick={() => history.push(`${path}/addAddress`)}
         >
           <Add color="primary" style={{ fontSize: 80 }} />
@@ -101,7 +101,7 @@ const AddressCard = ({
   };
 
   return (
-    <div className="border-2 border-gray-300 w-80 h-60">
+    <div className="border-2 border-gray-300 w-80 h-60 m-1">
       <div className="ml-3">
         <p>{address}</p>
         <p>{`${region}, ${city} ${zipCode}`}</p>
