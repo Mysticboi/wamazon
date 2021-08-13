@@ -1,8 +1,6 @@
-const User = require('../../models/user');
-
 const { withDatabase } = require('../utils/utils');
 
-const main = async () => {
+const main = async ({ models: { User } }) => {
   await User.updateOne(
     { fullName: 'Walid Oulderra' },
     {
@@ -22,5 +20,5 @@ const main = async () => {
 
 withDatabase(main)
   .then(() => console.log('Succesfly applied PDATA'))
-  .catch((error) => console.error(error))
+  .catch((err) => console.error('Failed applying PDATA', err))
   .finally(() => process.exit());
