@@ -10,6 +10,14 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^27.0.1",
+    "@types/jsonwebtoken": "^8.5.4",
+    "@types/lodash": "^4.14.172",
+    "@types/node": "^16.6.1",
+    "@types/react": "^17.0.18",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-router-dom": "^5.1.8",
+    "@types/react-select": "^4.0.17",
     "autoprefixer": "^9",
     "final-form": "^4.20.2",
     "final-form-material-ui": "^0.3.0",
@@ -23,6 +31,7 @@
     "react-scripts": "4.0.3",
     "react-select": "^4.3.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "typescript": "^4.3.5",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

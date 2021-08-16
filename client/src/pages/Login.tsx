@@ -9,14 +9,21 @@ import { useHistory } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 import { Link } from 'react-router-dom';
 
+type Values = {
+  email: string;
+  password: string;
+};
+
+type Error = Partial<Values>;
+
 const Login = () => {
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Error>({});
   const userContext = useContext(UserContext);
   const history = useHistory();
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: Values) => {
     const { email, password } = values;
-    let finalErrors = {};
+    let finalErrors: Error = {};
 
     if (!validateEmail(email)) {
       finalErrors.email = 'Invalid email';
@@ -162,10 +169,10 @@ const Login = () => {
   );
 };
 
-const validateEmail = (email) => {
+const validateEmail = (email: string) => {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
+  return re.test(email.toLowerCase());
 };
 
 export default Login;

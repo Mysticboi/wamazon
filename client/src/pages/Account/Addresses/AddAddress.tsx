@@ -8,8 +8,29 @@ import axios from 'axios';
 import countries from '../../../data/countries.json';
 import { UserContext } from '../../../context/UserContext';
 
+type Values = {
+  country: { value: string };
+  address: string;
+  city: string;
+  region: string;
+  zipCode: number;
+  phoneNumber: number;
+  key?: string;
+};
+
+type ErrorType = {
+  country: string;
+  address: string;
+  city: string;
+  region: string;
+  zipCode: string;
+  phoneNumber: string;
+};
+
+type Error = Partial<ErrorType>;
+
 const AddAddress = () => {
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Error>({});
   const history = useHistory();
   const { token } = useContext(UserContext);
 
@@ -17,7 +38,7 @@ const AddAddress = () => {
     return { value: name, label: name };
   });
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: Values) => {
     const {
       country: { value: country } = {},
       address,
@@ -27,21 +48,21 @@ const AddAddress = () => {
       phoneNumber,
     } = values;
 
-    let finalErrors = {};
-
-    const keys = [
-      'country',
-      'address',
-      'city',
-      'region',
-      'zipCode',
-      'phoneNumber',
-    ];
-    keys.forEach((key) => {
-      if (!values[key]) {
-        finalErrors[key] = 'Empty';
-      }
-    });
+    let finalErrors: Error = {};
+    //TODO Change for simpler
+    // const keys = [
+    //   'country',
+    //   'address',
+    //   'city',
+    //   'region',
+    //   'zipCode',
+    //   'phoneNumber',
+    // ];
+    // keys.forEach((key) => {
+    //   if (!values[key]) {
+    //     finalErrors[key] = 'Empty';
+    //   }
+    // });
     if (zipCode && isNaN(zipCode)) {
       finalErrors.zipCode = 'Must be a number';
     }

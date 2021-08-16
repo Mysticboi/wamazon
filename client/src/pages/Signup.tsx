@@ -8,13 +8,22 @@ import axios from 'axios';
 import _ from 'lodash';
 import { useHistory } from 'react-router-dom';
 
+type Values = {
+  fullName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+
+type Error = Partial<Values>;
+
 const Signup = () => {
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState<Error>({});
   const history = useHistory();
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: Values) => {
     const { fullName, email, password, confirmPassword } = values;
-    let finalErrors = {};
+    let finalErrors: Error = {};
 
     if (fullName.split(' ').length < 2) {
       finalErrors.fullName = 'At least 2 words';
@@ -178,10 +187,10 @@ const Signup = () => {
   );
 };
 
-const validateEmail = (email) => {
+const validateEmail = (email: string) => {
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
+  return re.test(email.toLowerCase());
 };
 
 export default Signup;

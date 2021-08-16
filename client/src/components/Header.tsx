@@ -2,20 +2,22 @@ import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
 import { UserContext } from '../context/UserContext';
-import jwt from 'jsonwebtoken';
+import jwt, { VerifyErrors } from 'jsonwebtoken';
 
 const Header = () => {
   const { token, userName, isUserConnected, logOut } = useContext(UserContext);
 
   useEffect(() => {
-    jwt.verify(token, 'RANDOM_TOKEN_SECRET', (err, decoded) => {
-      if (err) {
-        if (err.name === 'TokenExpiredError') {
-          console.log('TokenExpired, logging out...');
-          logOut();
+    if (token) {
+      jwt.verify(token, 'RANDOM_TOKEN_SECRET', (err: VerifyErrors | null) => {
+        if (err) {
+          if (err.name === 'TokenExpiredError') {
+            console.log('TokenExpired, logging out...');
+            logOut();
+          }
         }
-      }
-    });
+      });
+    }
   });
   return (
     <div className="bg-gray-500 h-24">
@@ -49,7 +51,7 @@ const Header = () => {
         </div>
       ) : (
         <div className="text-right w-50 space-x-10 mr-5 h-5 mt-7">
-          <Link to="/login">
+          <Link to="/login" title="Login to your account">
             <Button variant="contained" color="secondary">
               Login
             </Button>

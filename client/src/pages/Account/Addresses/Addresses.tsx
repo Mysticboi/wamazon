@@ -12,8 +12,24 @@ import {
 import AddAddress from './AddAddress';
 import UpdateAddress from './UpdateAddress';
 
-const AddressesPage = ({ path }) => {
-  const [addresses, setAddresses] = useState([]);
+export interface Address {
+  address: string;
+  city: string;
+  country: string;
+  region: string;
+  zipCode: number;
+  phoneNumber: number;
+  _id?: string;
+}
+
+interface CardProps extends Address {
+  token: string | null;
+  addresses: Address[];
+  setAddresses: React.Dispatch<React.SetStateAction<Address[]>>;
+}
+
+const AddressesPage = ({ path }: { path: string }) => {
+  const [addresses, setAddresses] = useState<Address[]>([]);
   const { token } = useContext(UserContext);
   const history = useHistory();
 
@@ -29,8 +45,8 @@ const AddressesPage = ({ path }) => {
             authorization: token,
           },
         });
-        const { addresses } = response.data;
-        console.log(('addresess', addresses));
+        const { addresses }: { addresses: Address[] } = response.data;
+        console.log('addresess', addresses);
         setAddresses(addresses);
       } catch (error) {
         console.error('Failed fetch addresses:', error);
@@ -82,7 +98,7 @@ const AddressCard = ({
   token,
   addresses,
   setAddresses,
-}) => {
+}: CardProps) => {
   const { path } = useRouteMatch();
   const handleClick = async () => {
     try {

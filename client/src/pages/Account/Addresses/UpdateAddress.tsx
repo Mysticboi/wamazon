@@ -6,12 +6,31 @@ import { Form, Field } from 'react-final-form';
 import { Button } from '@material-ui/core';
 import { TextField } from 'final-form-material-ui';
 import { useHistory } from 'react-router-dom';
+import { Address } from './Addresses';
+
+type Values = {
+  address: string;
+  city: string;
+  region: string;
+  zipCode: number;
+  phoneNumber: number;
+};
+
+type ErrorT = {
+  address: string;
+  city: string;
+  region: string;
+  zipCode: string;
+  phoneNumber: string;
+};
+
+type Error = Partial<ErrorT>;
 
 const UpdateAddress = () => {
-  const { addressId } = useParams();
+  const { addressId } = useParams<{ addressId: string }>();
   const { token } = useContext(UserContext);
-  const [address, setAddress] = useState({});
-  const [errors, setErrors] = useState({});
+  const [address, setAddress] = useState<Partial<Address>>({});
+  const [errors, setErrors] = useState<Error>({});
   const history = useHistory();
 
   useEffect(() => {
@@ -26,7 +45,7 @@ const UpdateAddress = () => {
           }
         );
 
-        const adr = response.data.address;
+        const adr: Address = response.data.address;
         console.log('address', adr);
         setAddress(adr);
       } catch (error) {
@@ -37,25 +56,25 @@ const UpdateAddress = () => {
     getAddress();
   }, [addressId, token]);
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: Values) => {
     const { address, city, region, zipCode, phoneNumber } = values;
     console.log(values);
 
-    let finalErrors = {};
-
-    const keys = [
-      'country',
-      'address',
-      'city',
-      'region',
-      'zipCode',
-      'phoneNumber',
-    ];
-    keys.forEach((key) => {
-      if (!values[key]) {
-        finalErrors[key] = 'Empty';
-      }
-    });
+    let finalErrors: Error = {};
+    // TODO: Change for simpler
+    // const keys = [
+    //   'country',
+    //   'address',
+    //   'city',
+    //   'region',
+    //   'zipCode',
+    //   'phoneNumber',
+    // ];
+    // keys.forEach((key) => {
+    //   if (!values[key]) {
+    //     finalErrors[key] = 'Empty';
+    //   }
+    // });
     if (zipCode && isNaN(zipCode)) {
       finalErrors.zipCode = 'Must be a number';
     }
@@ -112,12 +131,6 @@ const UpdateAddress = () => {
                   disabled
                   initialValue={address.country}
                 />
-
-                {errors?.country && (
-                  <span className="text-red-600 font-bold underline text-sm">
-                    {errors.country}
-                  </span>
-                )}
               </div>
 
               <div className="m-3 w-3/4">

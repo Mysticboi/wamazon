@@ -16,8 +16,31 @@ import { UserContext } from '../../context/UserContext';
 import { Link, useRouteMatch, Switch, Route } from 'react-router-dom';
 import Addresses from './Addresses/Addresses';
 
+type Values = {
+  oldPassword: string;
+  password: string;
+  confirmPassword: string;
+};
+
+type Error = Partial<Values>;
+
+type CardProps = {
+  title: string;
+  description: string;
+  link: string;
+  icon: any;
+};
+
+type UpdatePasswordProps = {
+  token: string | null;
+  setIsUpdateOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setChangedPassword: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
 const AccountPage = () => {
-  useEffect(() => (document.title = 'My Account'));
+  useEffect(() => {
+    document.title = 'My Account';
+  });
 
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [changedPassword, setChangedPassword] = useState(false);
@@ -87,12 +110,16 @@ const AccountPage = () => {
   );
 };
 
-const UpdatePasswordForm = ({ token, setIsUpdateOpen, setChangedPassword }) => {
-  const [errors, setErrors] = useState({});
+const UpdatePasswordForm = ({
+  token,
+  setIsUpdateOpen,
+  setChangedPassword,
+}: UpdatePasswordProps) => {
+  const [errors, setErrors] = useState<Error>({});
 
-  const onSubmit = async (values) => {
+  const onSubmit = async (values: Values) => {
     const { oldPassword, password, confirmPassword } = values;
-    let finalErrors = {};
+    let finalErrors: Error = {};
     if (!oldPassword) {
       finalErrors.oldPassword = 'Empty';
     } else if (oldPassword.length < 7) {
@@ -259,7 +286,7 @@ const UpdatePasswordForm = ({ token, setIsUpdateOpen, setChangedPassword }) => {
   );
 };
 
-const Card = ({ title, description, link, icon }) => {
+const Card = ({ title, description, link, icon }: CardProps) => {
   return (
     <Link to={link}>
       <div className="border-2 rounded-xl border-gray-300 m-auto w-80 h-28 hover:bg-gray-200 flex">
