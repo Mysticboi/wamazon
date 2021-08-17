@@ -7,6 +7,7 @@ require('dotenv').config({ path: '../../config.env' });
 const loadModels = () => {
   const modelsGlob = path.join(__dirname, '../../models/*.js');
   glob.sync(modelsGlob).forEach((file) => {
+    // eslint-disable-next-line global-require
     require(path.resolve(file));
   });
 };

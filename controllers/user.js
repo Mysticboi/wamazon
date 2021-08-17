@@ -1,6 +1,7 @@
-const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
+const User = require('../models/user');
 
 /** Signing Up the user and crypting his password  */
 exports.signup = async (req, res) => {
@@ -15,7 +16,7 @@ exports.signup = async (req, res) => {
     // Or await User.create({...req.body,password: hash});
     res.status(201).json({ message: 'User created' });
   } catch (error) {
-    let response = { message: 'Failed SigningUp user' };
+    const response = { message: 'Failed SigningUp user' };
 
     if (error?.errors?.email?.kind === 'unique') {
       response.error = 'Not unique email';
@@ -24,7 +25,7 @@ exports.signup = async (req, res) => {
   }
 };
 
-/**Login in the user and creating an authentification token */
+/** Login in the user and creating an authentification token */
 exports.login = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -50,7 +51,7 @@ exports.login = async (req, res) => {
     }
   } catch (error) {
     console.error('error', error);
-    res.status(500).json({ error: 'Unkown server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -71,7 +72,7 @@ exports.updatePassword = async (req, res) => {
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Unkown server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -83,7 +84,7 @@ exports.getAllAddresses = async (req, res) => {
     res.status(200).json({ addresses });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Unkown server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -99,7 +100,7 @@ exports.createAddress = async (req, res) => {
     res.status(200).json({ message: 'Success creating address' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Unkown server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -114,7 +115,7 @@ exports.deleteAddress = async (req, res) => {
     res.status(200).json({ message: 'Success removing address' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Unkown server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -128,7 +129,7 @@ exports.getAddress = async (req, res) => {
     res.status(200).json({ address });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Unkown server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };
 
@@ -136,26 +137,23 @@ exports.getAddress = async (req, res) => {
 exports.updateAddress = async (req, res) => {
   try {
     const user = await User.findById(req.body.userId);
-    const address = req.body;
-    delete address.userId;
-    const addressId = req.params.addressId;
+    const inputAddress = req.body;
+    delete inputAddress.userId;
+    const { address, city, region, zipCode, phoneNumber } = inputAddress;
+    const { addressId } = req.params;
     user.addresses = user.addresses.map((adr) => {
-      if (adr._id.toString() === addressId) {
-        adr.address = address.address;
-        adr.city = address.city;
-        adr.region = address.region;
-        adr.zipCode = address.zipCode;
-        adr.phoneNumber = address.phoneNumber;
-        return adr;
-      } else {
-        return adr;
-      }
+      const finalAddress =
+        adr._id.toString() === addressId
+          ? { addressId, address, city, region, zipCode, phoneNumber }
+          : adr;
+
+      return finalAddress;
     });
 
     await user.save();
     res.status(200).json({ message: 'Success updating address' });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Unkown server error' });
+    res.status(500).json({ error: 'Internal server error' });
   }
 };

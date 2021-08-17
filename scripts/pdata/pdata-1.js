@@ -19,6 +19,6 @@ const main = async ({ models: { User } }) => {
 };
 
 withDatabase(main)
-  .then(() => console.log('Succesfly applied PDATA'))
+  .then(() => console.log('Success applying PDATA'))
   .catch((err) => console.error('Failed applying PDATA', err))
   .finally(() => process.exit());
