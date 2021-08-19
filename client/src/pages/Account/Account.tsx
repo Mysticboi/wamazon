@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
-import { Button } from '@material-ui/core';
+import { Button, Snackbar, SnackbarCloseReason } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { TextField } from 'final-form-material-ui';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import {
@@ -45,6 +46,16 @@ const AccountPage = () => {
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
   const [changedPassword, setChangedPassword] = useState(false);
   const { token } = useContext(UserContext);
+
+  const handleClose = (
+    event?: React.SyntheticEvent<Element, Event>,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === 'timeout') {
+      setChangedPassword(false);
+    }
+  };
+
   return (
     <div className="mt-5">
       <p className="text-4xl text-center mb-10">My Account</p>
@@ -101,11 +112,15 @@ const AccountPage = () => {
         />
       )}
 
-      {changedPassword && (
-        <p className="text-green-500 text-center mt-5">
-          Succesfly updated password
-        </p>
-      )}
+      <Snackbar
+        open={changedPassword}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <Alert severity="success" elevation={6} variant="filled">
+          Success updating password
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

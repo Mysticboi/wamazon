@@ -10,7 +10,7 @@
     },
     "rules": {
         "prettier/prettier": ["error", {
-            "endOfLine": "crlf"
+            "endOfLine": "crlf" // Change to "lf" if using unix based OS
         }],
         "no-console" : 0,
         "no-underscore-dangle" : 0,
