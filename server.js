@@ -1,23 +1,17 @@
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
+const config = require('./config');
+const db = require('./services/database');
 
 const userRoutes = require('./routes/user');
 
 const app = express();
 
-require('dotenv').config({ path: './config.env' });
-
-const port = process.env.PORT || 5000;
+const { port } = config;
 
 const startServer = async () => {
   try {
-    await mongoose.connect(process.env.ATLAS_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-
-    console.log('Successfly connected to mongoDB');
+    await db.initialize();
 
     app.use(express.json());
 
@@ -28,8 +22,8 @@ const startServer = async () => {
     app.listen(port, () => {
       console.log('Server is running on port:', port);
     });
-  } catch (error) {
-    console.error('Failed connection to mongoDB');
+  } catch (e) {
+    console.error(e);
   }
 };
 

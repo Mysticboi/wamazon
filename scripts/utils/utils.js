@@ -1,8 +1,7 @@
-const mongoose = require('mongoose');
 const path = require('path');
 const glob = require('glob');
-
-require('dotenv').config({ path: '../../config.env' });
+const mongoose = require('mongoose');
+const db = require('../../services/database');
 
 const loadModels = () => {
   const modelsGlob = path.join(__dirname, '../../models/*.js');
@@ -14,12 +13,7 @@ const loadModels = () => {
 
 const withDatabase = async (main) => {
   try {
-    await mongoose.connect(process.env.ATLAS_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-
-    console.log('Successfly connected to mongoDB');
+    await db.initialize();
 
     loadModels();
 
@@ -30,7 +24,7 @@ const withDatabase = async (main) => {
     return await main({ models });
   } finally {
     // Error or not, we close the database connection
-    await mongoose.disconnect();
+    await db.disconnect();
   }
 };
 
