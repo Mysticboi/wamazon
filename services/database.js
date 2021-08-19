@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const config = require('../config');
+const logger = require('./logger');
 
 class Database {
   constructor() {
@@ -13,18 +14,18 @@ class Database {
     };
     await mongoose.connect(this.uri, connectConfig);
 
-    console.log('Successfuly connected to MongoDB');
+    logger.info('Successfuly connected to MongoDB');
   }
 
   async disconnect() {
     try {
-      console.log('Disconnecting mongoose from MongoDB...');
+      logger.info('Disconnecting mongoose from MongoDB...');
 
       await mongoose.disconnect();
 
-      console.log('Mongoose disconnected from MongoDB');
+      logger.info('Mongoose disconnected from MongoDB');
     } catch (err) {
-      console.error(
+      logger.error(
         err,
         'An error occured while disconneting mongoose from MongoDB'
       );

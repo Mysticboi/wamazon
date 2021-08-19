@@ -1,4 +1,5 @@
 const { withDatabase } = require('../utils/utils');
+const logger = require('../../services/logger');
 
 const main = async ({ models: { User } }) => {
   await User.updateOne(
@@ -19,6 +20,6 @@ const main = async ({ models: { User } }) => {
 };
 
 withDatabase(main)
-  .then(() => console.log('Success applying PDATA'))
-  .catch((err) => console.error('Failed applying PDATA', err))
+  .then(() => logger.info('Success applying PDATA'))
+  .catch((err) => logger.error(err))
   .finally(() => process.exit());

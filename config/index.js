@@ -1,4 +1,7 @@
-require('dotenv').config({ path: './config.env' });
+const path = require('path');
+
+const dynamicPath = path.resolve(__dirname, '../', 'config.env');
+require('dotenv').config({ path: dynamicPath });
 
 const config = {
   db: {
