@@ -10,17 +10,21 @@ const app = express();
 const { port } = config;
 
 const startServer = async () => {
-  await db.initialize();
+  try {
+    await db.initialize();
 
-  app.use(express.json());
+    app.use(express.json());
 
-  app.use(cors());
+    app.use(cors());
 
-  app.use('/user', userRoutes);
+    app.use('/user', userRoutes);
 
-  app.listen(port, () => {
-    console.log('Server is running on port:', port);
-  });
+    app.listen(port, () => {
+      console.log('Server is running on port:', port);
+    });
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 startServer();

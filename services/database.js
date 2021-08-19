@@ -11,13 +11,9 @@ class Database {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     };
-    try {
-      await mongoose.connect(this.uri, connectConfig);
+    await mongoose.connect(this.uri, connectConfig);
 
-      console.log('Successfuly connected to MongoDB');
-    } catch (e) {
-      console.error('Failed connection to MongoDB', e);
-    }
+    console.log('Successfuly connected to MongoDB');
   }
 
   async disconnect() {
@@ -30,7 +26,7 @@ class Database {
     } catch (err) {
       console.error(
         err,
-        'An error occured while disconneting mongoose from the MongoDB'
+        'An error occured while disconneting mongoose from MongoDB'
       );
       throw err;
     }
