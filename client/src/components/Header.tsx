@@ -1,8 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import { UserContext } from '../context/UserContext';
 import jwt, { VerifyErrors } from 'jsonwebtoken';
+import { UserContext } from '../context/UserContext';
 
 const Header = () => {
   const { token, userName, isUserConnected, logOut } = useContext(UserContext);

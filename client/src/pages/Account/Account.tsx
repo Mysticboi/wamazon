@@ -13,8 +13,8 @@ import {
   Store,
 } from '@material-ui/icons';
 import axios from 'axios';
-import { UserContext } from '../../context/UserContext';
 import { Link, useRouteMatch, Switch, Route } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
 import Addresses from './Addresses/Addresses';
 
 type Values = {
@@ -29,7 +29,7 @@ type CardProps = {
   title: string;
   description: string;
   link: string;
-  icon: any;
+  icon: React.ReactElement;
 };
 
 type UpdatePasswordProps = {
@@ -134,7 +134,7 @@ const UpdatePasswordForm = ({
 
   const onSubmit = async (values: Values) => {
     const { oldPassword, password, confirmPassword } = values;
-    let finalErrors: Error = {};
+    const finalErrors: Error = {};
     if (!oldPassword) {
       finalErrors.oldPassword = 'Empty';
     } else if (oldPassword.length < 7) {
@@ -178,7 +178,7 @@ const UpdatePasswordForm = ({
     <div className="flex justify-center mt-10 border-2 shadow border-gray-600 max-w-xl m-auto">
       <Form
         onSubmit={onSubmit}
-        render={({ handleSubmit, submitting, pristine, values }) => (
+        render={({ handleSubmit, submitting, pristine }) => (
           <form
             onSubmit={handleSubmit}
             className="w-full flex-col flex items-center"
@@ -296,25 +296,22 @@ const UpdatePasswordForm = ({
             </div>
           </form>
         )}
-      ></Form>
+      />
     </div>
   );
 };
 
-const Card = ({ title, description, link, icon }: CardProps) => {
-  return (
-    <Link to={link}>
-      <div className="border-2 rounded-xl border-gray-300 m-auto w-80 h-28 hover:bg-gray-200 flex">
-        {icon}
-        <div className="ml-3">
-          <p className="font-bold text-xl">{title}</p>
-          <p className="text-sm text-gray-700">{description}</p>
-        </div>
+const Card = ({ title, description, link, icon }: CardProps) => (
+  <Link to={link}>
+    <div className="border-2 rounded-xl border-gray-300 m-auto w-80 h-28 hover:bg-gray-200 flex">
+      {icon}
+      <div className="ml-3">
+        <p className="font-bold text-xl">{title}</p>
+        <p className="text-sm text-gray-700">{description}</p>
       </div>
-    </Link>
-  );
-};
-
+    </div>
+  </Link>
+);
 const Account = () => {
   const { path } = useRouteMatch();
   return (
