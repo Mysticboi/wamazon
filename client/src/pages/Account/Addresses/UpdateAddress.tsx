@@ -15,15 +15,13 @@ type Values = {
   phoneNumber: number;
 };
 
-type ErrorT = {
-  address: string;
-  city: string;
-  region: string;
-  zipCode: string;
-  phoneNumber: string;
+type Error = {
+  address?: string;
+  city?: string;
+  region?: string;
+  zipCode?: string;
+  phoneNumber?: string;
 };
-
-type Error = Partial<ErrorT>;
 
 const UpdateAddress = () => {
   const { addressId } = useParams<{ addressId: string }>();

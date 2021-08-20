@@ -18,16 +18,14 @@ type Values = {
   key?: string;
 };
 
-type ErrorType = {
-  country: string;
-  address: string;
-  city: string;
-  region: string;
-  zipCode: string;
-  phoneNumber: string;
+type Error = {
+  country?: string;
+  address?: string;
+  city?: string;
+  region?: string;
+  zipCode?: string;
+  phoneNumber?: string;
 };
-
-type Error = Partial<ErrorType>;
 
 const AddAddress = () => {
   const [errors, setErrors] = useState<Error>({});
