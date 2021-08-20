@@ -41,8 +41,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject",
-    "lint": "eslint src/pages/Account/Account.tsx"
+    "eject": "react-scripts eject"
   },
   "browserslist": {
     "production": [
