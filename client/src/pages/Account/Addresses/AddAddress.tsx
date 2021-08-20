@@ -34,9 +34,7 @@ const AddAddress = () => {
   const history = useHistory();
   const { token } = useContext(UserContext);
 
-  const options = countries.map(({ name }) => {
-    return { value: name, label: name };
-  });
+  const options = countries.map(({ name }) => ({ value: name, label: name }));
 
   const onSubmit = async (values: Values) => {
     const {
@@ -48,8 +46,9 @@ const AddAddress = () => {
       phoneNumber,
     } = values;
 
-    let finalErrors: Error = {};
-    //TODO Change for simpler
+    const finalErrors: Error = {};
+
+    // TODO Change for simpler
     // const keys = [
     //   'country',
     //   'address',
@@ -63,11 +62,11 @@ const AddAddress = () => {
     //     finalErrors[key] = 'Empty';
     //   }
     // });
-    if (zipCode && isNaN(zipCode)) {
+    if (zipCode && Number.isNaN(zipCode)) {
       finalErrors.zipCode = 'Must be a number';
     }
 
-    if (phoneNumber && isNaN(phoneNumber)) {
+    if (phoneNumber && Number.isNaN(phoneNumber)) {
       finalErrors.phoneNumber = 'Must be a number';
     }
 
@@ -96,7 +95,7 @@ const AddAddress = () => {
       <div className="flex justify-center mt-10 border-2 shadow border-gray-600 max-w-xl m-auto">
         <Form
           onSubmit={onSubmit}
-          render={({ handleSubmit, submitting, pristine, values }) => (
+          render={({ handleSubmit, submitting, pristine }) => (
             <form
               onSubmit={handleSubmit}
               className="w-full flex-col flex items-center"
@@ -107,8 +106,11 @@ const AddAddress = () => {
                   {(props) => (
                     <div>
                       <Select
+                        // eslint-disable-next-line react/prop-types
                         name={props.input.name}
+                        // eslint-disable-next-line react/prop-types
                         value={props.input.value}
+                        // eslint-disable-next-line react/prop-types
                         onChange={props.input.onChange}
                         options={options}
                         aria-label="Country"
@@ -241,7 +243,7 @@ const AddAddress = () => {
               </div>
             </form>
           )}
-        ></Form>
+        />
       </div>
     </div>
   );

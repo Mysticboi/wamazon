@@ -41,7 +41,9 @@
         "no-console": "off",
         "no-shadow": "off",
         "@typescript-eslint/no-empty-function": "off",
-        "@typescript-eslint/explicit-module-boundary-types": "off"
+        "@typescript-eslint/explicit-module-boundary-types": "off",
+        "react/jsx-props-no-spreading":"off",
+        "no-underscore-dangle":"off"
 
     },
     "root": true,
