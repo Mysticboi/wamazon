@@ -57,20 +57,23 @@ const UpdateAddress = () => {
     const { address, city, region, zipCode, phoneNumber } = values;
 
     const finalErrors: Error = {};
-    // TODO: Change for simpler
-    // const keys = [
-    //   'country',
-    //   'address',
-    //   'city',
-    //   'region',
-    //   'zipCode',
-    //   'phoneNumber',
-    // ];
-    // keys.forEach((key) => {
-    //   if (!values[key]) {
-    //     finalErrors[key] = 'Empty';
-    //   }
-    // });
+
+    if (!address) {
+      finalErrors.address = 'Empty';
+    }
+    if (!city) {
+      finalErrors.city = 'Empty';
+    }
+    if (!region) {
+      finalErrors.region = 'Empty';
+    }
+    if (!zipCode) {
+      finalErrors.zipCode = 'Empty';
+    }
+    if (!phoneNumber) {
+      finalErrors.phoneNumber = 'Empty';
+    }
+
     if (zipCode && Number.isNaN(zipCode)) {
       finalErrors.zipCode = 'Must be a number';
     }

@@ -135,6 +135,7 @@ const UpdatePasswordForm = ({
   const onSubmit = async (values: Values) => {
     const { oldPassword, password, confirmPassword } = values;
     const finalErrors: Error = {};
+
     if (!oldPassword) {
       finalErrors.oldPassword = 'Empty';
     } else if (oldPassword.length < 7) {
@@ -147,6 +148,8 @@ const UpdatePasswordForm = ({
       finalErrors.password = 'Atleast 7 characters';
     } else if (confirmPassword !== password) {
       finalErrors.confirmPassword = 'Password not matching';
+    } else if (password === oldPassword) {
+      finalErrors.password = "New password shouldn't be equal to old password";
     }
 
     setErrors(finalErrors);
