@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { UserContext } from '../../../context/UserContext';
 import { Add } from '@material-ui/icons';
 import {
   useRouteMatch,
@@ -9,6 +8,7 @@ import {
   useHistory,
   Link,
 } from 'react-router-dom';
+import { UserContext } from '../../../context/UserContext';
 import AddAddress from './AddAddress';
 import UpdateAddress from './UpdateAddress';
 
@@ -67,16 +67,17 @@ const AddressesPage = ({ path }: { path: string }) => {
       <div className={className}>
         <div
           className="border-2 border-gray-300 w-80 h-60 justify-center items-center flex flex-col cursor-pointer m-1"
+          role="presentation"
           onClick={() => history.push(`${path}/addAddress`)}
         >
           <Add color="primary" style={{ fontSize: 80 }} />
           <p className="text-2xl text-center text-blue-500">Add Address</p>
         </div>
 
-        {addresses.map((address, i) => (
+        {addresses.map((address) => (
           <AddressCard
             {...address}
-            key={i}
+            key={address._id}
             token={token}
             addresses={addresses}
             setAddresses={setAddresses}
@@ -102,7 +103,6 @@ const AddressCard = ({
   const { path } = useRouteMatch();
   const handleClick = async () => {
     try {
-      console.log('token', token);
       await axios.delete('http://localhost:5000/user/address', {
         headers: {
           authorization: token,
@@ -128,7 +128,7 @@ const AddressCard = ({
             Edit
           </Link>{' '}
           |{' '}
-          <button className="text-blue-600" onClick={handleClick}>
+          <button className="text-blue-600" type="button" onClick={handleClick}>
             Delete
           </button>
         </div>

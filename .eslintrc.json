@@ -10,10 +10,10 @@
     },
     "rules": {
         "prettier/prettier": ["error", {
-            "endOfLine": "crlf" // Change to "lf" if using unix based OS
+            "endOfLine": "auto"
         }],
-        "no-console" : 0,
-        "no-underscore-dangle" : 0,
+        "no-console": 0,
+        "no-underscore-dangle": 0,
         "import/no-dynamic-require": 0,
         "class-methods-use-this": 0
     }

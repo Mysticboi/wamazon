@@ -23,7 +23,7 @@ const Signup = () => {
 
   const onSubmit = async (values: Values) => {
     const { fullName, email, password, confirmPassword } = values;
-    let finalErrors: Error = {};
+    const finalErrors: Error = {};
 
     if (fullName.split(' ').length < 2) {
       finalErrors.fullName = 'At least 2 words';
@@ -60,7 +60,7 @@ const Signup = () => {
       <div className="flex justify-center mt-10 border-2 shadow border-gray-600 max-w-xl m-auto">
         <Form
           onSubmit={onSubmit}
-          render={({ handleSubmit, submitting, pristine, values }) => (
+          render={({ handleSubmit, submitting, pristine }) => (
             <form
               onSubmit={handleSubmit}
               className="w-full flex-col flex items-center"
@@ -181,7 +181,7 @@ const Signup = () => {
               </div>
             </form>
           )}
-        ></Form>
+        />
       </div>
     </div>
   );

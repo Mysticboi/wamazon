@@ -5,9 +5,8 @@ import { TextField } from 'final-form-material-ui';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Mail, Lock } from '@material-ui/icons';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
-import { Link } from 'react-router-dom';
 
 type Values = {
   email: string;
@@ -23,7 +22,7 @@ const Login = () => {
 
   const onSubmit = async (values: Values) => {
     const { email, password } = values;
-    let finalErrors: Error = {};
+    const finalErrors: Error = {};
 
     if (!validateEmail(email)) {
       finalErrors.email = 'Invalid email';
@@ -76,7 +75,7 @@ const Login = () => {
       <div className="flex justify-center mt-10 border-2 shadow border-gray-600 max-w-xl m-auto">
         <Form
           onSubmit={onSubmit}
-          render={({ handleSubmit, submitting, pristine, values }) => (
+          render={({ handleSubmit, submitting, pristine }) => (
             <form
               onSubmit={handleSubmit}
               className="w-full flex-col flex items-center"
@@ -154,7 +153,7 @@ const Login = () => {
               </div>
             </form>
           )}
-        ></Form>
+        />
       </div>
       <p className="text-center text-xl mt-5">
         Don't have an account yet?{' '}

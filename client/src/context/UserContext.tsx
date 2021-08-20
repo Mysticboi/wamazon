@@ -18,7 +18,11 @@ export const UserContext = createContext<IUserContext>({
   logOut: () => {},
 });
 
-export const UserContextProvider: React.FC = ({ children }) => {
+export const UserContextProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const storedToken = localStorage.getItem('token');
   const storedName = localStorage.getItem('name');
   const [token, setTokenState] = useState(storedToken);
@@ -34,7 +38,7 @@ export const UserContextProvider: React.FC = ({ children }) => {
     setUserNameState(name);
   };
 
-  const isUserConnected: boolean = !!token;
+  const isUserConnected = !!token;
 
   const logOut = () => {
     localStorage.removeItem('token');

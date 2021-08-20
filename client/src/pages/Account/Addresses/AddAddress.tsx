@@ -18,25 +18,21 @@ type Values = {
   key?: string;
 };
 
-type ErrorType = {
-  country: string;
-  address: string;
-  city: string;
-  region: string;
-  zipCode: string;
-  phoneNumber: string;
+type Error = {
+  country?: string;
+  address?: string;
+  city?: string;
+  region?: string;
+  zipCode?: string;
+  phoneNumber?: string;
 };
-
-type Error = Partial<ErrorType>;
 
 const AddAddress = () => {
   const [errors, setErrors] = useState<Error>({});
   const history = useHistory();
   const { token } = useContext(UserContext);
 
-  const options = countries.map(({ name }) => {
-    return { value: name, label: name };
-  });
+  const options = countries.map(({ name }) => ({ value: name, label: name }));
 
   const onSubmit = async (values: Values) => {
     const {
@@ -48,26 +44,32 @@ const AddAddress = () => {
       phoneNumber,
     } = values;
 
-    let finalErrors: Error = {};
-    //TODO Change for simpler
-    // const keys = [
-    //   'country',
-    //   'address',
-    //   'city',
-    //   'region',
-    //   'zipCode',
-    //   'phoneNumber',
-    // ];
-    // keys.forEach((key) => {
-    //   if (!values[key]) {
-    //     finalErrors[key] = 'Empty';
-    //   }
-    // });
-    if (zipCode && isNaN(zipCode)) {
+    const finalErrors: Error = {};
+
+    if (!country) {
+      finalErrors.country = 'Empty';
+    }
+    if (!address) {
+      finalErrors.address = 'Empty';
+    }
+    if (!city) {
+      finalErrors.city = 'Empty';
+    }
+    if (!region) {
+      finalErrors.region = 'Empty';
+    }
+    if (!zipCode) {
+      finalErrors.zipCode = 'Empty';
+    }
+    if (!phoneNumber) {
+      finalErrors.phoneNumber = 'Empty';
+    }
+
+    if (zipCode && Number.isNaN(zipCode)) {
       finalErrors.zipCode = 'Must be a number';
     }
 
-    if (phoneNumber && isNaN(phoneNumber)) {
+    if (phoneNumber && Number.isNaN(phoneNumber)) {
       finalErrors.phoneNumber = 'Must be a number';
     }
 
@@ -96,7 +98,7 @@ const AddAddress = () => {
       <div className="flex justify-center mt-10 border-2 shadow border-gray-600 max-w-xl m-auto">
         <Form
           onSubmit={onSubmit}
-          render={({ handleSubmit, submitting, pristine, values }) => (
+          render={({ handleSubmit, submitting, pristine }) => (
             <form
               onSubmit={handleSubmit}
               className="w-full flex-col flex items-center"
@@ -107,8 +109,11 @@ const AddAddress = () => {
                   {(props) => (
                     <div>
                       <Select
+                        // eslint-disable-next-line react/prop-types
                         name={props.input.name}
+                        // eslint-disable-next-line react/prop-types
                         value={props.input.value}
+                        // eslint-disable-next-line react/prop-types
                         onChange={props.input.onChange}
                         options={options}
                         aria-label="Country"
@@ -241,7 +246,7 @@ const AddAddress = () => {
               </div>
             </form>
           )}
-        ></Form>
+        />
       </div>
     </div>
   );

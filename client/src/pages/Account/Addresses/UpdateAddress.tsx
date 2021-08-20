@@ -1,11 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-import { UserContext } from '../../../context/UserContext';
+import { useParams, useHistory } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import { Button } from '@material-ui/core';
 import { TextField } from 'final-form-material-ui';
-import { useHistory } from 'react-router-dom';
+import { UserContext } from '../../../context/UserContext';
 import { Address } from './Addresses';
 
 type Values = {
@@ -16,15 +15,13 @@ type Values = {
   phoneNumber: number;
 };
 
-type ErrorT = {
-  address: string;
-  city: string;
-  region: string;
-  zipCode: string;
-  phoneNumber: string;
+type Error = {
+  address?: string;
+  city?: string;
+  region?: string;
+  zipCode?: string;
+  phoneNumber?: string;
 };
-
-type Error = Partial<ErrorT>;
 
 const UpdateAddress = () => {
   const { addressId } = useParams<{ addressId: string }>();
@@ -58,28 +55,30 @@ const UpdateAddress = () => {
 
   const onSubmit = async (values: Values) => {
     const { address, city, region, zipCode, phoneNumber } = values;
-    console.log(values);
 
-    let finalErrors: Error = {};
-    // TODO: Change for simpler
-    // const keys = [
-    //   'country',
-    //   'address',
-    //   'city',
-    //   'region',
-    //   'zipCode',
-    //   'phoneNumber',
-    // ];
-    // keys.forEach((key) => {
-    //   if (!values[key]) {
-    //     finalErrors[key] = 'Empty';
-    //   }
-    // });
-    if (zipCode && isNaN(zipCode)) {
+    const finalErrors: Error = {};
+
+    if (!address) {
+      finalErrors.address = 'Empty';
+    }
+    if (!city) {
+      finalErrors.city = 'Empty';
+    }
+    if (!region) {
+      finalErrors.region = 'Empty';
+    }
+    if (!zipCode) {
+      finalErrors.zipCode = 'Empty';
+    }
+    if (!phoneNumber) {
+      finalErrors.phoneNumber = 'Empty';
+    }
+
+    if (zipCode && Number.isNaN(zipCode)) {
       finalErrors.zipCode = 'Must be a number';
     }
 
-    if (phoneNumber && isNaN(phoneNumber)) {
+    if (phoneNumber && Number.isNaN(phoneNumber)) {
       finalErrors.phoneNumber = 'Must be a number';
     }
 
@@ -113,7 +112,7 @@ const UpdateAddress = () => {
       <div className="flex justify-center mt-10 border-2 shadow border-gray-600 max-w-xl m-auto">
         <Form
           onSubmit={onSubmit}
-          render={({ handleSubmit, submitting, pristine, values }) => (
+          render={({ handleSubmit, submitting, pristine }) => (
             <form
               onSubmit={handleSubmit}
               className="w-full flex-col flex items-center"
@@ -253,7 +252,7 @@ const UpdateAddress = () => {
               </div>
             </form>
           )}
-        ></Form>
+        />
       </div>
     </div>
   );
