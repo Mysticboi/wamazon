@@ -20,47 +20,56 @@ const Header = () => {
     }
   });
   return (
-    <div className="bg-gray-500 h-24">
-      <div className="text-3xl font-bold text-green-400 h-0 absolute left-5">
-        <Link to="/" className="text-left">
-          Wamazon
-        </Link>
+    <div className="h-14">
+      <div className="h-14 bg-gray-800">
+        <div className="text-3xl font-bold text-green-500 absolute left-5">
+          <Link to="/" className="text-left">
+            Wamazon
+          </Link>
+        </div>
+
+        <h1 className="text-3xl font-bold text-white text-center h-5 invisible lg:visible">
+          The e-commerce website for the people
+        </h1>
+        <div className="absolute right-5 top-2">
+          {isUserConnected ? (
+            <div className="space-x-5 h-5">
+              <Link to="/account">
+                <Button variant="contained" color="secondary" size="small">
+                  My Account
+                </Button>
+              </Link>
+              <Link to="/">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={logOut}
+                  size="small"
+                >
+                  Log Out
+                </Button>
+              </Link>
+            </div>
+          ) : (
+            <div className="space-x-5 h-5">
+              <Link to="/login" title="Login to your account">
+                <Button variant="contained" color="secondary" size="small">
+                  Login
+                </Button>
+              </Link>
+              <Link to="/signup">
+                <Button variant="contained" color="secondary" size="small">
+                  Sign Up
+                </Button>
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
 
-      <h1 className="text-3xl font-bold text-blue-800 text-center h-5">
-        The e-commerce website for the people
-      </h1>
-
       {isUserConnected && (
-        <div className="text-white text-2xl w-100 text-center mt-3 h-5">
+        <div className="text-black text-2xl w-100 text-center mt-3 h-5">
           Hello {userName}
-        </div>
-      )}
-      {isUserConnected ? (
-        <div className="text-right mr-5 space-x-5 h-5">
-          <Link to="/account">
-            <Button variant="contained" color="secondary">
-              My Account
-            </Button>
-          </Link>
-          <Link to="/">
-            <Button variant="contained" color="secondary" onClick={logOut}>
-              Log Out
-            </Button>
-          </Link>
-        </div>
-      ) : (
-        <div className="text-right w-50 space-x-10 mr-5 h-5 mt-7">
-          <Link to="/login" title="Login to your account">
-            <Button variant="contained" color="secondary">
-              Login
-            </Button>
-          </Link>
-          <Link to="/signup">
-            <Button variant="contained" color="secondary">
-              Sign Up
-            </Button>
-          </Link>
         </div>
       )}
     </div>

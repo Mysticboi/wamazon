@@ -66,7 +66,7 @@ const AddressesPage = ({ path }: { path: string }) => {
       <p className="text-4xl text-center mb-10">My Addresses</p>
       <div className={className}>
         <div
-          className="border-2 border-gray-300 w-80 h-60 justify-center items-center flex flex-col cursor-pointer m-1"
+          className="border-2 border-dashed border-gray-300 w-80 h-60 justify-center items-center flex flex-col cursor-pointer m-1"
           role="presentation"
           onClick={() => history.push(`${path}/addAddress`)}
         >

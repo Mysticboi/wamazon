@@ -6,7 +6,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { AccountCircle, Mail, Lock, LockOpen } from '@material-ui/icons';
 import axios from 'axios';
 import _ from 'lodash';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 
 type Values = {
   fullName: string;
@@ -183,6 +183,15 @@ const Signup = () => {
           )}
         />
       </div>
+      <p className="text-center text-xl mt-5">
+        Already got an account?{' '}
+        <Link
+          to="/signup"
+          className="underline text-indigo-600 hover:text-indigo-900 transform"
+        >
+          Login
+        </Link>
+      </p>
     </div>
   );
 };

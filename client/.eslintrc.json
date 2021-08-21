@@ -43,7 +43,8 @@
         "@typescript-eslint/no-empty-function": "off",
         "@typescript-eslint/explicit-module-boundary-types": "off",
         "react/jsx-props-no-spreading": "off",
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "react/require-default-props": "off"
 
     },
     "root": true,
