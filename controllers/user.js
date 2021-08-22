@@ -110,7 +110,7 @@ exports.deleteAddress = async (req, res) => {
   try {
     const user = await User.findById(req.body.userId);
     user.addresses = user.addresses.filter(
-      (address) => address._id.toString() !== req.body.addressId
+      (address) => address._id.toString() !== req.params.addressId
     );
     await user.save();
     res.status(200).json({ message: 'Success removing address' });

@@ -12,7 +12,7 @@ const router = express.Router();
 router.get('/', getAllAddresses);
 router.get('/:addressId', getAddress);
 router.post('/', createAddress);
-router.delete('/', deleteAddress);
+router.delete('/:addressId', deleteAddress);
 router.put('/:addressId', updateAddress);
 
 module.exports = router;

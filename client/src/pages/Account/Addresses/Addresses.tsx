@@ -103,11 +103,10 @@ const AddressCard = ({
   const { path } = useRouteMatch();
   const handleClick = async () => {
     try {
-      await axios.delete('http://localhost:5000/user/address', {
+      await axios.delete(`http://localhost:5000/user/address/${_id}`, {
         headers: {
           authorization: token,
         },
-        data: { addressId: _id },
       });
 
       setAddresses([...addresses.filter((address) => address._id !== _id)]);
