@@ -11,7 +11,7 @@ import NavBar from './components/NavBar';
 
 const theme = createTheme({
   palette: {
-    secondary: {
+    primary: {
       main: '#a749ff',
     },
   },

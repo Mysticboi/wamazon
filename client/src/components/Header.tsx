@@ -39,21 +39,27 @@ const Header = () => {
           </Link>
         </div>
 
-        <h1 className="text-3xl font-bold text-white text-center h-5 invisible lg:visible">
+        <h1 className="text-3xl font-bold text-white text-center h-5 invisible xl:visible">
           The e-commerce website for the people
         </h1>
+
+        {isUserConnected && (
+          <div className="text-white text-lg absolute top-2 right-60 border-2 p-0.5 border-dotted border-white sm:visible invisible">
+            <p>Hello {userName}</p>
+          </div>
+        )}
         <div className="absolute right-5 top-2">
           {isUserConnected ? (
             <div className="space-x-5 h-5">
               <Link to="/account">
-                <Button variant="contained" color="secondary" size="small">
+                <Button variant="contained" color="primary" size="small">
                   My Account
                 </Button>
               </Link>
               <Link to="/">
                 <Button
                   variant="contained"
-                  color="secondary"
+                  color="primary"
                   onClick={logOut}
                   size="small"
                 >
@@ -64,12 +70,12 @@ const Header = () => {
           ) : (
             <div className="space-x-5 h-5">
               <Link to="/login" title="Login to your account">
-                <Button variant="contained" color="secondary" size="small">
+                <Button variant="contained" color="primary" size="small">
                   Login
                 </Button>
               </Link>
               <Link to="/signup">
-                <Button variant="contained" color="secondary" size="small">
+                <Button variant="contained" color="primary" size="small">
                   Sign Up
                 </Button>
               </Link>
@@ -77,12 +83,6 @@ const Header = () => {
           )}
         </div>
       </div>
-
-      {isUserConnected && (
-        <div className="text-black text-2xl w-100 text-center mt-3 h-5">
-          Hello {userName}
-        </div>
-      )}
     </div>
   );
 };
