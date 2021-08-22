@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
+const { secret } = require('../config');
 
 /** Signing Up the user and crypting his password  */
 exports.signup = async (req, res) => {
@@ -43,7 +44,7 @@ exports.login = async (req, res) => {
         // Sending a new authentificaiton token
         res.status(200).json({
           fullName: user.fullName,
-          token: jwt.sign({ userId: user._id }, 'RANDOM_TOKEN_SECRET', {
+          token: jwt.sign({ userId: user._id }, secret, {
             expiresIn: '24h',
           }),
         });
@@ -156,4 +157,21 @@ exports.updateAddress = async (req, res) => {
     console.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
+};
+
+/** Verify if token expired */
+exports.verifyTokenExpired = (req, res) => {
+  const token = req.headers.authorization;
+  if (!token) {
+    res.status(401).json({ message: 'Token missing' });
+  }
+  jwt.verify(token, secret, (err) => {
+    if (err) {
+      if (err.name === 'TokenExpiredError') {
+        res.status(400).json({ message: 'Expired token' });
+      }
+    } else {
+      res.status(200).json({ message: 'Unexpired token' });
+    }
+  });
 };

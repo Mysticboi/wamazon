@@ -50,7 +50,7 @@ const NavItem = ({ name, link, paperContent }: NavItemProps) => {
   return (
     <div>
       <div
-        className="hover:text-purple-900 text-lg"
+        className="hover:text-purple-500 text-lg"
         onMouseEnter={() => setChecked(true)}
         onMouseLeave={() => setChecked(false)}
       >

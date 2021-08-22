@@ -1,22 +1,33 @@
 import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@material-ui/core';
-import jwt, { VerifyErrors } from 'jsonwebtoken';
+import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 
 const Header = () => {
   const { token, userName, isUserConnected, logOut } = useContext(UserContext);
 
   useEffect(() => {
-    if (token) {
-      jwt.verify(token, 'RANDOM_TOKEN_SECRET', (err: VerifyErrors | null) => {
-        if (err) {
-          if (err.name === 'TokenExpiredError') {
-            console.log('TokenExpired, logging out...');
-            logOut();
-          }
+    const verifyTokenExpired = async () => {
+      try {
+        await axios.get('http://localhost:5000/user/verifyToken', {
+          headers: {
+            authorization: token,
+          },
+        });
+
+        console.log('Unexpired token');
+      } catch (e) {
+        const errorMessage = e.response?.data.message;
+        if (errorMessage === 'Expired token') {
+          console.log('Token expired logging out...');
+          logOut();
         }
-      });
+      }
+    };
+
+    if (token) {
+      verifyTokenExpired();
     }
   });
   return (
