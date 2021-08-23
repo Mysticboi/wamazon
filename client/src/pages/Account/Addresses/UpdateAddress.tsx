@@ -107,7 +107,7 @@ const UpdateAddress = () => {
 
   return (
     <div className="mt-5">
-      <p className="text-4xl text-center mb-10">Editing Address</p>
+      <p className="text-4xl text-center mb-10">Update Address</p>
 
       <div className="flex justify-center mt-10 border-2 shadow border-gray-600 max-w-xl m-auto">
         <Form

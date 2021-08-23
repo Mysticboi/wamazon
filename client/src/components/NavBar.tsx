@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ShoppingCartOutlined, KeyboardArrowDown } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
-import { Paper, Collapse } from '@material-ui/core';
+import { Paper, Collapse, Divider } from '@material-ui/core';
 
 type NavItemProps = {
   name: string;
@@ -41,6 +41,10 @@ const NavBar = () => (
     </nav>
 
     <Cart />
+    <div className="mt-3">
+      {' '}
+      <Divider />
+    </div>
   </div>
 );
 
@@ -48,12 +52,11 @@ const NavItem = ({ name, link, paperContent }: NavItemProps) => {
   const [checked, setChecked] = useState(false);
 
   return (
-    <div>
-      <div
-        className="hover:text-purple-500 text-lg"
-        onMouseEnter={() => setChecked(true)}
-        onMouseLeave={() => setChecked(false)}
-      >
+    <div
+      onMouseEnter={() => setChecked(true)}
+      onMouseLeave={() => setChecked(false)}
+    >
+      <div className="hover:text-purple-500 text-lg">
         <Link to={link}>
           {name}
           <KeyboardArrowDown />
@@ -68,7 +71,7 @@ const NavItem = ({ name, link, paperContent }: NavItemProps) => {
 };
 
 const Cart = () => {
-  const items = [5, 4];
+  const items: number[] = [5, 15];
   const [checked, setChecked] = useState(false);
   return (
     <div className="absolute top-14 right-2 flex space-x-3">
@@ -92,8 +95,6 @@ const Cart = () => {
               </div>
             ) : (
               <div className="w-85">
-                <p>Cart info</p>
-
                 <div className="w-3/4 flex mt-5 mb-5">
                   <span className="ml-10">
                     Total <b>:</b>

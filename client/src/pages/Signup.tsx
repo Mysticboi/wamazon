@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 import { Button } from '@material-ui/core';
 import { TextField } from 'final-form-material-ui';
@@ -20,6 +20,10 @@ type Error = Partial<Values>;
 const Signup = () => {
   const [errors, setErrors] = useState<Error>({});
   const history = useHistory();
+
+  useEffect(() => {
+    document.title = 'Sign up';
+  }, []);
 
   const onSubmit = async (values: Values) => {
     const { fullName, email, password, confirmPassword } = values;

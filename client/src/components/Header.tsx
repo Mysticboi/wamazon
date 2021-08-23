@@ -33,7 +33,7 @@ const Header = () => {
   return (
     <div className="h-14">
       <div className="h-14 bg-gray-800">
-        <div className="text-3xl font-bold text-green-500 absolute left-5">
+        <div className="text-3xl font-bold text-purple-500 absolute left-5">
           <Link to="/" className="text-left">
             Wamazon
           </Link>
