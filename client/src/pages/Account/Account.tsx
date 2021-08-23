@@ -17,6 +17,7 @@ import { Link, useRouteMatch, Switch, Route } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import Addresses from './Addresses/Addresses';
 import AccountNavBar from '../../components/AccountNavBar';
+import Payments from './Payments/Payments';
 
 type Values = {
   oldPassword: string;
@@ -75,7 +76,7 @@ const AccountPage = () => {
           <Card
             title="Your Payments"
             description="Configure your payment methods and parameters, show your balance "
-            link="/account/payments"
+            link="/account/payments/wallet"
             icon={<Payment color="primary" style={{ fontSize: 60 }} />}
           />
         </div>
@@ -330,6 +331,10 @@ const Account = () => {
 
         <Route path={`${path}/addresses`}>
           <Addresses />
+        </Route>
+
+        <Route path={`${path}/payments`}>
+          <Payments />
         </Route>
       </Switch>
     </>
