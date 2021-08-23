@@ -103,12 +103,9 @@ const Presentation = () => (
           <p className="ml-2">Wamazon Gift Card Balance</p>
         </div>
         <span className="text-right absolute top-3 right-5">0,00 €</span>
-        <button className="text-blue-600 text-sm ml-14" type="button">
-          Convert your gift card number to balance
-          {
-            // Should open dialog where we input card
-          }
-        </button>
+        <Link to="payments/wallet" className="text-blue-600 text-sm ml-14">
+          Go to wallet
+        </Link>
       </div>
     </div>
   </div>

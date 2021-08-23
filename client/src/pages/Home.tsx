@@ -10,9 +10,11 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="mt-5">
-      <div className="test border-2 border-black">
-        {isUserConnected ? 'Connected User' : 'Unconnected User'}
+    <div>
+      <div className="mt-5 w-80 m-auto">
+        <div className="test border-2 border-black rounded-xl">
+          {isUserConnected ? 'Connected User' : 'Unconnected User'}
+        </div>
       </div>
     </div>
   );

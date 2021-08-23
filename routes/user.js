@@ -4,6 +4,7 @@ const {
   login,
   updatePassword,
   verifyTokenExpired,
+  getBalance,
 } = require('../controllers/user');
 
 const addressRoutes = require('./address');
@@ -16,6 +17,7 @@ router.post('/signup', signup);
 router.post('/login', login);
 router.put('/updatePassword', decode, updatePassword);
 router.get('/verifyToken', verifyTokenExpired);
+router.get('/balance', decode, getBalance);
 
 router.use('/address', decode, addressRoutes);
 

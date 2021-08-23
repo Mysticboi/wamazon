@@ -18,6 +18,7 @@ const userSchema = mongoose.Schema({
       phoneNumber: { type: String },
     },
   ],
+  balance: { type: Number },
 });
 
 // Plugin for better error handling with validation

@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 const { secret } = require('../config');
+const logger = require('../services/logger');
 
 /** Signing Up the user and crypting his password  */
 exports.signup = async (req, res) => {
@@ -11,6 +12,7 @@ exports.signup = async (req, res) => {
     const user = new User({
       ...req.body,
       password: hash,
+      balance: 0,
     });
 
     await user.save();
@@ -174,4 +176,23 @@ exports.verifyTokenExpired = (req, res) => {
       res.status(200).json({ message: 'Unexpired token' });
     }
   });
+};
+
+/** Get user current balance */
+exports.getBalance = async (req, res) => {
+  try {
+    const { balance } = await User.findById(req.body.userId);
+    // Temporary: if user doesn't have balance field we create it
+    if (balance === undefined) {
+      logger.info('Undefined balance');
+      await User.updateOne({ _id: req.body.userId }, { balance: 0 });
+      res.status(200).json({ balance: 0 });
+    } else {
+      logger.info('Good balance');
+      res.status(200).json({ balance });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };

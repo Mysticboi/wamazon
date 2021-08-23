@@ -64,7 +64,7 @@ const AddressesPage = ({ path }: { path: string }) => {
   return (
     <div className="mt-5">
       <div className="w-2/3 mb-10 m-auto">
-        <p className="text-4xl relative left-5 md:left-56">Your Addresses</p>
+        <p className="text-4xl relative text-center">Your Addresses</p>
       </div>
 
       <div className={className}>

@@ -63,7 +63,7 @@ const NavItem = ({ name, link, paperContent }: NavItemProps) => {
         </Link>
       </div>
 
-      <Collapse in={checked} className="absolute ml-2 top-22">
+      <Collapse in={checked} className="absolute ml-2 top-22 z-10">
         <Paper elevation={1}>{paperContent}</Paper>
       </Collapse>
     </div>
@@ -90,11 +90,11 @@ const Cart = () => {
         <Collapse in={checked} className="absolute top-22 right-10">
           <Paper elevation={1}>
             {items.length === 0 ? (
-              <div className="w-72 h-10 flex justify-center items-center">
+              <div className="w-72 h-10 flex justify-center items-center z-10">
                 No items added to cart
               </div>
             ) : (
-              <div className="w-85">
+              <div className="w-85 z-10">
                 <div className="w-3/4 flex mt-5 mb-5">
                   <span className="ml-10">
                     Total <b>:</b>
