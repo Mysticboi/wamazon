@@ -6,7 +6,7 @@ import {
   useLocation,
   Link,
 } from 'react-router-dom';
-import Wallet from './Wallet';
+import Wallet from './Wallet/Wallet';
 import Transactions from './Transactions';
 import giftCard from '../../../images/giftCard.png';
 

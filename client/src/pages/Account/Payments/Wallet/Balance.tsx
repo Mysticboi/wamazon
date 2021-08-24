@@ -12,30 +12,16 @@ import {
 } from '@material-ui/core';
 import axios from 'axios';
 import { Alert } from '@material-ui/lab';
-import giftCard from '../../../images/giftCard.png';
-import { UserContext } from '../../../context/UserContext';
-
-const Wallet = () => (
-  <div className="mt-5">
-    <div className="w-2/3 mb-10 m-auto">
-      <div className="relative left-9 md:left-60">
-        <p className="text-3xl">Wallet</p>
-
-        <Balance />
-      </div>
-    </div>
-  </div>
-);
+import giftCard from '../../../../images/giftCard.png';
+import { UserContext } from '../../../../context/UserContext';
 
 const Balance = () => {
   const [open, setOpen] = useState(false);
   const [key, setKey] = useState('');
   const [error, setError] = useState('');
-  const [balance, setBalance] = useState<number>(0);
+  const [balance, setBalance] = useState(0);
   const [successGiftCard, setSuccessGiftCard] = useState(false);
   const { token } = useContext(UserContext);
-
-  console.log('tokenn', token);
 
   useEffect(() => {
     const getBalance = async () => {
@@ -73,7 +59,6 @@ const Balance = () => {
     if (key.length !== 8) {
       setError('Key should be 8 characters !');
     } else {
-      console.log('Arrived here');
       try {
         const response = await axios.put(
           `http://localhost:5000/giftCard/${key}`,
@@ -182,4 +167,4 @@ const Balance = () => {
   );
 };
 
-export default Wallet;
+export default Balance;
