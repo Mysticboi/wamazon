@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { CircularProgress } from '@material-ui/core';
+import {
+  CircularProgress,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { UserContext } from '../../../../context/UserContext';
 import Balance from './Balance';
@@ -71,12 +77,31 @@ const Wallet = () => {
 
 const BankAccount = ({ iban, bic, holder }: BankAccountT) => (
   <div className="w-2/3">
-    <p className="text-xl mt-2">Your bank account</p>
-    <div className="font-sans w-full border-2 mt-1 border-gray-500 bg-gray-300 relative h-8">
+    <p className="text-xl mt-2 mb-2">Your bank account</p>
+    {/* <div className="font-sans w-full border-2 mt-1 border-gray-500 bg-gray-300 relative h-8">
       <p className="absolute left-5">Iban: {iban}</p>
       <p className="absolute left-1/2">Bic: {bic}</p>
       <p className="absolute right-5">Holder: {holder}</p>
-    </div>
+    </div> */}
+
+    <Accordion>
+      <div className="bg-gray-200">
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <p className="text-md">Holder: {holder}</p>
+        </AccordionSummary>
+      </div>
+
+      <AccordionDetails>
+        <div className="font-sans w-full  mt-1   relative h-8">
+          <p className="absolute left-5">IBAN: {iban}</p>
+          <p className="absolute left-1/2">BIC: {bic}</p>
+        </div>
+      </AccordionDetails>
+    </Accordion>
   </div>
 );
 
