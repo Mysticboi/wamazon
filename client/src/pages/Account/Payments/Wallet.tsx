@@ -7,8 +7,11 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Snackbar,
+  SnackbarCloseReason,
 } from '@material-ui/core';
 import axios from 'axios';
+import { Alert } from '@material-ui/lab';
 import giftCard from '../../../images/giftCard.png';
 import { UserContext } from '../../../context/UserContext';
 
@@ -27,9 +30,12 @@ const Wallet = () => (
 const Balance = () => {
   const [open, setOpen] = useState(false);
   const [key, setKey] = useState('');
-  const [error, setError] = useState(false);
+  const [error, setError] = useState('');
   const [balance, setBalance] = useState<number>(0);
+  const [successGiftCard, setSuccessGiftCard] = useState(false);
   const { token } = useContext(UserContext);
+
+  console.log('tokenn', token);
 
   useEffect(() => {
     const getBalance = async () => {
@@ -49,13 +55,13 @@ const Balance = () => {
   }, []);
 
   const handleClickOpen = () => {
-    setError(false);
+    setError('');
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    setError(false);
+    setError('');
     setKey('');
   };
 
@@ -63,11 +69,42 @@ const Balance = () => {
     setKey(event.target.value);
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (key.length !== 8) {
-      setError(true);
+      setError('Key should be 8 characters !');
     } else {
-      setError(false);
+      console.log('Arrived here');
+      try {
+        const response = await axios.put(
+          `http://localhost:5000/giftCard/${key}`,
+          {},
+          {
+            headers: {
+              authorization: token,
+            },
+          }
+        );
+        setError('');
+        setBalance((prevBalance) => prevBalance + response.data.value);
+        setOpen(false);
+        setSuccessGiftCard(true);
+      } catch (e) {
+        const { status } = e.response;
+        if (status === 400) {
+          setError('Gift card has already been used');
+        } else if (status === 404) {
+          setError('Invalid key');
+        }
+      }
+    }
+  };
+
+  const handleSnackBarClose = (
+    event?: React.SyntheticEvent<Element, Event>,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === 'timeout') {
+      setSuccessGiftCard(false);
     }
   };
 
@@ -114,12 +151,12 @@ const Balance = () => {
               type="text"
               value={key}
               onChange={handleChange}
-              error={error}
+              error={!error.length}
             />
           </div>
 
           <div className="text-red-600 underline m-2 text-center h-5 font-bold">
-            {error && 'Key should be 8 characters !'}
+            {error}
           </div>
         </DialogContent>
         <DialogActions className="space-x-5">
@@ -131,6 +168,16 @@ const Balance = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      <Snackbar
+        open={successGiftCard}
+        autoHideDuration={3000}
+        onClose={handleSnackBarClose}
+      >
+        <Alert severity="success" elevation={6} variant="filled">
+          Success converting gift card
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

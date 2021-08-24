@@ -12,7 +12,6 @@ exports.signup = async (req, res) => {
     const user = new User({
       ...req.body,
       password: hash,
-      balance: 0,
     });
 
     await user.save();
@@ -53,7 +52,7 @@ exports.login = async (req, res) => {
       }
     }
   } catch (error) {
-    console.error('error', error);
+    logger.error('error', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -74,7 +73,7 @@ exports.updatePassword = async (req, res) => {
       res.status(200).json({ message: "Success updating user's password" });
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -86,7 +85,7 @@ exports.getAllAddresses = async (req, res) => {
     const { addresses } = user;
     res.status(200).json({ addresses });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -102,7 +101,7 @@ exports.createAddress = async (req, res) => {
     await user.save();
     res.status(200).json({ message: 'Success creating address' });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -117,7 +116,7 @@ exports.deleteAddress = async (req, res) => {
     await user.save();
     res.status(200).json({ message: 'Success removing address' });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -131,7 +130,7 @@ exports.getAddress = async (req, res) => {
     );
     res.status(200).json({ address });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -156,7 +155,7 @@ exports.updateAddress = async (req, res) => {
     await user.save();
     res.status(200).json({ message: 'Success updating address' });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -192,7 +191,7 @@ exports.getBalance = async (req, res) => {
       res.status(200).json({ balance });
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };

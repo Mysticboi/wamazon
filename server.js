@@ -6,6 +6,7 @@ const db = require('./services/database');
 const logger = require('./services/logger');
 
 const userRoutes = require('./routes/user');
+const giftCardRoutes = require('./routes/giftCard');
 
 const app = express();
 
@@ -20,6 +21,7 @@ const startServer = async () => {
     app.use(morgan('dev'));
 
     app.use('/user', userRoutes);
+    app.use('/giftCard', giftCardRoutes);
 
     app.listen(port, () => {
       logger.info(`Server is running on port: ${port}`);
