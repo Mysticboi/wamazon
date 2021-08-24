@@ -100,9 +100,8 @@ const Presentation = () => (
       <div className="mt-7 w-3/4 p-3 border-2 rounded-xl border-gray-300 relative">
         <div className="flex">
           <img src={giftCard} alt="giftCard" height={40} width={40} />
-          <p className="ml-2">Wamazon Gift Card Balance</p>
+          <p className="ml-2">Wamazon Gift Card</p>
         </div>
-        <span className="text-right absolute top-3 right-5">0,00 €</span>
         <Link to="payments/wallet" className="text-blue-600 text-sm ml-14">
           Go to wallet
         </Link>

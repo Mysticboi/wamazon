@@ -97,7 +97,7 @@ const Balance = () => {
     <div>
       <p className="text-xl mt-5">Your balance</p>
 
-      <div className="mt-7 w-3/4 p-3 border-2 rounded-xl border-gray-300 relative">
+      <div className="mt-5 w-3/4 p-3 border-2 rounded-xl border-gray-300 relative">
         <div className="flex">
           <img src={giftCard} alt="giftCard" height={40} width={40} />
           <p className="ml-2">Wamazon Gift Card Balance</p>

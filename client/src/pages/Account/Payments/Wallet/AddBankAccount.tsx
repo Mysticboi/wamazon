@@ -87,8 +87,8 @@ const AddBankAccount = () => {
   return (
     <div>
       <p className="text-2xl mt-2">Add a bank account</p>
-      <div className="w-2/3">
-        <p>
+      <div className="w-3/4">
+        <p className="w-3/4 text-sm">
           You will need your IBAN and BIC code to add your bank account and pay
           by direct debit. This information is present on your account statement
           or available by contacting your bank.{' '}
