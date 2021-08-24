@@ -75,7 +75,6 @@ const Signup = () => {
                   name="fullName"
                   component={TextField}
                   type="text"
-                  placeholder="Full Name"
                   label="Full Name"
                   size="medium"
                   fullWidth
@@ -100,7 +99,6 @@ const Signup = () => {
                   name="email"
                   component={TextField}
                   type="email"
-                  placeholder="Email"
                   label="Email"
                   size="medium"
                   required
@@ -125,7 +123,6 @@ const Signup = () => {
                   name="password"
                   component={TextField}
                   type="password"
-                  placeholder="Password"
                   label="Password"
                   size="medium"
                   required
@@ -151,7 +148,6 @@ const Signup = () => {
                   name="confirmPassword"
                   component={TextField}
                   type="password"
-                  placeholder="Confirm Password"
                   label="Confirm Password"
                   size="medium"
                   required

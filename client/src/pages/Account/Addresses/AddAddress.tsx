@@ -136,7 +136,6 @@ const AddAddress = () => {
                   name="address"
                   component={TextField}
                   type="text"
-                  placeholder="Address"
                   label="Address"
                   size="medium"
                   required
@@ -154,7 +153,6 @@ const AddAddress = () => {
                   name="city"
                   component={TextField}
                   type="text"
-                  placeholder="City"
                   label="City"
                   size="medium"
                   required
@@ -173,7 +171,6 @@ const AddAddress = () => {
                   name="region"
                   component={TextField}
                   type="text"
-                  placeholder="Region"
                   label="Region"
                   size="medium"
                   required
@@ -192,7 +189,6 @@ const AddAddress = () => {
                   name="zipCode"
                   component={TextField}
                   type="text"
-                  placeholder="Zip Code"
                   label="Zip Code"
                   size="medium"
                   required
@@ -211,7 +207,6 @@ const AddAddress = () => {
                   name="phoneNumber"
                   component={TextField}
                   type="text"
-                  placeholder="Phone Number"
                   label="Phone Number"
                   size="medium"
                   required

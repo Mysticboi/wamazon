@@ -7,6 +7,7 @@ const logger = require('./services/logger');
 
 const userRoutes = require('./routes/user');
 const giftCardRoutes = require('./routes/giftCard');
+const bankAccountRoutes = require('./routes/bankAccount');
 
 const app = express();
 
@@ -22,6 +23,7 @@ const startServer = async () => {
 
     app.use('/user', userRoutes);
     app.use('/giftCard', giftCardRoutes);
+    app.use('/bankAccount', bankAccountRoutes);
 
     app.listen(port, () => {
       logger.info(`Server is running on port: ${port}`);

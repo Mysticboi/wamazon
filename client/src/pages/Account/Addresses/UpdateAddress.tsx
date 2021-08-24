@@ -123,7 +123,6 @@ const UpdateAddress = () => {
                   name="country"
                   component={TextField}
                   type="text"
-                  placeholder="Country"
                   label="Country"
                   size="medium"
                   fullWidth
@@ -137,7 +136,6 @@ const UpdateAddress = () => {
                   name="address"
                   component={TextField}
                   type="text"
-                  placeholder="Address"
                   label="Address"
                   size="medium"
                   required
@@ -156,7 +154,6 @@ const UpdateAddress = () => {
                   name="city"
                   component={TextField}
                   type="text"
-                  placeholder="City"
                   label="City"
                   size="medium"
                   required
@@ -176,7 +173,6 @@ const UpdateAddress = () => {
                   name="region"
                   component={TextField}
                   type="text"
-                  placeholder="Region"
                   label="Region"
                   size="medium"
                   required
@@ -196,7 +192,6 @@ const UpdateAddress = () => {
                   name="zipCode"
                   component={TextField}
                   type="text"
-                  placeholder="Zip Code"
                   label="Zip Code"
                   size="medium"
                   required
@@ -216,7 +211,6 @@ const UpdateAddress = () => {
                   name="phoneNumber"
                   component={TextField}
                   type="text"
-                  placeholder="Phone Number"
                   label="Phone Number"
                   size="medium"
                   required
