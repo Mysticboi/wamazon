@@ -23,6 +23,7 @@ export interface CreditCardT {
 
 interface CreditCardProps extends CreditCardT {
   token: string | null;
+  setCreditCards: React.Dispatch<React.SetStateAction<CreditCardT[]>>;
 }
 
 export interface BankAccountT {
@@ -33,6 +34,7 @@ export interface BankAccountT {
 
 interface BankAccountProps extends BankAccountT {
   token: string | null;
+  setBankAccount: React.Dispatch<React.SetStateAction<BankAccountT | null>>;
 }
 
 const Wallet = () => {
@@ -98,7 +100,13 @@ const Wallet = () => {
             </div>
           ) : (
             <div>
-              {bankAccount && <BankAccount {...bankAccount} token={token} />}
+              {bankAccount && (
+                <BankAccount
+                  {...bankAccount}
+                  token={token}
+                  setBankAccount={setBankAccount}
+                />
+              )}
 
               <div className="w-2/3">
                 <p className="text-xl mt-2 mb-2">Your credit cards</p>
@@ -108,6 +116,7 @@ const Wallet = () => {
                     {...creditCard}
                     key={creditCard._id}
                     token={token}
+                    setCreditCards={setCreditCards}
                   />
                 ))}
               </div>
@@ -130,7 +139,14 @@ const Wallet = () => {
   );
 };
 
-const CreditCard = ({ number, expiry, name, _id, token }: CreditCardProps) => {
+const CreditCard = ({
+  number,
+  expiry,
+  name,
+  _id,
+  token,
+  setCreditCards,
+}: CreditCardProps) => {
   const handleClick = async () => {
     try {
       await axios.delete(`http://localhost:5000/creditCard/${_id}`, {
@@ -139,44 +155,54 @@ const CreditCard = ({ number, expiry, name, _id, token }: CreditCardProps) => {
         },
       });
 
-      window.location.reload(false);
+      setCreditCards((prev) =>
+        prev.filter((creditCard) => creditCard._id !== _id)
+      );
     } catch (error) {
       console.error('Failed removing address', error);
     }
   };
   return (
-    <Accordion>
-      <div className="bg-gray-200">
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel-header"
-        >
-          <div className="flex space-x-3">
-            <img src={visa} alt="visa" width={60} height={60} />
-            <span className="text-md">VISA: {number}</span>
-          </div>
-        </AccordionSummary>
-      </div>
-
-      <AccordionDetails>
-        <div className="font-sans w-full  mt-1   relative h-8">
-          <p className="absolute left-5">Name on the card: {name}</p>
-          <p className="absolute left-1/2">Date of expiry: {expiry}</p>
-          <button
-            type="button"
-            className="absolute right-5 text-purple-500 underline"
-            onClick={handleClick}
+    <div className="mt-2">
+      <Accordion>
+        <div className="bg-gray-200">
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel-header"
           >
-            Delete
-          </button>
+            <div className="flex space-x-3">
+              <img src={visa} alt="visa" width={60} height={60} />
+              <span className="text-md">VISA: {number}</span>
+            </div>
+          </AccordionSummary>
         </div>
-      </AccordionDetails>
-    </Accordion>
+
+        <AccordionDetails>
+          <div className="font-sans w-full  mt-1   relative h-8">
+            <p className="absolute left-5">Name on the card: {name}</p>
+            <p className="absolute left-1/2">Date of expiry: {expiry}</p>
+            <button
+              type="button"
+              className="absolute right-5 text-purple-500 underline"
+              onClick={handleClick}
+            >
+              Delete
+            </button>
+          </div>
+        </AccordionDetails>
+      </Accordion>
+    </div>
   );
 };
 
-const BankAccount = ({ iban, bic, holder, token }: BankAccountProps) => {
+const BankAccount = ({
+  iban,
+  bic,
+  holder,
+  token,
+  setBankAccount,
+}: BankAccountProps) => {
   const handleClick = async () => {
     try {
       await axios.delete(`http://localhost:5000/bankAccount`, {
@@ -185,7 +211,7 @@ const BankAccount = ({ iban, bic, holder, token }: BankAccountProps) => {
         },
       });
 
-      window.location.reload(false);
+      setBankAccount(null);
     } catch (error) {
       console.error('Failed removing address', error);
     }
