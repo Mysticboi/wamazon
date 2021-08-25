@@ -5,12 +5,9 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  Snackbar,
-  SnackbarCloseReason,
 } from '@material-ui/core';
 import { Form, Field } from 'react-final-form';
 import { TextField } from 'final-form-material-ui';
-import { Alert } from '@material-ui/lab';
 import axios from 'axios';
 import { UserContext } from '../../../../context/UserContext';
 
@@ -19,6 +16,7 @@ import { BankAccountT } from './Wallet';
 
 type AddBankAccountProps = {
   setBankAccount: React.Dispatch<React.SetStateAction<BankAccountT | null>>;
+  setSuccess: React.Dispatch<React.SetStateAction<boolean>>;
 };
 type Values = {
   iban: string;
@@ -28,10 +26,12 @@ type Values = {
 
 type Error = Partial<Values>;
 
-const AddBankAccount = ({ setBankAccount }: AddBankAccountProps) => {
+const AddBankAccount = ({
+  setBankAccount,
+  setSuccess,
+}: AddBankAccountProps) => {
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState<Error>({});
-  const [success, setSuccess] = useState(false);
   const { token } = useContext(UserContext);
 
   const handleClickOpen = () => {
@@ -79,14 +79,6 @@ const AddBankAccount = ({ setBankAccount }: AddBankAccountProps) => {
     }
   };
 
-  const handleSnackBarClose = (
-    event?: React.SyntheticEvent<Element, Event>,
-    reason?: SnackbarCloseReason
-  ) => {
-    if (reason === 'timeout') {
-      setSuccess(false);
-    }
-  };
   return (
     <div>
       <p className="text-2xl mt-2">Add a bank account</p>
@@ -216,16 +208,6 @@ const AddBankAccount = ({ setBankAccount }: AddBankAccountProps) => {
           </DialogContentText>
         </DialogContent>
       </Dialog>
-
-      <Snackbar
-        open={success}
-        autoHideDuration={3000}
-        onClose={handleSnackBarClose}
-      >
-        <Alert severity="success" elevation={6} variant="filled">
-          Success adding your bank account
-        </Alert>
-      </Snackbar>
     </div>
   );
 };

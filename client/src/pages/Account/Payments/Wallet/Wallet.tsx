@@ -5,8 +5,11 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Snackbar,
+  SnackbarCloseReason,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Alert } from '@material-ui/lab';
 
 import { UserContext } from '../../../../context/UserContext';
 import Balance from './Balance';
@@ -41,9 +44,18 @@ const Wallet = () => {
   const [bankAccount, setBankAccount] = useState<BankAccountT | null>(null);
   const [creditCards, setCreditCards] = useState<CreditCardT[]>([]);
   const [loading, setLoading] = useState(true);
+  const [successAddBankAccount, setSuccessAddBankAccount] = useState(false);
+
   const { token } = useContext(UserContext);
 
-  console.log(creditCards);
+  const handleSnackBarClose = (
+    event?: React.SyntheticEvent<Element, Event>,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === 'timeout') {
+      setSuccessAddBankAccount(false);
+    }
+  };
 
   useEffect(() => {
     const getBankAccount = async () => {
@@ -129,10 +141,23 @@ const Wallet = () => {
               <div className="bg-gray-300 h-0.5 w-3/4 mt-1" />
 
               {!bankAccount && (
-                <AddBankAccount setBankAccount={setBankAccount} />
+                <AddBankAccount
+                  setBankAccount={setBankAccount}
+                  setSuccess={setSuccessAddBankAccount}
+                />
               )}
 
               <AddCreditCard setCreditCards={setCreditCards} />
+
+              <Snackbar
+                open={successAddBankAccount}
+                autoHideDuration={3000}
+                onClose={handleSnackBarClose}
+              >
+                <Alert severity="success" elevation={6} variant="filled">
+                  Success adding your bank account
+                </Alert>
+              </Snackbar>
             </div>
           )}
         </div>
@@ -175,7 +200,7 @@ const CreditCard = ({
           >
             <div className="flex space-x-3">
               <img src={visa} alt="visa" width={60} height={60} />
-              <span className="text-md">VISA: {number}</span>
+              <span className="text-md font-sans">VISA: {number}</span>
             </div>
           </AccordionSummary>
         </div>

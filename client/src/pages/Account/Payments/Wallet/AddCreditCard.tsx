@@ -51,8 +51,6 @@ const AddCreditCard = ({ setCreditCards }: AddCreditCardProps) => {
   const onSubmit = async (values: Values) => {
     const { number, expiry, name, cvc } = values;
 
-    console.log('values', values);
-
     const finalErrors: Error = {};
 
     if (!number || number.length !== 19) {
@@ -75,7 +73,6 @@ const AddCreditCard = ({ setCreditCards }: AddCreditCardProps) => {
       // No errors we continue
       const data = { number, expiry, name, cvc };
       try {
-        // TODO get id from response and use setCreditCards to add the new creditCard
         const response = await axios.post(
           'http://localhost:5000/creditCard',
           data,
@@ -364,7 +361,6 @@ const isExpireValid = (expiry: string): boolean => {
   if (!expiry) return false;
   if (expiry.length !== 5) return false;
   const month = +expiry.split('/')[0];
-  console.log('month', month);
 
   if (month > 12 || month < 1) return false;
 
