@@ -30,3 +30,15 @@ exports.getBankAccount = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+/** Delete bank account */
+exports.deleteBankAccount = async (req, res) => {
+  try {
+    const { userId } = req.body;
+    await BankAccount.deleteOne({ user: userId });
+    res.status(200).json('Success removing bank account');
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

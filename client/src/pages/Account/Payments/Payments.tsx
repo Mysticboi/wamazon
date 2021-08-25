@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   useRouteMatch,
   Switch,
@@ -112,6 +112,10 @@ const Presentation = () => (
 
 const Payments = () => {
   const { path } = useRouteMatch();
+
+  useEffect(() => {
+    document.title = 'Your payments';
+  }, []);
   return (
     <>
       <PaymentsNavBar />

@@ -11,19 +11,37 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { UserContext } from '../../../../context/UserContext';
 import Balance from './Balance';
 import AddBankAccount from './AddBankAccount';
+import AddCreditCard from './AddCreditCard';
+import visa from '../../../../images/visa.png';
 
-type BankAccountT = {
+export interface CreditCardT {
+  number: string;
+  name: string;
+  expiry: string;
+  _id: string;
+}
+
+interface CreditCardProps extends CreditCardT {
+  token: string | null;
+}
+
+export interface BankAccountT {
   iban: string;
   bic: string;
   holder: string;
-};
+}
+
+interface BankAccountProps extends BankAccountT {
+  token: string | null;
+}
 
 const Wallet = () => {
   const [bankAccount, setBankAccount] = useState<BankAccountT | null>(null);
+  const [creditCards, setCreditCards] = useState<CreditCardT[]>([]);
   const [loading, setLoading] = useState(true);
   const { token } = useContext(UserContext);
 
-  console.log(bankAccount);
+  console.log(creditCards);
 
   useEffect(() => {
     const getBankAccount = async () => {
@@ -37,14 +55,35 @@ const Wallet = () => {
         // setLoading(false);
       } catch (e) {
         setBankAccount(null);
-        console.error('Failed getBalance', e);
+        if (e.response.status === 404) {
+          console.log("User hasn't added a bank account yet");
+        } else {
+          console.error('Failed getBalance', e);
+        }
+      }
+    };
+
+    const getCreditCards = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/creditCard', {
+          headers: {
+            authorization: token,
+          },
+        });
+        setCreditCards(response.data.creditCards);
+        // setLoading(false);
+      } catch (e) {
+        setCreditCards([]);
+        console.error('Failed getCreditCards', e);
       }
     };
 
     setTimeout(() => setLoading(false), 1200);
 
     getBankAccount();
+    getCreditCards();
   }, []);
+
   return (
     <div className="mt-5">
       <div className="w-2/3 mb-10 m-auto">
@@ -59,14 +98,30 @@ const Wallet = () => {
             </div>
           ) : (
             <div>
-              {bankAccount && <BankAccount {...bankAccount} />}
+              {bankAccount && <BankAccount {...bankAccount} token={token} />}
+
+              <div className="w-2/3">
+                <p className="text-xl mt-2 mb-2">Your credit cards</p>
+
+                {creditCards.map((creditCard) => (
+                  <CreditCard
+                    {...creditCard}
+                    key={creditCard._id}
+                    token={token}
+                  />
+                ))}
+              </div>
 
               <Balance />
 
               <p className="text-3xl mt-3">Add a new payment method</p>
               <div className="bg-gray-300 h-0.5 w-3/4 mt-1" />
 
-              {!bankAccount && <AddBankAccount />}
+              {!bankAccount && (
+                <AddBankAccount setBankAccount={setBankAccount} />
+              )}
+
+              <AddCreditCard setCreditCards={setCreditCards} />
             </div>
           )}
         </div>
@@ -75,34 +130,97 @@ const Wallet = () => {
   );
 };
 
-const BankAccount = ({ iban, bic, holder }: BankAccountT) => (
-  <div className="w-2/3">
-    <p className="text-xl mt-2 mb-2">Your bank account</p>
-    {/* <div className="font-sans w-full border-2 mt-1 border-gray-500 bg-gray-300 relative h-8">
-      <p className="absolute left-5">Iban: {iban}</p>
-      <p className="absolute left-1/2">Bic: {bic}</p>
-      <p className="absolute right-5">Holder: {holder}</p>
-    </div> */}
+const CreditCard = ({ number, expiry, name, _id, token }: CreditCardProps) => {
+  const handleClick = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/creditCard/${_id}`, {
+        headers: {
+          authorization: token,
+        },
+      });
 
+      window.location.reload(false);
+    } catch (error) {
+      console.error('Failed removing address', error);
+    }
+  };
+  return (
     <Accordion>
       <div className="bg-gray-200">
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
-          id="panel1a-header"
+          id="panel-header"
         >
-          <p className="text-md">Holder: {holder}</p>
+          <div className="flex space-x-3">
+            <img src={visa} alt="visa" width={60} height={60} />
+            <span className="text-md">VISA: {number}</span>
+          </div>
         </AccordionSummary>
       </div>
 
       <AccordionDetails>
         <div className="font-sans w-full  mt-1   relative h-8">
-          <p className="absolute left-5">IBAN: {iban}</p>
-          <p className="absolute left-1/2">BIC: {bic}</p>
+          <p className="absolute left-5">Name on the card: {name}</p>
+          <p className="absolute left-1/2">Date of expiry: {expiry}</p>
+          <button
+            type="button"
+            className="absolute right-5 text-purple-500 underline"
+            onClick={handleClick}
+          >
+            Delete
+          </button>
         </div>
       </AccordionDetails>
     </Accordion>
-  </div>
-);
+  );
+};
+
+const BankAccount = ({ iban, bic, holder, token }: BankAccountProps) => {
+  const handleClick = async () => {
+    try {
+      await axios.delete(`http://localhost:5000/bankAccount`, {
+        headers: {
+          authorization: token,
+        },
+      });
+
+      window.location.reload(false);
+    } catch (error) {
+      console.error('Failed removing address', error);
+    }
+  };
+  return (
+    <div className="w-2/3">
+      <p className="text-xl mt-2 mb-2">Your bank account</p>
+
+      <Accordion>
+        <div className="bg-gray-200">
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <p className="text-md">Holder: {holder}</p>
+          </AccordionSummary>
+        </div>
+
+        <AccordionDetails>
+          <div className="font-sans w-full  mt-1   relative h-8">
+            <p className="absolute left-5">IBAN: {iban}</p>
+            <p className="absolute left-1/2">BIC: {bic}</p>
+            <button
+              type="button"
+              className="absolute right-5 text-purple-500 underline"
+              onClick={handleClick}
+            >
+              Delete
+            </button>
+          </div>
+        </AccordionDetails>
+      </Accordion>
+    </div>
+  );
+};
 
 export default Wallet;

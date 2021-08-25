@@ -15,7 +15,11 @@ import axios from 'axios';
 import { UserContext } from '../../../../context/UserContext';
 
 import sepa from '../../../../images/sepa.jpg';
+import { BankAccountT } from './Wallet';
 
+type AddBankAccountProps = {
+  setBankAccount: React.Dispatch<React.SetStateAction<BankAccountT | null>>;
+};
 type Values = {
   iban: string;
   bic: string;
@@ -24,7 +28,7 @@ type Values = {
 
 type Error = Partial<Values>;
 
-const AddBankAccount = () => {
+const AddBankAccount = ({ setBankAccount }: AddBankAccountProps) => {
   const [open, setOpen] = useState(false);
   const [errors, setErrors] = useState<Error>({});
   const [success, setSuccess] = useState(false);
@@ -66,7 +70,7 @@ const AddBankAccount = () => {
             authorization: token,
           },
         });
-
+        setBankAccount(data);
         setOpen(false);
         setSuccess(true);
       } catch (error) {
@@ -122,7 +126,7 @@ const AddBankAccount = () => {
           Add your current account
         </DialogTitle>
         <DialogContent>
-          <div className="flex justify-center mt-10 border-2 shadow border-gray-600 max-w-xl m-auto">
+          <div className="flex justify-center border-2 shadow border-gray-600 max-w-xl m-auto">
             <Form
               onSubmit={onSubmit}
               render={({ handleSubmit, submitting, pristine }) => (
