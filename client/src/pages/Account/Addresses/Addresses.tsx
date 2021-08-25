@@ -34,7 +34,7 @@ const AddressesPage = ({ path }: { path: string }) => {
   const history = useHistory();
 
   useEffect(() => {
-    document.title = 'My Addresses';
+    document.title = 'Your Addresses';
   }, []);
 
   useEffect(() => {
@@ -63,7 +63,10 @@ const AddressesPage = ({ path }: { path: string }) => {
 
   return (
     <div className="mt-5">
-      <p className="text-4xl text-center mb-10">My Addresses</p>
+      <div className="w-2/3 mb-10 m-auto">
+        <p className="text-4xl relative text-center">Your Addresses</p>
+      </div>
+
       <div className={className}>
         <div
           className="border-2 border-dashed border-gray-300 w-80 h-60 justify-center items-center flex flex-col cursor-pointer m-1"

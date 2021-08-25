@@ -6,6 +6,9 @@ const db = require('./services/database');
 const logger = require('./services/logger');
 
 const userRoutes = require('./routes/user');
+const giftCardRoutes = require('./routes/giftCard');
+const bankAccountRoutes = require('./routes/bankAccount');
+const creditCardRoutes = require('./routes/creditCard');
 
 const app = express();
 
@@ -20,6 +23,9 @@ const startServer = async () => {
     app.use(morgan('dev'));
 
     app.use('/user', userRoutes);
+    app.use('/giftCard', giftCardRoutes);
+    app.use('/bankAccount', bankAccountRoutes);
+    app.use('/creditCard', creditCardRoutes);
 
     app.listen(port, () => {
       logger.info(`Server is running on port: ${port}`);

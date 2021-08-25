@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 import { Button } from '@material-ui/core';
 import { TextField } from 'final-form-material-ui';
@@ -20,6 +20,10 @@ type Error = Partial<Values>;
 const Signup = () => {
   const [errors, setErrors] = useState<Error>({});
   const history = useHistory();
+
+  useEffect(() => {
+    document.title = 'Sign up';
+  }, []);
 
   const onSubmit = async (values: Values) => {
     const { fullName, email, password, confirmPassword } = values;
@@ -71,7 +75,6 @@ const Signup = () => {
                   name="fullName"
                   component={TextField}
                   type="text"
-                  placeholder="Full Name"
                   label="Full Name"
                   size="medium"
                   fullWidth
@@ -96,7 +99,6 @@ const Signup = () => {
                   name="email"
                   component={TextField}
                   type="email"
-                  placeholder="Email"
                   label="Email"
                   size="medium"
                   required
@@ -121,7 +123,6 @@ const Signup = () => {
                   name="password"
                   component={TextField}
                   type="password"
-                  placeholder="Password"
                   label="Password"
                   size="medium"
                   required
@@ -147,7 +148,6 @@ const Signup = () => {
                   name="confirmPassword"
                   component={TextField}
                   type="password"
-                  placeholder="Confirm Password"
                   label="Confirm Password"
                   size="medium"
                   required

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
 import { Button } from '@material-ui/core';
 import { TextField } from 'final-form-material-ui';
@@ -19,6 +19,9 @@ const Login = () => {
   const [errors, setErrors] = useState<Error>({});
   const userContext = useContext(UserContext);
   const history = useHistory();
+  useEffect(() => {
+    document.title = 'Login to Wamazon';
+  }, []);
 
   const onSubmit = async (values: Values) => {
     const { email, password } = values;

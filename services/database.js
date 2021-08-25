@@ -11,6 +11,7 @@ class Database {
     const connectConfig = {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useCreateIndex: true,
     };
     await mongoose.connect(this.uri, connectConfig);
 

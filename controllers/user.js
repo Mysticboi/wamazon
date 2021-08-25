@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 const { secret } = require('../config');
+const logger = require('../services/logger');
 
 /** Signing Up the user and crypting his password  */
 exports.signup = async (req, res) => {
@@ -51,7 +52,7 @@ exports.login = async (req, res) => {
       }
     }
   } catch (error) {
-    console.error('error', error);
+    logger.error('error', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -72,7 +73,7 @@ exports.updatePassword = async (req, res) => {
       res.status(200).json({ message: "Success updating user's password" });
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -84,7 +85,7 @@ exports.getAllAddresses = async (req, res) => {
     const { addresses } = user;
     res.status(200).json({ addresses });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -100,7 +101,7 @@ exports.createAddress = async (req, res) => {
     await user.save();
     res.status(200).json({ message: 'Success creating address' });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -115,7 +116,7 @@ exports.deleteAddress = async (req, res) => {
     await user.save();
     res.status(200).json({ message: 'Success removing address' });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -129,7 +130,7 @@ exports.getAddress = async (req, res) => {
     );
     res.status(200).json({ address });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -154,7 +155,7 @@ exports.updateAddress = async (req, res) => {
     await user.save();
     res.status(200).json({ message: 'Success updating address' });
   } catch (error) {
-    console.error(error);
+    logger.error(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
@@ -174,4 +175,23 @@ exports.verifyTokenExpired = (req, res) => {
       res.status(200).json({ message: 'Unexpired token' });
     }
   });
+};
+
+/** Get user current balance */
+exports.getBalance = async (req, res) => {
+  try {
+    const { balance } = await User.findById(req.body.userId);
+    // Temporary: if user doesn't have balance field we create it
+    if (balance === undefined) {
+      logger.info('Undefined balance');
+      await User.updateOne({ _id: req.body.userId }, { balance: 0 });
+      res.status(200).json({ balance: 0 });
+    } else {
+      logger.info('Good balance');
+      res.status(200).json({ balance });
+    }
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 };

@@ -16,6 +16,8 @@ import axios from 'axios';
 import { Link, useRouteMatch, Switch, Route } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import Addresses from './Addresses/Addresses';
+import AccountNavBar from '../../components/AccountNavBar';
+import Payments from './Payments/Payments';
 
 type Values = {
   oldPassword: string;
@@ -40,7 +42,7 @@ type UpdatePasswordProps = {
 
 const AccountPage = () => {
   useEffect(() => {
-    document.title = 'My Account';
+    document.title = 'Your Account';
   });
 
   const [isUpdateOpen, setIsUpdateOpen] = useState(false);
@@ -58,28 +60,30 @@ const AccountPage = () => {
 
   return (
     <div className="mt-5">
-      <p className="text-4xl text-center mb-10">My Account</p>
+      <div className="w-2/3 mb-10 m-auto">
+        <p className="text-4xl relative text-center">Your Account</p>
+      </div>
 
       <div className="mt-5 w-2/3 flex m-auto space-x-5 justify-center items-center">
         <div className="space-x-1">
           <Card
             title="Your Orders"
             description="View your in progress and delivered orders "
-            link="/home"
+            link="/account/orders"
             icon={<Search color="primary" style={{ fontSize: 60 }} />}
           />
 
           <Card
             title="Your Payments"
             description="Configure your payment methods and parameters, show your balance "
-            link="/home"
+            link="/account/payments/wallet"
             icon={<Payment color="primary" style={{ fontSize: 60 }} />}
           />
         </div>
 
         <div className="space-x-1">
           <Card
-            title="Addresses"
+            title="Your Addresses"
             description="Change your addresses of delivery"
             link="/account/addresses"
             icon={<Home color="primary" style={{ fontSize: 60 }} />}
@@ -87,7 +91,7 @@ const AccountPage = () => {
           <Card
             title="Your Stock"
             description="View your currently on sale and solds items"
-            link="/home"
+            link="/account/stock"
             icon={<Store color="primary" style={{ fontSize: 60 }} />}
           />
         </div>
@@ -318,15 +322,22 @@ const Card = ({ title, description, link, icon }: CardProps) => (
 const Account = () => {
   const { path } = useRouteMatch();
   return (
-    <Switch>
-      <Route exact path={path}>
-        <AccountPage />
-      </Route>
+    <>
+      <AccountNavBar />
+      <Switch>
+        <Route exact path={path}>
+          <AccountPage />
+        </Route>
 
-      <Route path={`${path}/addresses`}>
-        <Addresses />
-      </Route>
-    </Switch>
+        <Route path={`${path}/addresses`}>
+          <Addresses />
+        </Route>
+
+        <Route path={`${path}/payments`}>
+          <Payments />
+        </Route>
+      </Switch>
+    </>
   );
 };
 
