@@ -57,7 +57,7 @@ const Wallet = () => {
         // setLoading(false);
       } catch (e) {
         setBankAccount(null);
-        if (e.response.status === 404) {
+        if (e?.response?.status === 404) {
           console.log("User hasn't added a bank account yet");
         } else {
           console.error('Failed getBalance', e);
@@ -108,18 +108,20 @@ const Wallet = () => {
                 />
               )}
 
-              <div className="w-2/3">
-                <p className="text-xl mt-2 mb-2">Your credit cards</p>
+              {!!creditCards.length && (
+                <div className="w-2/3">
+                  <p className="text-xl mt-2 mb-2">Your credit cards</p>
 
-                {creditCards.map((creditCard) => (
-                  <CreditCard
-                    {...creditCard}
-                    key={creditCard._id}
-                    token={token}
-                    setCreditCards={setCreditCards}
-                  />
-                ))}
-              </div>
+                  {creditCards.map((creditCard) => (
+                    <CreditCard
+                      {...creditCard}
+                      key={creditCard._id}
+                      token={token}
+                      setCreditCards={setCreditCards}
+                    />
+                  ))}
+                </div>
+              )}
 
               <Balance />
 

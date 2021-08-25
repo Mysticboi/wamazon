@@ -40,13 +40,12 @@ const AddCreditCard = ({ setCreditCards }: AddCreditCardProps) => {
   const { token } = useContext(UserContext);
 
   const handleClickOpen = () => {
-    // setError('');
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    // setError('');
+    setErrors({});
   };
 
   const onSubmit = async (values: Values) => {
@@ -67,7 +66,7 @@ const AddCreditCard = ({ setCreditCards }: AddCreditCardProps) => {
     }
 
     if (!isExpireValid(expiry)) {
-      finalErrors.expiry = 'Invalid expire date please enter month then year';
+      finalErrors.expiry = 'Invalid expire date';
     }
 
     setErrors(finalErrors);
@@ -215,45 +214,47 @@ const AddCreditCard = ({ setCreditCards }: AddCreditCardProps) => {
                     )}
                   </div>
 
-                  <div className="m-3 w-3/4">
-                    <Field
-                      name="expiry"
-                      component={TextField}
-                      type="text"
-                      label="Expire date"
-                      size="medium"
-                      required
-                      fullWidth
-                      pattern="\d\d/\d\d"
-                      format={formatExpirationDate}
-                    />
+                  <div className="m-3 w-3/4 flex space-x-16">
+                    <div className="w-32">
+                      <Field
+                        name="expiry"
+                        component={TextField}
+                        type="text"
+                        label="Expire date"
+                        size="medium"
+                        required
+                        fullWidth
+                        pattern="\d\d/\d\d"
+                        format={formatExpirationDate}
+                      />
 
-                    {errors?.expiry && (
-                      <span className="text-red-600 font-bold underline text-sm">
-                        {errors.expiry}
-                      </span>
-                    )}
-                  </div>
+                      {errors?.expiry && (
+                        <span className="text-red-600 font-bold underline text-sm">
+                          {errors.expiry}
+                        </span>
+                      )}
+                    </div>
 
-                  <div className="m-3 w-3/4">
-                    <Field
-                      name="cvc"
-                      component={TextField}
-                      type="text"
-                      label="CVC"
-                      size="medium"
-                      required
-                      fullWidth
-                      pattern="\d{3,4}"
-                      format={formatCVC}
-                      maxlength="3"
-                    />
+                    <div className="w-20">
+                      <Field
+                        name="cvc"
+                        component={TextField}
+                        type="text"
+                        label="CVC"
+                        size="medium"
+                        required
+                        fullWidth
+                        pattern="\d{3,4}"
+                        format={formatCVC}
+                        maxlength="3"
+                      />
 
-                    {errors?.cvc && (
-                      <span className="text-red-600 font-bold underline text-sm">
-                        {errors.cvc}
-                      </span>
-                    )}
+                      {errors?.cvc && (
+                        <span className="text-red-600 font-bold underline text-sm">
+                          {errors.cvc}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   <div className="mt-5 mb-5 justify-center flex space-x-5">
@@ -360,6 +361,7 @@ function formatExpirationDate(value: string) {
 }
 
 const isExpireValid = (expiry: string): boolean => {
+  if (!expiry) return false;
   if (expiry.length !== 5) return false;
   const month = +expiry.split('/')[0];
   console.log('month', month);

@@ -35,13 +35,12 @@ const AddBankAccount = ({ setBankAccount }: AddBankAccountProps) => {
   const { token } = useContext(UserContext);
 
   const handleClickOpen = () => {
-    // setError('');
+    setErrors({});
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    // setError('');
   };
 
   const onSubmit = async (values: Values) => {
