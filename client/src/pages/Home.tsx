@@ -12,7 +12,14 @@ const Home = () => {
   return (
     <div>
       <div className="bg-purple-300 w-full h-200">
-        <Fade duration={3000} pauseOnHover={false} arrows={false}>
+        <Fade
+          duration={3000}
+          pauseOnHover={false}
+          arrows={false}
+          onChange={(oldIndex: number, newIndex: number) => {
+            console.log('newIndex', newIndex);
+          }}
+        >
           <div className="slide-container flex">
             <div className="w-2/3">
               <p>Welcome</p>
