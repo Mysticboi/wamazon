@@ -74,7 +74,7 @@ const Cart = () => {
   const items: number[] = [5, 15];
   const [checked, setChecked] = useState(false);
   return (
-    <div className="absolute top-14 right-2 flex space-x-3">
+    <div className="absolute top-14 right-2 flex space-x-3 z-10">
       <div className="relative w-14">
         <button
           type="button"

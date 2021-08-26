@@ -8,6 +8,7 @@ import { UserContextProvider } from './context/UserContext';
 import Account from './pages/Account/Account';
 import Home from './pages/Home';
 import NavBar from './components/NavBar';
+import useIsMobile from './hooks/useIsMobile';
 
 const theme = createTheme({
   palette: {
@@ -17,7 +18,22 @@ const theme = createTheme({
   },
 });
 
-const App = () => (
+const App = () => {
+  const isMobile = useIsMobile();
+  return (
+    <div>
+      {isMobile ? (
+        <div className="test border-2 border-black rounded-xl text-center mt-20">
+          Not supporting mobile
+        </div>
+      ) : (
+        <AppDesktop />
+      )}
+    </div>
+  );
+};
+
+const AppDesktop = () => (
   <div className="font-serif">
     <ThemeProvider theme={theme}>
       <UserContextProvider>
