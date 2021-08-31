@@ -136,7 +136,8 @@ const Balance = () => {
               type="text"
               value={key}
               onChange={handleChange}
-              error={!error.length}
+              error={!!error}
+              color="primary"
             />
           </div>
 
@@ -145,10 +146,10 @@ const Balance = () => {
           </div>
         </DialogContent>
         <DialogActions className="space-x-5">
-          <Button onClick={handleConfirm} color="primary" variant="outlined">
+          <Button onClick={handleConfirm} color="primary" variant="contained">
             Confirm
           </Button>
-          <Button onClick={handleClose} color="secondary" variant="outlined">
+          <Button onClick={handleClose} color="secondary" variant="contained">
             Cancel
           </Button>
         </DialogActions>

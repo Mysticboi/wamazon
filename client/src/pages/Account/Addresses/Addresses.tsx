@@ -119,7 +119,7 @@ const AddressCard = ({
   };
 
   return (
-    <div className="border-2 border-gray-300 w-80 h-60 m-1">
+    <div className="border-2 border-gray-300 w-80 h-60 m-1 font-sans">
       <div className="ml-3">
         <p>{address}</p>
         <p>{`${region}, ${city} ${zipCode}`}</p>
