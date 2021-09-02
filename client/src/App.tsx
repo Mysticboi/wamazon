@@ -18,6 +18,16 @@ const theme = createTheme({
       main: '#a749ff',
     },
   },
+  overrides: {
+    MuiFormControlLabel: {
+      label: {
+        fontSize: 14,
+        fontWeight: 600,
+        fontFamily:
+          '-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,Liberation Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji',
+      },
+    },
+  },
 });
 
 const App = () => {
