@@ -9,6 +9,7 @@ import Account from './pages/Account/Account';
 import Home from './pages/Home';
 import NavBar from './components/NavBar';
 import useIsMobile from './hooks/useIsMobile';
+import Contact from './pages/Contact';
 
 const theme = createTheme({
   palette: {
@@ -56,6 +57,10 @@ const AppDesktop = () => (
             <Route path="/account">
               <NavBar />
               <Account />
+            </Route>
+
+            <Route path="/contact">
+              <Contact />
             </Route>
           </Switch>
         </BrowserRouter>

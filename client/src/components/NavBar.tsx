@@ -36,7 +36,9 @@ const NavBar = () => (
             </div>
           }
         />
-        <div>Contact Us</div>
+        <Link to="/contact">
+          <div className="hover:text-purple-500 text-lg">Contact Us</div>
+        </Link>
       </div>
     </nav>
 
@@ -104,14 +106,14 @@ const Cart = () => {
                   </span>
                 </div>
 
-                <Link to="cart">
+                <Link to="/cart">
                   <div className="border-2 h-12 border-black w-3/4 m-auto flex justify-center items-center transition-colors duration-1000 hover:bg-purple-500 hover:border-purple-500 hover:text-white">
                     VIEW CART
                   </div>
                 </Link>
 
                 <div className="h-5" />
-                <Link to="checkout">
+                <Link to="/checkout">
                   <div className="border-2 h-12 border-black w-3/4 m-auto flex justify-center items-center transition-colors duration-1000 hover:bg-purple-500 hover:border-purple-500 hover:text-white">
                     CHECKOUT
                   </div>

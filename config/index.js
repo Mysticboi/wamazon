@@ -9,6 +9,10 @@ const config = {
   },
   port: process.env.PORT || 5000,
   secret: process.env.SECRET || 'RANDOM_TOKEN_SECRET',
+  nodemailer: {
+    user: process.env.MAIL_USER,
+    pass: process.env.MAIL_PASSWORD,
+  },
 };
 
 module.exports = config;

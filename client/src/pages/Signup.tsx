@@ -29,7 +29,7 @@ const Signup = () => {
     const { fullName, email, password, confirmPassword } = values;
     const finalErrors: Error = {};
 
-    if (fullName.split(' ').length < 2) {
+    if (!fullName || fullName.split(' ').length < 2) {
       finalErrors.fullName = 'At least 2 words';
     }
 
@@ -37,7 +37,7 @@ const Signup = () => {
       finalErrors.email = 'Invalid email';
     }
 
-    if (password.length < 7) {
+    if (!password || password.length < 7) {
       finalErrors.password = 'Atleast 7 characters';
     } else if (password !== confirmPassword) {
       finalErrors.confirmPassword = 'Password not matching';
@@ -77,6 +77,7 @@ const Signup = () => {
                   type="text"
                   label="Full Name"
                   size="medium"
+                  placeholder="Full Name"
                   fullWidth
                   InputProps={{
                     startAdornment: (
@@ -101,6 +102,7 @@ const Signup = () => {
                   type="email"
                   label="Email"
                   size="medium"
+                  placeholder="Email"
                   required
                   fullWidth
                   InputProps={{
@@ -124,6 +126,7 @@ const Signup = () => {
                   component={TextField}
                   type="password"
                   label="Password"
+                  placeholder="Password"
                   size="medium"
                   required
                   fullWidth
@@ -150,6 +153,7 @@ const Signup = () => {
                   type="password"
                   label="Confirm Password"
                   size="medium"
+                  placeholder="Confirm Password"
                   required
                   fullWidth
                   InputProps={{
@@ -197,6 +201,7 @@ const Signup = () => {
 };
 
 const validateEmail = (email: string) => {
+  if (!email) return false;
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email.toLowerCase());

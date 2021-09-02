@@ -1,6 +1,19 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Form, Field } from 'react-final-form';
-import { Button } from '@material-ui/core';
+import {
+  Button,
+  CircularProgress,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Snackbar,
+  SnackbarCloseReason,
+} from '@material-ui/core';
+
+import TextFieldCore from '@material-ui/core/TextField';
+import { Alert } from '@material-ui/lab';
 import { TextField } from 'final-form-material-ui';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Mail, Lock } from '@material-ui/icons';
@@ -17,6 +30,12 @@ type Error = Partial<Values>;
 
 const Login = () => {
   const [errors, setErrors] = useState<Error>({});
+  const [open, setOpen] = useState(false);
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [successForgot, setSuccessForgot] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const userContext = useContext(UserContext);
   const history = useHistory();
   useEffect(() => {
@@ -65,6 +84,52 @@ const Login = () => {
             break;
         }
       }
+    }
+  };
+
+  const handleClickOpen = () => {
+    setError('');
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+    setError('');
+    setEmail('');
+  };
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value);
+  };
+
+  const handleConfirm = async () => {
+    if (!validateEmail(email)) {
+      setError('Invalid email');
+    } else {
+      try {
+        setError('');
+        setIsLoading(true);
+        await axios.put('http://localhost:5000/user/forgotPassword', { email });
+        setIsLoading(false);
+        setOpen(false);
+        setSuccessForgot(true);
+        setEmail('');
+      } catch (e) {
+        setIsLoading(false);
+        const { status } = e.response;
+        if (status === 404) {
+          setError('Email not found');
+        }
+      }
+    }
+  };
+
+  const handleSnackBarClose = (
+    event?: React.SyntheticEvent<Element, Event>,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === 'timeout') {
+      setSuccessForgot(false);
     }
   };
 
@@ -143,7 +208,7 @@ const Login = () => {
                 )}
               </div>
 
-              <div className="mt-5 mb-5 justify-center flex">
+              <div className="mt-5 mb-5 justify-center flex space-x-5">
                 <Button
                   variant="contained"
                   type="submit"
@@ -152,6 +217,16 @@ const Login = () => {
                   className="hover:scale-110 transform"
                 >
                   Login
+                </Button>
+
+                <Button
+                  variant="contained"
+                  type="button"
+                  color="secondary"
+                  size="small"
+                  onClick={handleClickOpen}
+                >
+                  I forgot my password
                 </Button>
               </div>
             </form>
@@ -167,11 +242,69 @@ const Login = () => {
           Sign Up
         </Link>
       </p>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title" className="text-center">
+          Forgotten password
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Enter your email to receive a mail with a new password.
+          </DialogContentText>
+          <div className="w-64 text-center m-auto">
+            <TextFieldCore
+              autoFocus
+              margin="dense"
+              id="email"
+              label="Email"
+              type="email"
+              value={email}
+              onChange={handleChange}
+              error={!!error}
+              color="primary"
+              fullWidth
+            />
+          </div>
+
+          {isLoading && (
+            <div className="flex justify-center items-center mt-5">
+              <CircularProgress />
+            </div>
+          )}
+
+          <div className="text-red-600 underline m-2 text-center h-5 font-bold">
+            {error}
+          </div>
+        </DialogContent>
+        <DialogActions className="space-x-5">
+          <Button onClick={handleConfirm} color="primary" variant="contained">
+            Confirm
+          </Button>
+          <Button onClick={handleClose} color="secondary" variant="contained">
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar
+        open={successForgot}
+        autoHideDuration={3000}
+        onClose={handleSnackBarClose}
+      >
+        <Alert severity="success" elevation={6} variant="filled">
+          Success: Check your email
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
 
 const validateEmail = (email: string) => {
+  if (!email) return false;
   const re =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email.toLowerCase());
