@@ -87,7 +87,10 @@ const Login = () => {
     }
   };
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (loginEmail: string) => {
+    if (loginEmail) {
+      setEmail(loginEmail);
+    }
     setError('');
     setOpen(true);
   };
@@ -143,7 +146,7 @@ const Login = () => {
       <div className="flex justify-center mt-10 border-2 shadow border-gray-600 max-w-xl m-auto">
         <Form
           onSubmit={onSubmit}
-          render={({ handleSubmit, submitting, pristine }) => (
+          render={({ handleSubmit, submitting, pristine, values }) => (
             <form
               onSubmit={handleSubmit}
               className="w-full flex-col flex items-center"
@@ -224,7 +227,7 @@ const Login = () => {
                   type="button"
                   color="secondary"
                   size="small"
-                  onClick={handleClickOpen}
+                  onClick={() => handleClickOpen(values?.email)}
                 >
                   I forgot my password
                 </Button>
@@ -279,6 +282,18 @@ const Login = () => {
           <div className="text-red-600 underline m-2 text-center h-5 font-bold">
             {error}
           </div>
+
+          {error === 'Email not found' && (
+            <p className="text-center mt-2 mb-5">
+              Don't have an account yet?{' '}
+              <Link
+                to="/signup"
+                className="underline text-indigo-600 hover:text-indigo-900 transform"
+              >
+                Sign Up
+              </Link>
+            </p>
+          )}
         </DialogContent>
         <DialogActions className="space-x-5">
           <Button onClick={handleConfirm} color="primary" variant="contained">

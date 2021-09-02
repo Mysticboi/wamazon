@@ -8,8 +8,9 @@ import { UserContextProvider } from './context/UserContext';
 import Account from './pages/Account/Account';
 import Home from './pages/Home';
 import NavBar from './components/NavBar';
-import useIsMobile from './hooks/useIsMobile';
+import Shop from './pages/Shop';
 import Contact from './pages/Contact';
+import useIsMobile from './hooks/useIsMobile';
 
 const theme = createTheme({
   palette: {
@@ -59,7 +60,13 @@ const AppDesktop = () => (
               <Account />
             </Route>
 
+            <Route path="/shop">
+              <NavBar />
+              <Shop />
+            </Route>
+
             <Route path="/contact">
+              <NavBar />
               <Contact />
             </Route>
           </Switch>
