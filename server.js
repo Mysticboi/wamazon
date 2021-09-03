@@ -9,6 +9,7 @@ const userRoutes = require('./routes/user');
 const giftCardRoutes = require('./routes/giftCard');
 const bankAccountRoutes = require('./routes/bankAccount');
 const creditCardRoutes = require('./routes/creditCard');
+const imagesRoutes = require('./routes/images');
 
 const app = express();
 
@@ -26,6 +27,7 @@ const startServer = async () => {
     app.use('/giftCard', giftCardRoutes);
     app.use('/bankAccount', bankAccountRoutes);
     app.use('/creditCard', creditCardRoutes);
+    app.use('/images', imagesRoutes);
 
     app.listen(port, () => {
       logger.info(`Server is running on port: ${port}`);

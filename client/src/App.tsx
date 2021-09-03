@@ -9,6 +9,7 @@ import Account from './pages/Account/Account';
 import Home from './pages/Home';
 import NavBar from './components/NavBar';
 import Shop from './pages/Shop';
+import Marketplace from './pages/Marketplace';
 import Contact from './pages/Contact';
 import useIsMobile from './hooks/useIsMobile';
 
@@ -73,6 +74,11 @@ const AppDesktop = () => (
             <Route path="/shop">
               <NavBar />
               <Shop />
+            </Route>
+
+            <Route path="/marketplace">
+              <NavBar />
+              <Marketplace />
             </Route>
 
             <Route path="/contact">

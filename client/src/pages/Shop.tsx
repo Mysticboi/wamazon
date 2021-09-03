@@ -9,20 +9,7 @@ import {
   Radio,
 } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
-
-const categories = [
-  'Women Fashion',
-  'Men Fashion',
-  'Electronics',
-  'Furniture',
-  'Plants',
-  'Books',
-  'Cosmetics',
-  'Accessories',
-  'Kids',
-  'Medical',
-  'Chritmas',
-];
+import categories from '../data/categories.json';
 
 const Shop = () => {
   const [search, setSearch] = useState('');
