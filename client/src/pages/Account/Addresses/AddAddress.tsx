@@ -60,16 +60,12 @@ const AddAddress = () => {
     }
     if (!zipCode) {
       finalErrors.zipCode = 'Empty';
+    } else if (isNaN(zipCode)) {
+      finalErrors.zipCode = 'Must be a number';
     }
     if (!phoneNumber) {
       finalErrors.phoneNumber = 'Empty';
-    }
-
-    if (zipCode && Number.isNaN(zipCode)) {
-      finalErrors.zipCode = 'Must be a number';
-    }
-
-    if (phoneNumber && Number.isNaN(phoneNumber)) {
+    } else if (isNaN(phoneNumber)) {
       finalErrors.phoneNumber = 'Must be a number';
     }
 
