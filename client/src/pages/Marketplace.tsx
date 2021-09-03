@@ -5,6 +5,7 @@ import { InputAdornment, Button, IconButton } from '@material-ui/core';
 import TextFieldCore from '@material-ui/core/TextField';
 import { Euro, Clear } from '@material-ui/icons';
 import Select from 'react-select';
+import { Link } from 'react-router-dom';
 import categories from '../data/categories.json';
 import ImagesField from '../components/ImagesField';
 
@@ -39,6 +40,7 @@ const Marketplace = () => {
     value: category,
     label: category,
   }));
+
   useEffect(() => {
     document.title = 'Marketplace';
   });
@@ -303,6 +305,21 @@ const Marketplace = () => {
           />
         </div>
       </div>
+
+      <p className="text-center text-xl mt-5">
+        Want to know your current stock? Click{' '}
+        <Link
+          to="/account/stock"
+          className="underline text-indigo-600 hover:text-indigo-900 transform"
+        >
+          Here
+        </Link>
+      </p>
+
+      {/* <img
+        alt="RANDOM"
+        src="http://localhost:5000/images/6132359216eb152f402c7034"
+      /> */}
     </div>
   );
 };

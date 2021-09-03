@@ -74,11 +74,13 @@ const Balance = () => {
         setOpen(false);
         setSuccessGiftCard(true);
       } catch (e) {
-        const { status } = e.response;
-        if (status === 400) {
-          setError('Gift card has already been used');
-        } else if (status === 404) {
-          setError('Invalid key');
+        if (axios.isAxiosError(e)) {
+          const status = e.response?.status;
+          if (status === 400) {
+            setError('Gift card has already been used');
+          } else if (status === 404) {
+            setError('Invalid key');
+          }
         }
       }
     }

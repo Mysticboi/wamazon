@@ -18,10 +18,12 @@ const Header = () => {
 
         console.log('Unexpired token');
       } catch (e) {
-        const errorMessage = e.response?.data.message;
-        if (errorMessage === 'Expired token') {
-          console.log('Token expired logging out...');
-          logOut();
+        if (axios.isAxiosError(e)) {
+          const errorMessage = e.response?.data.message;
+          if (errorMessage === 'Expired token') {
+            console.log('Token expired logging out...');
+            logOut();
+          }
         }
       }
     };

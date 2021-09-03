@@ -51,8 +51,10 @@ const Signup = () => {
         await axios.post('http://localhost:5000/user/signup', data);
         history.push('/login');
       } catch (error) {
-        if (error.response?.data.error === 'Not unique email') {
-          setErrors({ email: 'Email already in use' });
+        if (axios.isAxiosError(error)) {
+          if (error.response?.data.error === 'Not unique email') {
+            setErrors({ email: 'Email already in use' });
+          }
         }
       }
     }

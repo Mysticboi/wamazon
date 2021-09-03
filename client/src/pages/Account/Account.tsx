@@ -174,8 +174,10 @@ const UpdatePasswordForm = ({
         setIsUpdateOpen(false);
         setChangedPassword(true);
       } catch (error) {
-        if (error.response?.data.error === 'Wrong Password') {
-          setErrors({ oldPassword: 'Wrong Password' });
+        if (axios.isAxiosError(error)) {
+          if (error.response?.data.error === 'Wrong Password') {
+            setErrors({ oldPassword: 'Wrong Password' });
+          }
         }
       }
     }

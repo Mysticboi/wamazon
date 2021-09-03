@@ -68,11 +68,13 @@ const Wallet = () => {
         setBankAccount(response.data.bankAccount);
         // setLoading(false);
       } catch (e) {
-        setBankAccount(null);
-        if (e?.response?.status === 404) {
-          console.log("User hasn't added a bank account yet");
-        } else {
-          console.error('Failed getBalance', e);
+        if (axios.isAxiosError(e)) {
+          setBankAccount(null);
+          if (e?.response?.status === 404) {
+            console.log("User hasn't added a bank account yet");
+          } else {
+            console.error('Failed getBalance', e);
+          }
         }
       }
     };

@@ -71,17 +71,19 @@ const Login = () => {
 
         history.push('/');
       } catch (error) {
-        const errorMessage = error.response?.data.error;
-        switch (errorMessage) {
-          case 'Email not found':
-            setErrors({ email: 'Email not found' });
-            break;
-          case 'Wrong Password':
-            setErrors({ password: 'Wrong Password' });
-            break;
+        if (axios.isAxiosError(error)) {
+          const errorMessage = error.response?.data.error;
+          switch (errorMessage) {
+            case 'Email not found':
+              setErrors({ email: 'Email not found' });
+              break;
+            case 'Wrong Password':
+              setErrors({ password: 'Wrong Password' });
+              break;
 
-          default:
-            break;
+            default:
+              break;
+          }
         }
       }
     }
@@ -119,9 +121,11 @@ const Login = () => {
         setEmail('');
       } catch (e) {
         setIsLoading(false);
-        const { status } = e.response;
-        if (status === 404) {
-          setError('Email not found');
+        if (axios.isAxiosError(e)) {
+          const status = e.response?.status;
+          if (status === 404) {
+            setError('Email not found');
+          }
         }
       }
     }
