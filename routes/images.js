@@ -1,11 +1,15 @@
 const express = require('express');
-const uploadImages = require('../middlewares/uploadImages');
+const upload = require('../middlewares/uploadImages');
+const {
+  uploadImages,
+  getImage,
+  deleteImage,
+} = require('../controllers/images');
 
 const router = express.Router();
 
-router.post('/upload', uploadImages, async (req, res) => {
-  console.log(req.files);
-  res.send('Hello');
-});
+router.post('/upload', upload, uploadImages);
+router.get('/:imageId', getImage);
+router.delete('/:imageId', deleteImage);
 
 module.exports = router;

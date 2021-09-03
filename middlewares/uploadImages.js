@@ -1,5 +1,5 @@
 const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
+const { GridFsStorage } = require('multer-gridfs-storage');
 const { db } = require('../config');
 
 const storage = new GridFsStorage({
@@ -20,4 +20,4 @@ const storage = new GridFsStorage({
   },
 });
 
-module.exports = multer({ storage }).array('multi-files', 5);
+module.exports = multer({ storage }).array('files', 5);
