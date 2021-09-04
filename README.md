@@ -66,7 +66,7 @@ Express, is an open-source back end web application framework for Node.js. It is
 #### - **MongoDB** (Database)
 
 <p align="center">
-<img src="https://assets.stickpng.com/thumbs/58481021cef1014c0b5e494b.png" width="100">
+<img src="https://upload.wikimedia.org/wikipedia/fr/thumb/4/45/MongoDB-Logo.svg/langfr-220px-MongoDB-Logo.svg.png" width="100">
 </p>
 
 MongoDB is a source-available cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas.
@@ -81,7 +81,8 @@ Elegant MongoDB object modeling for Node.js. Mongoose provides a straight-forwar
 
 #### - Others
 
-    - jsonwebtoken
-    - mutler (middleware for handling file uploads)
-    - GridFS (for storing and retrieving files like images from mongoDB)
-    - nodemailer (for sending emails like in case of forgotten password)
+- **jsonwebtoken**
+- **mutler**: middleware for handling file uploads.
+- **GridFS**: for storing and retrieving files like images from mongoDB.
+- **nodemailer**: for sending emails like in case of forgotten password.
+- **ESLint+Prettier**: ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code.
