@@ -7,12 +7,12 @@ const userSchema = mongoose.Schema({
   fullName: { type: String, required: true },
   addresses: [
     {
-      country: { type: String },
-      address: { type: String },
-      city: { type: String },
-      region: { type: String },
-      zipCode: { type: String },
-      phoneNumber: { type: String },
+      country: String,
+      address: String,
+      city: String,
+      region: String,
+      zipCode: String,
+      phoneNumber: String,
     },
   ],
   balance: { type: Number, default: 0 },

@@ -6,6 +6,7 @@ import TextFieldCore from '@material-ui/core/TextField';
 import { Euro, Clear } from '@material-ui/icons';
 import Select from 'react-select';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import categories from '../data/categories.json';
 import ImagesField from '../components/ImagesField';
 
@@ -77,6 +78,32 @@ const Marketplace = () => {
     }
 
     setErrors(finalErrors);
+
+    if (Object.keys(finalErrors).length === 0) {
+      // No errors we continue
+      try {
+        // Uploading images
+        let uploadedImages;
+        if (images?.length > 0) {
+          const formData = new FormData();
+          for (let i = 0; i < images.length; i += 1) {
+            formData.append('files', images[i]);
+          }
+          const response = await axios.post(
+            'http://localhost:5000/images/upload',
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+              },
+            }
+          );
+          uploadedImages = response.data?.uploadedFiles;
+        }
+      } catch (e) {
+        console.error('Failed creating product');
+      }
+    }
   };
 
   const handleNameChange = (

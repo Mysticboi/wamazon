@@ -12,13 +12,16 @@ conn.once('open', () => {
 
 exports.uploadImages = async (req, res) => {
   if (!req.files) {
+    console.log('req', req.body);
     res.status(400).json({ error: 'No files specified' });
+  } else {
+    console.log('OK files', req.files);
+    const uploadedFiles = req.files.map(({ id }) => ({
+      id,
+      imgUrl: `http://localhost:${port}/images/${id}`,
+    }));
+    res.status(201).json({ uploadedFiles });
   }
-  const uploadedFiles = req.files.map(({ id }) => ({
-    id,
-    imgUrl: `http://localhost:${port}/images/${id}`,
-  }));
-  res.status(201).json({ uploadedFiles });
 };
 
 exports.getImage = async (req, res) => {
