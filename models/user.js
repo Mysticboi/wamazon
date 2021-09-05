@@ -7,6 +7,7 @@ const userSchema = mongoose.Schema({
   fullName: { type: String, required: true },
   addresses: [
     {
+      _id: false,
       country: String,
       address: String,
       city: String,

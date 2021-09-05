@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Form, Field } from 'react-final-form';
 import { TextField } from 'final-form-material-ui';
-import { InputAdornment, Button, IconButton } from '@material-ui/core';
+import { InputAdornment, Button, IconButton, Dialog } from '@material-ui/core';
+import { Alert, AlertTitle } from '@material-ui/lab';
 import TextFieldCore from '@material-ui/core/TextField';
 import { Euro, Clear } from '@material-ui/icons';
 import Select from 'react-select';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { UserContext } from '../context/UserContext';
 import categories from '../data/categories.json';
 import ImagesField from '../components/ImagesField';
 
@@ -36,6 +38,9 @@ type Information = {
 const Marketplace = () => {
   const [errors, setErrors] = useState<Error>({});
   const [informations, setInformations] = useState<Information[]>([]);
+  const [success, setSuccess] = useState(false);
+  const { token } = useContext(UserContext);
+  const history = useHistory();
 
   const options = categories.map((category) => ({
     value: category,
@@ -100,6 +105,28 @@ const Marketplace = () => {
           );
           uploadedImages = response.data?.uploadedFiles;
         }
+
+        const finalImages = uploadedImages || [];
+
+        // Creating product
+        const data = {
+          productName,
+          price,
+          description,
+          quantity,
+          images: finalImages,
+          informations,
+        };
+
+        await axios.post('http://localhost:5000/product', data, {
+          headers: {
+            authorization: token,
+          },
+        });
+
+        setSuccess(true);
+
+        setTimeout(() => history.push('/account/stock'), 2000);
       } catch (e) {
         console.error('Failed creating product');
       }
@@ -342,6 +369,13 @@ const Marketplace = () => {
           Here
         </Link>
       </p>
+
+      <Dialog open={success}>
+        <Alert severity="success" variant="filled">
+          <AlertTitle>Success creating product</AlertTitle>
+          Moving to your stock page...
+        </Alert>
+      </Dialog>
 
       {/* <img
         alt="RANDOM"

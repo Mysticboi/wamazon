@@ -6,6 +6,7 @@ const db = require('./services/database');
 const logger = require('./services/logger');
 
 const userRoutes = require('./routes/user');
+const productRoutes = require('./routes/product');
 const giftCardRoutes = require('./routes/giftCard');
 const bankAccountRoutes = require('./routes/bankAccount');
 const creditCardRoutes = require('./routes/creditCard');
@@ -24,6 +25,7 @@ const startServer = async () => {
     app.use(morgan('dev'));
 
     app.use('/user', userRoutes);
+    app.use('/product', productRoutes);
     app.use('/giftCard', giftCardRoutes);
     app.use('/bankAccount', bankAccountRoutes);
     app.use('/creditCard', creditCardRoutes);

@@ -6,14 +6,23 @@ const productSchema = mongoose.Schema({
   description: { type: String, required: true },
   quantity: { type: Number, required: true },
   seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  images: [
+    {
+      _id: false,
+      id: { type: mongoose.Schema.Types.ObjectId, ref: 'Images' },
+      imgUrl: String,
+    },
+  ],
   informations: [
     {
+      _id: false,
       name: String,
-      information: String,
+      value: String,
     },
   ],
   reviews: [
     {
+      _id: false,
       comment: String,
       rating: Number,
     },
