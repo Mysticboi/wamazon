@@ -2,6 +2,7 @@ const multer = require('multer');
 const { GridFsStorage } = require('multer-gridfs-storage');
 const { db } = require('../config');
 
+/** Creating multer storage for storing images directly in mongoDB using GridFS */
 const storage = new GridFsStorage({
   url: db.uri,
   options: { useNewUrlParser: true, useUnifiedTopology: true },
@@ -20,4 +21,5 @@ const storage = new GridFsStorage({
   },
 });
 
-module.exports = multer({ storage }).array('files', 5);
+/** Can store 3 images max per API call */
+module.exports = multer({ storage }).array('files', 3);

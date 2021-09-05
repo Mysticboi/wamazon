@@ -17,13 +17,11 @@ const NavBar = () => (
           name="Shop"
           link="/shop"
           paperContent={
-            <div>
-              <p className="text-center">Shop where you can buy:</p>
-              <li className="ml-5">Items</li>
+            <div className="w-40">
+              <p>Shop where you can buy a wide variety of items like: </p>
               <li className="ml-5">Clothes</li>
               <li className="ml-5">Furniture</li>
-              <li className="ml-5">Electronics</li>
-              <li className="ml-5">...</li>
+              <li className="ml-5">Electronics...</li>
             </div>
           }
         />

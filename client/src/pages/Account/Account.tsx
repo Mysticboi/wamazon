@@ -18,6 +18,7 @@ import { UserContext } from '../../context/UserContext';
 import Addresses from './Addresses/Addresses';
 import AccountNavBar from '../../components/AccountNavBar';
 import Payments from './Payments/Payments';
+import Stock from './Stock';
 
 type Values = {
   oldPassword: string;
@@ -337,6 +338,10 @@ const Account = () => {
 
         <Route path={`${path}/payments`}>
           <Payments />
+        </Route>
+
+        <Route path={`${path}/stock`}>
+          <Stock />
         </Route>
       </Switch>
     </>

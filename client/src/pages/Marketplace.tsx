@@ -28,6 +28,7 @@ type Error = {
   quantity?: string;
   category?: string;
   informations?: string;
+  images?: string;
 };
 
 type Information = {
@@ -80,6 +81,19 @@ const Marketplace = () => {
 
     if (!validateInformations(informations)) {
       finalErrors.informations = 'Complete or delete unnecessary fields';
+    }
+
+    if (images?.length > 3) {
+      finalErrors.images = '3 images max';
+    } else if (images?.length > 0) {
+      let totalSize = 0;
+      for (let i = 0; i < images.length; i += 1) {
+        totalSize += images[i].size;
+      }
+      totalSize /= 1024; // Converting from bytes to Kb
+      if (totalSize > 1024) {
+        finalErrors.images = 'Total images size should not exceed 1Mb';
+      }
     }
 
     setErrors(finalErrors);
@@ -291,6 +305,11 @@ const Marketplace = () => {
                         Add multiple images
                       </p>
                       <ImagesField name="images" />
+                      {errors?.images && (
+                        <p className="text-red-600 font-bold underline text-sm">
+                          {errors.images}
+                        </p>
+                      )}
                     </div>
 
                     <div className="m-3 w-3/4">

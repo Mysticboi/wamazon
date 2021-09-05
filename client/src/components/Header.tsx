@@ -31,7 +31,7 @@ const Header = () => {
     if (token) {
       verifyTokenExpired();
     }
-  });
+  }, []);
   return (
     <div className="h-14">
       <div className="h-14 bg-gray-800">

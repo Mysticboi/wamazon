@@ -12,6 +12,8 @@ import Shop from './pages/Shop';
 import Marketplace from './pages/Marketplace';
 import Contact from './pages/Contact';
 import useIsMobile from './hooks/useIsMobile';
+import Cart from './pages/Cart';
+import Checkout from './pages/Checkout';
 
 const theme = createTheme({
   palette: {
@@ -79,6 +81,16 @@ const AppDesktop = () => (
             <Route path="/marketplace">
               <NavBar />
               <Marketplace />
+            </Route>
+
+            <Route path="/cart">
+              <NavBar />
+              <Cart />
+            </Route>
+
+            <Route path="/checkout">
+              <NavBar />
+              <Checkout />
             </Route>
 
             <Route path="/contact">

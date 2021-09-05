@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { port } = require('../config');
 const logger = require('../services/logger');
 
+// Setting up GridFSBucket used to retrieve and delete images from mongoDB
 const conn = mongoose.connection;
 let gridFSBucket;
 conn.once('open', () => {
@@ -12,10 +13,8 @@ conn.once('open', () => {
 
 exports.uploadImages = async (req, res) => {
   if (!req.files) {
-    console.log('req', req.body);
     res.status(400).json({ error: 'No files specified' });
   } else {
-    console.log('OK files', req.files);
     const uploadedFiles = req.files.map(({ id }) => ({
       id,
       imgUrl: `http://localhost:${port}/images/${id}`,
