@@ -6,6 +6,7 @@ const productSchema = mongoose.Schema({
   description: { type: String, required: true },
   quantity: { type: Number, required: true },
   seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  dateOfEnter: { type: Date, default: new Date() },
   images: [
     {
       _id: false,

@@ -149,7 +149,7 @@ const ProductCard = ({
           <img src={imgUrl} alt="product" height={100} width={100} />
         </div>
         <div>
-          <p className="text-2xl">{productName}</p>
+          <p className="text-2xl font-sans">{productName}</p>
           <p className="font-sans text-xl font-semibold">{price.toFixed(2)}€</p>
           <p>
             Left to sell: <span className="font-sans">{quantity}</span>

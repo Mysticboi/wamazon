@@ -1,17 +1,55 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Fade } from 'react-slideshow-image';
 import { Slide } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import home1 from '../images/home1.jpg';
-import hesitating from '../images/hesitating.jpeg';
+import DailyDeals from './DailyDeals';
+import home1 from '../../images/home1.jpg';
+import hesitating from '../../images/hesitating.jpeg';
 import 'react-slideshow-image/dist/styles.css';
+import icon1 from '../../images/home-icon-1.png';
+import icon2 from '../../images/home-icon-2.png';
+import icon3 from '../../images/home-icon-3.png';
+import icon4 from '../../images/home-icon-4.png';
+
+type InfoProps = {
+  title: string;
+  text: string;
+  imgSrc: string;
+};
+
+const infos = [
+  {
+    title: 'Free Shipping',
+    text: 'Free shipping on all orders',
+    imgSrc: icon1,
+  },
+  {
+    title: 'Support 24/7',
+    text: 'You can call us anytime for technical support!',
+    imgSrc: icon2,
+  },
+  {
+    title: 'Money Return',
+    text: ' Send back a product you have 10 days',
+    imgSrc: icon3,
+  },
+  {
+    title: 'Order Discount',
+    text: 'Get discounts by buying multiple products',
+    imgSrc: icon4,
+  },
+];
 
 const Home = () => {
   const [slide, setSlide] = useState<boolean[]>([true, false]);
 
+  useEffect(() => {
+    document.title = 'Wamazon';
+  }, []);
+
   return (
     <div>
-      <div className="bg-purple-200 w-full h-200">
+      <div className="w-full h-200 bg-pink-100">
         <Fade
           duration={4000}
           pauseOnHover={false}
@@ -47,6 +85,8 @@ const Home = () => {
             <div className="">
               <img src={home1} alt="home1" className="h-200 w-200" />
             </div>
+
+            <div className="h-200 w-20" />
           </div>
 
           <div className="slide-container flex">
@@ -79,9 +119,21 @@ const Home = () => {
             <div>
               <img src={hesitating} alt="hesitating" className="h-200 w-200" />
             </div>
+
+            <div className="h-200 w-20" />
           </div>
         </Fade>
       </div>
+
+      <div className="flex justify-center items-center">
+        <div className="mt-16 flex flex-wrap space-x-5 justify-center items-center">
+          {infos.map((info) => (
+            <Info {...info} key={info.title} />
+          ))}
+        </div>
+      </div>
+
+      <DailyDeals />
     </div>
   );
 };
@@ -92,6 +144,18 @@ const ShopNow = () => (
       SHOP NOW
     </div>
   </Link>
+);
+
+const Info = ({ title, text, imgSrc }: InfoProps) => (
+  <div className="flex">
+    <div className="w-20 h-24 hover:animate-wiggle">
+      <img src={imgSrc} alt="" width={60} height={60} />
+    </div>
+    <div className="w-44">
+      <p className="text-lg">{title}</p>
+      <p className="text-gray-500">{text}</p>
+    </div>
+  </div>
 );
 
 export default Home;

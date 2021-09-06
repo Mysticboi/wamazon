@@ -6,7 +6,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import { UserContextProvider } from './context/UserContext';
 import Account from './pages/Account/Account';
-import Home from './pages/Home';
+import Home from './pages/Home/Home';
 import NavBar from './components/NavBar';
 import Shop from './pages/Shop';
 import Marketplace from './pages/Marketplace';

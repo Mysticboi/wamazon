@@ -13,6 +13,9 @@ const NavBar = () => (
   <div>
     <nav className="justify-center flex invisible sm:visible">
       <div className="flex space-x-5">
+        <Link to="/">
+          <div className="hover:text-purple-500 text-lg">Home</div>
+        </Link>
         <NavItem
           name="Shop"
           link="/shop"
