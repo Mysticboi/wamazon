@@ -33,16 +33,16 @@ const Header = () => {
     }
   }, []);
   return (
-    <div className="h-14">
+    <div className="h-14 font-sans">
       <div className="h-14 bg-gray-800">
-        <div className="text-3xl font-bold text-purple-500 absolute left-5">
+        <div className="text-3xl font-bold text-purple-500 absolute left-5 uppercase top-2">
           <Link to="/" className="text-left">
-            Wamazon
+            Wamazon.
           </Link>
         </div>
 
-        <h1 className="text-3xl font-bold text-white text-center h-5 invisible xl:visible">
-          The e-commerce website for the people
+        <h1 className="text-3xl font-bold text-white text-center h-5 invisible xl:visible pt-2">
+          <i>The e-commerce website for the people</i>
         </h1>
 
         {isUserConnected && (
@@ -50,7 +50,7 @@ const Header = () => {
             <p>Hello {userName}</p>
           </div>
         )}
-        <div className="absolute right-5 top-2">
+        <div className="absolute right-5 top-3">
           {isUserConnected ? (
             <div className="space-x-5 h-5">
               <Link to="/account">

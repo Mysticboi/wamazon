@@ -14,6 +14,7 @@ import Contact from './pages/Contact';
 import useIsMobile from './hooks/useIsMobile';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import Footer from './components/Footer';
 
 const theme = createTheme({
   palette: {
@@ -98,6 +99,8 @@ const AppDesktop = () => (
               <Contact />
             </Route>
           </Switch>
+
+          <Footer />
         </BrowserRouter>
       </UserContextProvider>
     </ThemeProvider>

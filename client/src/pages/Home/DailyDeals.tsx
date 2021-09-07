@@ -12,9 +12,6 @@ interface Product {
   price: number;
 }
 
-interface CardProps extends Product {
-  isNew?: boolean;
-}
 const pages = ['Best sellers', 'Top rated', 'New arrivals'];
 const apiPaths = [
   'product/topSellers',
@@ -90,14 +87,7 @@ const ProductsList = ({ products }: { products: Product[] }) => (
   </div>
 );
 
-const ProductCard = ({
-  _id,
-  productName,
-  imgUrl,
-  rating,
-  price,
-  isNew,
-}: CardProps) => {
+const ProductCard = ({ _id, productName, imgUrl, rating, price }: Product) => {
   const handleClick = () => {
     // TODO Add item to wishList using it's _id
   };

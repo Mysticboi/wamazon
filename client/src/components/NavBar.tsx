@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { ShoppingCartOutlined, KeyboardArrowDown } from '@material-ui/icons';
+import {
+  ShoppingCartOutlined,
+  KeyboardArrowDown,
+  FavoriteBorder,
+} from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { Paper, Collapse, Divider } from '@material-ui/core';
 
@@ -44,6 +48,16 @@ const NavBar = () => (
     </nav>
 
     <Cart />
+
+    <div className="absolute top-14 right-20" title="Go to wishlist">
+      <Link to="/wishlist" className="hover:text-purple-500 relative">
+        <FavoriteBorder style={{ fontSize: 40 }} className="mr-1" />
+        <span className="absolute bottom-2 right-0 rounded-full w-5 h-5 flex items-center justify-center bg-black text-white font-sans">
+          {4}
+        </span>
+      </Link>
+    </div>
+
     <div className="mt-3">
       {' '}
       <Divider />
@@ -102,7 +116,7 @@ const Cart = () => {
                   <span className="ml-10">
                     Total <b>:</b>
                   </span>
-                  <span className="font-sans right-10 absolute">
+                  <span className="font-sans right-10 absolute animate-ping">
                     {items.reduce((acc, x) => acc + x, 0).toFixed(2)}€
                   </span>
                 </div>
