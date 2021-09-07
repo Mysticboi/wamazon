@@ -49,7 +49,7 @@ const Home = () => {
 
   return (
     <div>
-      <div className="w-full h-200 bg-pink-100">
+      <div className="w-full h-200 bg-light-purple">
         <Fade
           duration={4000}
           pauseOnHover={false}

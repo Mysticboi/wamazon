@@ -52,7 +52,7 @@ const NavBar = () => (
     <div className="absolute top-14 right-20" title="Go to wishlist">
       <Link to="/wishlist" className="hover:text-purple-500 relative">
         <FavoriteBorder style={{ fontSize: 40 }} className="mr-1" />
-        <span className="absolute bottom-2 right-0 rounded-full w-5 h-5 flex items-center justify-center bg-black text-white font-sans">
+        <span className="absolute bottom-2 right-0 rounded-full w-5 h-5 flex items-center justify-center bg-black text-white font-sans animate-bounce">
           {4}
         </span>
       </Link>
@@ -99,7 +99,7 @@ const Cart = () => {
           onClick={() => setChecked((prev) => !prev)}
         >
           <ShoppingCartOutlined style={{ fontSize: 40 }} />
-          <span className="absolute top-0 right-1.5 rounded-full w-5 h-5 flex items-center justify-center bg-black text-white font-sans">
+          <span className="absolute top-0 right-1.5 rounded-full w-5 h-5 flex items-center justify-center bg-black text-white font-sans animate-bounce">
             {items.length}
           </span>
         </button>
@@ -116,7 +116,7 @@ const Cart = () => {
                   <span className="ml-10">
                     Total <b>:</b>
                   </span>
-                  <span className="font-sans right-10 absolute animate-ping">
+                  <span className="font-sans right-10 absolute">
                     {items.reduce((acc, x) => acc + x, 0).toFixed(2)}€
                   </span>
                 </div>

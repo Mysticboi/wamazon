@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { TextField } from '@material-ui/core';
+import { GitHub } from '@material-ui/icons';
 
 const Footer = () => (
-  <div>
-    <div className="w-full h-96 bg-gray-100 mt-20 font-sans flex justify-center items-center space-x-20 mb-5">
+  <div className="w-full">
+    <div className="w-full h-96 bg-gray-100 mt-20 font-sans flex justify-center items-center space-x-20 flex-wrap">
       <div className="h-36 space-y-1">
         <div className="text-3xl font-bold text-purple-500 uppercase">
           <Link to="/">Wamazon.</Link>
@@ -11,6 +13,19 @@ const Footer = () => (
 
         <p>© 2021 Wamazon.</p>
         <p>All Rights Reserved</p>
+        <p>
+          Made by{' '}
+          <a
+            href="https://github.com/Mysticboi"
+            className="text-purple-500 underline"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Walid
+          </a>
+          {'  '}
+          <GitHub />
+        </p>
       </div>
 
       <div className="flex flex-col items-start h-32 space-y-3">
@@ -62,6 +77,28 @@ const Footer = () => (
         >
           Instagram
         </a>
+      </div>
+
+      <div className="h-32 w-64">
+        <p className="text-lg uppercase">Subscribe</p>
+        <p className="text-gray-600 mt-2">
+          Get E-mail updates about our latest shop and special offers.
+        </p>
+
+        <div className="mt-5">
+          <TextField
+            placeholder="Enter your email address..."
+            fullWidth
+            type="email"
+          />
+        </div>
+
+        <button
+          type="button"
+          className="uppercase underline hover:text-purple-500 text-md font-serif mt-2"
+        >
+          subscribe
+        </button>
       </div>
     </div>
   </div>

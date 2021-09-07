@@ -55,6 +55,8 @@ Go to the front [documentation](client/README.md)
 
 Node.js is an open-source, cross-platform, back-end JavaScript runtime environment that runs on the V8 engine and executes JavaScript code outside a web browser.
 
+**My opinion**: Since I am using React in the front-end, I chose to use NodeJS for the backend so I can be using JavaScript/TypeScript for both front and back. Plus there are a lot of practical libraries that you can use to make the development much easier (npm-yarn).
+
 #### - **Express** (Backend framework)
 
 <p align="center">
@@ -62,6 +64,8 @@ Node.js is an open-source, cross-platform, back-end JavaScript runtime environme
 </p>
 
 Express, is an open-source back end web application framework for Node.js. It is designed for building web applications and APIs. It has been called the de facto standard server framework for Node.js
+
+**My opinion**: I found writing the back-end API really using this framework since it provides a lot of utilities like middlewares, Router class and others.
 
 #### - **MongoDB** (Database)
 
@@ -71,6 +75,8 @@ Express, is an open-source back end web application framework for Node.js. It is
 
 MongoDB is a source-available cross-platform document-oriented database program. Classified as a NoSQL database program, MongoDB uses JSON-like documents with optional schemas.
 
+**My opinion**: I've chosen to go with mongoDB as this projec's database since I am only using JavaScript/TypeScript. And it's easy to integrate its JSON-like documents with the structure of the project.
+
 #### - **mongoose** (ODM)
 
 <p align="center">
@@ -79,10 +85,12 @@ MongoDB is a source-available cross-platform document-oriented database program.
 
 Elegant MongoDB object modeling for Node.js. Mongoose provides a straight-forward, schema-based solution to model your application data. It includes built-in type casting, validation, query building, business logic hooks and more, out of the box.
 
+**My opinion**: mongoose has made back-end development much easier and more structured using models and schemas.
+
 #### - Others
 
-- **jsonwebtoken**
+- **jsonwebtoken**: used for user's authentification.
 - **mutler**: middleware for handling file uploads.
 - **GridFS**: for storing and retrieving files like images from mongoDB.
 - **nodemailer**: for sending emails like in case of forgotten password.
-- **ESLint+Prettier**: ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code.
+- **ESLint+Prettier**: ESLint is a tool for identifying and reporting on patterns found in ECMAScript/JavaScript code. It alows better structuring of the code. Prettier is used for formating.

@@ -34,7 +34,7 @@ const Header = () => {
   }, []);
   return (
     <div className="h-14 font-sans">
-      <div className="h-14 bg-gray-800">
+      <div className="h-14 bg-black">
         <div className="text-3xl font-bold text-purple-500 absolute left-5 uppercase top-2">
           <Link to="/" className="text-left">
             Wamazon.
