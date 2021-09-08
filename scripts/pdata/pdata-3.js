@@ -6,7 +6,7 @@ const main = async ({ models: { Product } }) => {
     {
       comment:
         "Very good product, I've been using it for 2months and it still works just as new",
-      rating: 5,
+      rating: 4,
     },
     {
       comment:

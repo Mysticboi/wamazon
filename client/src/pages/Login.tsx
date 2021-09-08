@@ -215,7 +215,7 @@ const Login = () => {
                 )}
               </div>
 
-              <div className="mt-5 mb-5 justify-center flex space-x-5">
+              <div className="mt-5 mb-5 justify-center flex space-x-20">
                 <Button
                   variant="contained"
                   type="submit"
@@ -226,15 +226,13 @@ const Login = () => {
                   Login
                 </Button>
 
-                <Button
-                  variant="contained"
+                <button
+                  className="hover:text-purple-500"
                   type="button"
-                  color="secondary"
-                  size="small"
                   onClick={() => handleClickOpen(values?.email)}
                 >
-                  I forgot my password
-                </Button>
+                  Forgot password?
+                </button>
               </div>
             </form>
           )}

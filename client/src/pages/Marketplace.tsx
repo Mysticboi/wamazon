@@ -147,6 +147,7 @@ const Marketplace = () => {
           quantity,
           images: finalImages,
           informations,
+          category,
         };
 
         await axios.post('http://localhost:5000/product', data, {

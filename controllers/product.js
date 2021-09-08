@@ -6,6 +6,13 @@ const logger = require('../services/logger');
 const defaultImgUrl =
   'https://upload.wikimedia.org/wikipedia/commons/1/14/Product_sample_icon_picture.png';
 
+const getRating = (reviews) =>
+  reviews?.length > 0
+    ? (
+        reviews.reduce((acc, { rating }) => acc + rating, 0) / reviews.length
+      ).toFixed(1)
+    : 0;
+
 // Setting up GridFSBucket used to retrieve and delete images from mongoDB
 const conn = mongoose.connection;
 let gridFSBucket;
@@ -99,9 +106,7 @@ exports.getTopSellers = async (req, res) => {
       productName,
       price,
       imgUrl: images?.length > 0 ? images[0].imgUrl : defaultImgUrl,
-      rating: (
-        reviews.reduce((acc, { rating }) => acc + rating, 0) / reviews.length
-      ).toFixed(1),
+      rating: getRating(reviews),
     }));
 
     res.status(200).json({ products });
@@ -122,13 +127,7 @@ exports.getTopRated = async (req, res) => {
       productName,
       price,
       imgUrl: images?.length > 0 ? images[0].imgUrl : defaultImgUrl,
-      rating:
-        reviews?.length > 0
-          ? (
-              reviews.reduce((acc, { rating }) => acc + rating, 0) /
-              reviews.length
-            ).toFixed(1)
-          : 0,
+      rating: getRating(reviews),
     }));
 
     // Sort desc by rating
@@ -156,12 +155,57 @@ exports.getNewArrivals = async (req, res) => {
       productName,
       price,
       imgUrl: images?.length > 0 ? images[0].imgUrl : defaultImgUrl,
-      rating: (
-        reviews.reduce((acc, { rating }) => acc + rating, 0) / reviews.length
-      ).toFixed(1),
+      rating: getRating(reviews),
     }));
 
     res.status(200).json({ products });
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+/** Get products to display on shop with pagination */
+exports.getProductsShop = async (req, res) => {
+  try {
+    let { page = 1, limit = 9 } = req.query;
+    const { category = '', filter = 'default', search = '' } = req.query;
+    page = parseInt(page, 10);
+    limit = parseInt(limit, 10);
+
+    const queryFilter = {};
+    if (category) {
+      queryFilter.category = category;
+    }
+    if (search) {
+      queryFilter.$text = { $search: search };
+    }
+
+    let sortFilter;
+    if (filter === 'default') sortFilter = {};
+    if (filter === 'priceHighToLow') sortFilter = { price: -1 };
+    if (filter === 'priceLowToHigh') sortFilter = { price: 1 };
+
+    let products = await Product.find(queryFilter)
+      .sort(sortFilter)
+      .limit(limit)
+      .skip((page - 1) * limit);
+
+    products = products.map(({ _id, productName, price, images, reviews }) => ({
+      _id,
+      productName,
+      price,
+      rating: getRating(reviews),
+      imgUrl: images?.length > 0 ? images[0].imgUrl : defaultImgUrl,
+    }));
+
+    const count = await Product.countDocuments(queryFilter);
+
+    res.status(200).json({
+      products,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+    });
   } catch (error) {
     logger.error(error);
     res.status(500).json({ error: 'Internal server error' });

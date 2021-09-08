@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Rating } from '@material-ui/lab';
-import { FavoriteBorder } from '@material-ui/icons';
+import { FavoriteBorder, Star } from '@material-ui/icons';
+import flame from '../../images/flame.svg';
 
 interface Product {
   _id: string;
@@ -10,6 +11,10 @@ interface Product {
   imgUrl: string;
   rating: number;
   price: number;
+}
+
+interface CardProps extends Product {
+  currentPage: number;
 }
 
 const pages = ['Best sellers', 'Top rated', 'New arrivals'];
@@ -22,6 +27,8 @@ const apiPaths = [
 const DailyDeals = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [products, setProducts] = useState<Product[]>([]);
+
+  console.log('products', products);
 
   useEffect(() => {
     const getProducts = async () => {
@@ -73,21 +80,34 @@ const DailyDeals = () => {
         })}
       </nav>
       <div className="flex justify-center items-center w-full">
-        <ProductsList products={products} />
+        <ProductsList products={products} currentPage={currentPage} />
       </div>
     </div>
   );
 };
 
-const ProductsList = ({ products }: { products: Product[] }) => (
+const ProductsList = ({
+  products,
+  currentPage,
+}: {
+  products: Product[];
+  currentPage: number;
+}) => (
   <div className="flex flex-wrap justify-center items-center space-x-10 mt-8 w-2/3">
     {products.map((product) => (
-      <ProductCard {...product} key={product._id} />
+      <ProductCard {...product} key={product._id} currentPage={currentPage} />
     ))}
   </div>
 );
 
-const ProductCard = ({ _id, productName, imgUrl, rating, price }: Product) => {
+const ProductCard = ({
+  _id,
+  productName,
+  imgUrl,
+  rating,
+  price,
+  currentPage,
+}: CardProps) => {
   const handleClick = () => {
     // TODO Add item to wishList using it's _id
   };
@@ -95,12 +115,30 @@ const ProductCard = ({ _id, productName, imgUrl, rating, price }: Product) => {
   return (
     <div className="flex-none">
       <div className="h-80 flex justify-center items-center relative">
+        {currentPage === 0 && (
+          <div className="absolute top-6 right-5">
+            <img alt="" src={flame} width={30} />
+          </div>
+        )}
+
+        {currentPage === 1 && (
+          <div className="absolute top-6 right-5">
+            <Star style={{ color: 'orange' }} fontSize="large" />
+          </div>
+        )}
+
+        {currentPage === 2 && (
+          <div className="absolute top-9 right-5 bg-nice-purple rounded text-white pl-2 pr-2 font-sans">
+            New
+          </div>
+        )}
+
         <Link to={`/product/${_id}`}>
           <img alt="" src={imgUrl} width={200} height={200} />
         </Link>
-        <div className="absolute bottom-5 bg-purple-600 w-48 h-10 flex">
+        <div className="absolute bottom-5 bg-nice-purple w-48 h-10 flex">
           <button
-            className="border border-gray-400 flex justify-center items-center hover:bg-black"
+            className="border border-gray-400 flex justify-center items-center  hover:bg-black"
             title="Add to Wishlist"
             type="button"
             onClick={handleClick}
@@ -120,7 +158,7 @@ const ProductCard = ({ _id, productName, imgUrl, rating, price }: Product) => {
         </Link>
 
         <Rating
-          value={typeof rating === 'string' ? parseInt(rating, 10) : rating}
+          value={typeof rating === 'string' ? parseFloat(rating) : rating}
           readOnly
           precision={0.5}
         />

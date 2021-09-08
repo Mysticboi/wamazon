@@ -19,7 +19,7 @@ import Footer from './components/Footer';
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#a749ff',
+      main: '#A548FC',
     },
   },
   overrides: {

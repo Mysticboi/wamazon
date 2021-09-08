@@ -7,6 +7,7 @@ const {
   getTopSellers,
   getTopRated,
   getNewArrivals,
+  getProductsShop,
 } = require('../controllers/product');
 
 const router = express.Router();
@@ -17,5 +18,6 @@ router.delete('/:productId', decode, deleteProduct);
 router.get('/topSellers', getTopSellers);
 router.get('/topRated', getTopRated);
 router.get('/newArrivals', getNewArrivals);
+router.get('/shop', getProductsShop);
 
 module.exports = router;

@@ -7,6 +7,7 @@ const productSchema = mongoose.Schema({
   quantity: { type: Number, required: true },
   seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   dateOfEnter: { type: Date, default: new Date() },
+  category: { type: String, default: '' },
   images: [
     {
       _id: false,
@@ -30,5 +31,8 @@ const productSchema = mongoose.Schema({
   ],
   nSold: { type: Number, default: 0 },
 });
+
+// Text index for enabling $search query
+productSchema.index({ productName: 'text' });
 
 module.exports = mongoose.model('Product', productSchema);
