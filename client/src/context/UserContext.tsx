@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 
-type IUserContext = {
+type TUserContext = {
   token: string | null;
   setToken: (token: string) => void;
   userName: string | null;
@@ -9,7 +9,7 @@ type IUserContext = {
   logOut: () => void;
 };
 
-export const UserContext = createContext<IUserContext>({
+export const UserContext = createContext<TUserContext>({
   token: '',
   setToken: () => {},
   userName: '',

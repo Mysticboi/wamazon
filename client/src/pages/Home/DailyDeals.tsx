@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Rating } from '@material-ui/lab';
 import { FavoriteBorder, Star } from '@material-ui/icons';
 import flame from '../../images/flame.svg';
+import { WishListContext } from '../../context/WishListContext';
 
 interface Product {
   _id: string;
@@ -108,8 +109,10 @@ const ProductCard = ({
   price,
   currentPage,
 }: CardProps) => {
+  const { addToWishList } = useContext(WishListContext);
+
   const handleClick = () => {
-    // TODO Add item to wishList using it's _id
+    addToWishList(_id);
   };
 
   return (

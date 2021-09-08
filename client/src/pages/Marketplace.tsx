@@ -423,7 +423,7 @@ const Marketplace = () => {
           </Dialog>
         </div>
       ) : (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center h-96">
           <div className="text-center mt-10 text-xl border border-gray-500 p-5">
             <p>
               You must be connected to access the marketplace.{' '}

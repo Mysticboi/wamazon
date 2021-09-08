@@ -211,3 +211,24 @@ exports.getProductsShop = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+/** Get products for wishlist, we provide the productIds in the request */
+exports.getProductsWishList = async (req, res) => {
+  try {
+    const { productIds } = req.query;
+
+    let products = await Product.find({ _id: { $in: productIds } });
+
+    products = products.map(({ _id, productName, price, images }) => ({
+      _id,
+      productName,
+      price,
+      imgUrl: images?.length > 0 ? images[0].imgUrl : defaultImgUrl,
+    }));
+
+    res.status(200).json({ products });
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

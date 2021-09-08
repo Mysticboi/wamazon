@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   ShoppingCartOutlined,
   KeyboardArrowDown,
@@ -6,6 +6,7 @@ import {
 } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 import { Paper, Collapse, Divider } from '@material-ui/core';
+import { WishListContext } from '../context/WishListContext';
 
 type NavItemProps = {
   name: string;
@@ -13,57 +14,64 @@ type NavItemProps = {
   paperContent?: React.ReactElement;
 };
 
-const NavBar = () => (
-  <div>
-    <nav className="justify-center flex invisible sm:visible">
-      <div className="flex space-x-5">
-        <Link to="/">
-          <div className="hover:text-purple-500 text-lg">Home</div>
-        </Link>
-        <NavItem
-          name="Shop"
-          link="/shop"
-          paperContent={
-            <div className="w-40">
-              <p>Shop where you can buy a wide variety of items like: </p>
-              <li className="ml-5">Clothes</li>
-              <li className="ml-5">Furniture</li>
-              <li className="ml-5">Electronics...</li>
-            </div>
-          }
-        />
-        <NavItem
-          name="Marketplace"
-          link="/marketplace"
-          paperContent={
-            <div className="w-40">
-              Marketplace where you can sell your items
-            </div>
-          }
-        />
-        <Link to="/contact">
-          <div className="hover:text-purple-500 text-lg">Contact Us</div>
+const NavBar = () => {
+  const { wishListLength } = useContext(WishListContext);
+  return (
+    <div>
+      <nav className="justify-center flex invisible sm:visible">
+        <div className="flex space-x-5">
+          <Link to="/">
+            <div className="hover:text-purple-500 text-lg">Home</div>
+          </Link>
+          <NavItem
+            name="Shop"
+            link="/shop"
+            paperContent={
+              <div className="w-40">
+                <p>Shop where you can buy a wide variety of items like: </p>
+                <li className="ml-5">Clothes</li>
+                <li className="ml-5">Furniture</li>
+                <li className="ml-5">Electronics...</li>
+              </div>
+            }
+          />
+          <NavItem
+            name="Marketplace"
+            link="/marketplace"
+            paperContent={
+              <div className="w-40">
+                Marketplace where you can sell your items
+              </div>
+            }
+          />
+          <Link to="/contact">
+            <div className="hover:text-purple-500 text-lg">Contact Us</div>
+          </Link>
+        </div>
+      </nav>
+
+      <Cart />
+
+      <div className="absolute top-14 right-20" title="Go to wishlist">
+        <Link to="/wishlist" className="hover:text-purple-500 relative">
+          <FavoriteBorder style={{ fontSize: 40 }} className="mr-1" />
+          <span
+            className={`absolute bottom-2 right-0 rounded-full w-5 h-5 flex items-center justify-center bg-black text-white font-sans ${
+              wishListLength ? 'animate-bounce' : ''
+            }`}
+          >
+            {wishListLength}
+          </span>
         </Link>
       </div>
-    </nav>
 
-    <Cart />
-
-    <div className="absolute top-14 right-20" title="Go to wishlist">
-      <Link to="/wishlist" className="hover:text-purple-500 relative">
-        <FavoriteBorder style={{ fontSize: 40 }} className="mr-1" />
-        <span className="absolute bottom-2 right-0 rounded-full w-5 h-5 flex items-center justify-center bg-black text-white font-sans animate-bounce">
-          {4}
-        </span>
-      </Link>
+      <div className="mt-3">
+        {' '}
+        <Divider />
+      </div>
     </div>
-
-    <div className="mt-3">
-      {' '}
-      <Divider />
-    </div>
-  </div>
-);
+  );
+};
 
 const NavItem = ({ name, link, paperContent }: NavItemProps) => {
   const [checked, setChecked] = useState(false);

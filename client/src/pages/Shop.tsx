@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import {
   TextField,
   InputAdornment,
@@ -14,6 +14,7 @@ import axios from 'axios';
 import { Rating, Pagination } from '@material-ui/lab';
 import Select from 'react-select';
 import categories from '../data/categories.json';
+import { WishListContext } from '../context/WishListContext';
 
 interface Product {
   _id: string;
@@ -195,8 +196,9 @@ const Shop = () => {
 };
 
 const ProductCard = ({ _id, productName, imgUrl, rating, price }: Product) => {
+  const { addToWishList } = useContext(WishListContext);
   const handleClick = () => {
-    // TODO Add item to wishList using it's _id
+    addToWishList(_id);
   };
 
   return (
