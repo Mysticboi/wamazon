@@ -62,7 +62,7 @@ const WishList = () => {
 
   return (
     <div>
-      <div className="text-center text-2xl h-20 flex justify-center items-center">
+      <div className="text-center text-2xl bg-gray-100 h-20 flex justify-center items-center">
         <p>Your Wishlist</p>
       </div>
 

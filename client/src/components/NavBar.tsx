@@ -7,6 +7,7 @@ import {
 import { Link } from 'react-router-dom';
 import { Paper, Collapse, Divider } from '@material-ui/core';
 import { WishListContext } from '../context/WishListContext';
+import { CartContext } from '../context/CartContext';
 
 type NavItemProps = {
   name: string;
@@ -96,7 +97,7 @@ const NavItem = ({ name, link, paperContent }: NavItemProps) => {
 };
 
 const Cart = () => {
-  const items: number[] = [5, 15];
+  const { cartLength, totalPrice } = useContext(CartContext);
   const [checked, setChecked] = useState(false);
   return (
     <div className="absolute top-14 right-2 flex space-x-3 z-10">
@@ -107,14 +108,18 @@ const Cart = () => {
           onClick={() => setChecked((prev) => !prev)}
         >
           <ShoppingCartOutlined style={{ fontSize: 40 }} />
-          <span className="absolute top-0 right-1.5 rounded-full w-5 h-5 flex items-center justify-center bg-black text-white font-sans animate-bounce">
-            {items.length}
+          <span
+            className={`absolute top-0 right-1.5 rounded-full w-5 h-5 flex items-center justify-center bg-black text-white font-sans ${
+              cartLength > 0 ? 'animate-bounce' : ''
+            }`}
+          >
+            {cartLength}
           </span>
         </button>
 
         <Collapse in={checked} className="absolute top-22 right-10">
           <Paper elevation={1}>
-            {items.length === 0 ? (
+            {cartLength === 0 ? (
               <div className="w-72 h-10 flex justify-center items-center z-10">
                 No items added to cart
               </div>
@@ -125,7 +130,7 @@ const Cart = () => {
                     Total <b>:</b>
                   </span>
                   <span className="font-sans right-10 absolute">
-                    {items.reduce((acc, x) => acc + x, 0).toFixed(2)}€
+                    {totalPrice.toFixed(2)}€
                   </span>
                 </div>
 

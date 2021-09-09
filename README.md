@@ -1,6 +1,6 @@
 # Wamazon
 
-**_A full-stack MERN e-commerce website_**
+**_A full-stack MERN e-commerce website (built from scratch)_**
 
 <p align="center"><b>Currently in development</b></p>
 

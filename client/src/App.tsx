@@ -6,6 +6,7 @@ import Signup from './pages/Signup';
 import Login from './pages/Login';
 import { UserContextProvider } from './context/UserContext';
 import { WishListContextProvider } from './context/WishListContext';
+import { CartContextProvider } from './context/CartContext';
 import Account from './pages/Account/Account';
 import Home from './pages/Home/Home';
 import NavBar from './components/NavBar';
@@ -57,65 +58,67 @@ const AppDesktop = () => (
     <ThemeProvider theme={theme}>
       <UserContextProvider>
         <WishListContextProvider>
-          <BrowserRouter>
-            <Header />
-            <Switch>
-              <Route exact path="/">
-                <NavBar />
-                <Home />
-              </Route>
+          <CartContextProvider>
+            <BrowserRouter>
+              <Header />
+              <Switch>
+                <Route exact path="/">
+                  <NavBar />
+                  <Home />
+                </Route>
 
-              <Route path="/signup">
-                <Signup />
-              </Route>
+                <Route path="/signup">
+                  <Signup />
+                </Route>
 
-              <Route path="/login">
-                <Login />
-              </Route>
+                <Route path="/login">
+                  <Login />
+                </Route>
 
-              <Route path="/account">
-                <NavBar />
-                <Account />
-              </Route>
+                <Route path="/account">
+                  <NavBar />
+                  <Account />
+                </Route>
 
-              <Route path="/shop">
-                <NavBar />
-                <Shop />
-              </Route>
+                <Route path="/shop">
+                  <NavBar />
+                  <Shop />
+                </Route>
 
-              <Route path="/marketplace">
-                <NavBar />
-                <Marketplace />
-              </Route>
+                <Route path="/marketplace">
+                  <NavBar />
+                  <Marketplace />
+                </Route>
 
-              <Route path="/cart">
-                <NavBar />
-                <Cart />
-              </Route>
+                <Route path="/cart">
+                  <NavBar />
+                  <Cart />
+                </Route>
 
-              <Route path="/checkout">
-                <NavBar />
-                <Checkout />
-              </Route>
+                <Route path="/checkout">
+                  <NavBar />
+                  <Checkout />
+                </Route>
 
-              <Route path="/wishlist">
-                <NavBar />
-                <WishList />
-              </Route>
+                <Route path="/wishlist">
+                  <NavBar />
+                  <WishList />
+                </Route>
 
-              <Route path="/product/:productId">
-                <NavBar />
-                <Product />
-              </Route>
+                <Route path="/product/:productId">
+                  <NavBar />
+                  <Product />
+                </Route>
 
-              <Route path="/contact">
-                <NavBar />
-                <Contact />
-              </Route>
-            </Switch>
+                <Route path="/contact">
+                  <NavBar />
+                  <Contact />
+                </Route>
+              </Switch>
 
-            <Footer />
-          </BrowserRouter>
+              <Footer />
+            </BrowserRouter>
+          </CartContextProvider>
         </WishListContextProvider>
       </UserContextProvider>
     </ThemeProvider>

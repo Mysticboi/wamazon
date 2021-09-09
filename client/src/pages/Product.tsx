@@ -6,6 +6,7 @@ import { FavoriteBorder } from '@material-ui/icons';
 import axios from 'axios';
 import { Slide } from 'react-slideshow-image';
 import { WishListContext } from '../context/WishListContext';
+import { CartContext } from '../context/CartContext';
 import 'react-slideshow-image/dist/styles.css';
 
 type Product = {
@@ -40,6 +41,7 @@ const ProductPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
 
   const { addToWishList } = useContext(WishListContext);
+  const { addToCart } = useContext(CartContext);
 
   console.log('product', product);
 
@@ -127,7 +129,15 @@ const ProductPage = () => {
                   </button>
                 </div>
 
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {
+                    if (product) {
+                      addToCart(productId, quantity, product.price);
+                    }
+                  }}
+                >
                   Add to cart
                 </Button>
 
