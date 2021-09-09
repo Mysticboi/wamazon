@@ -7,6 +7,7 @@ import {
   FormControlLabel,
   RadioGroup,
   Radio,
+  CircularProgress,
 } from '@material-ui/core';
 import { Search, FavoriteBorder } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
@@ -46,6 +47,7 @@ const Shop = () => {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('');
   const [filter, setFilter] = useState<Filter | null>(filterOptions[0]);
+  const [loading, setLoading] = useState(true);
 
   // Number of products per page
   const limit = 4;
@@ -68,6 +70,7 @@ const Shop = () => {
       const { products, totalPages } = response.data;
       setProducts(products);
       setTotalPages(totalPages);
+      setLoading(false);
     } catch (e) {
       console.error('Failed fetch products');
     }
@@ -145,51 +148,57 @@ const Shop = () => {
           </div>
         </div>
 
-        <div className="w-3/4">
-          <div className="w-48 text-sm font-sans mt-3 ml-3">
-            <Select
-              options={filterOptions}
-              isSearchable={false}
-              value={filter}
-              onChange={(value) => setFilter(value)}
-              theme={(theme) => ({
-                ...theme,
-                borderRadius: 0,
-                colors: {
-                  ...theme.colors,
-                  primary25: '#A548FC',
-                  primary: 'black',
-                },
-              })}
-            />
+        {loading ? (
+          <div className="h-96 flex justify-center items-center w-full">
+            <CircularProgress color="primary" size={70} />
           </div>
-
-          {products.length > 0 ? (
-            <div>
-              <div className="flex flex-wrap justify-center items-center space-x-20 mt-8">
-                {products.map((product) => (
-                  <ProductCard {...product} key={product._id} />
-                ))}
-              </div>
-
-              <div className="flex justify-center items-center w-full mt-7">
-                <Pagination
-                  count={totalPages}
-                  page={page}
-                  onChange={handlePageChange}
-                  color="primary"
-                  disabled={totalPages === 1}
-                />
-              </div>
+        ) : (
+          <div className="w-3/4">
+            <div className="w-48 text-sm font-sans mt-3 ml-3">
+              <Select
+                options={filterOptions}
+                isSearchable={false}
+                value={filter}
+                onChange={(value) => setFilter(value)}
+                theme={(theme) => ({
+                  ...theme,
+                  borderRadius: 0,
+                  colors: {
+                    ...theme.colors,
+                    primary25: '#A548FC',
+                    primary: 'black',
+                  },
+                })}
+              />
             </div>
-          ) : (
-            <div className="text-3xl flex justify-center items-center h-96">
-              <div className="border-4 border-purple-500 p-5">
-                No products yet. Coming soon...
+
+            {products.length > 0 ? (
+              <div>
+                <div className="flex flex-wrap justify-center items-center space-x-20 mt-8">
+                  {products.map((product) => (
+                    <ProductCard {...product} key={product._id} />
+                  ))}
+                </div>
+
+                <div className="flex justify-center items-center w-full mt-7">
+                  <Pagination
+                    count={totalPages}
+                    page={page}
+                    onChange={handlePageChange}
+                    color="primary"
+                    disabled={totalPages === 1}
+                  />
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            ) : (
+              <div className="text-3xl flex justify-center items-center h-96">
+                <div className="border-4 border-purple-500 p-5">
+                  No products yet. Coming soon...
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

@@ -17,6 +17,7 @@ import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import Footer from './components/Footer';
 import WishList from './pages/WishList';
+import Product from './pages/Product';
 
 const theme = createTheme({
   palette: {
@@ -100,6 +101,11 @@ const AppDesktop = () => (
               <Route path="/wishlist">
                 <NavBar />
                 <WishList />
+              </Route>
+
+              <Route path="/product/:productId">
+                <NavBar />
+                <Product />
               </Route>
 
               <Route path="/contact">

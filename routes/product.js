@@ -9,6 +9,7 @@ const {
   getNewArrivals,
   getProductsShop,
   getProductsWishList,
+  getProduct,
 } = require('../controllers/product');
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.get('/topRated', getTopRated);
 router.get('/newArrivals', getNewArrivals);
 router.get('/shop', getProductsShop);
 router.get('/wishList', getProductsWishList);
+router.get('/:productId', getProduct);
 
 module.exports = router;

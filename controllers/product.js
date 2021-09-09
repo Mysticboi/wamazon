@@ -232,3 +232,45 @@ exports.getProductsWishList = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+/** Get 1 product for the product page */
+exports.getProduct = async (req, res) => {
+  try {
+    const { productId } = req.params;
+    const product = await Product.findById(productId);
+    if (!product) {
+      res.status(404).json({ error: 'Product not found' });
+    } else {
+      const {
+        _id,
+        productName,
+        price,
+        reviews,
+        images,
+        description,
+        informations,
+        category,
+      } = product;
+
+      const finalProduct = {
+        _id,
+        productName,
+        price,
+        rating: getRating(reviews),
+        description,
+        images:
+          images?.length > 0
+            ? images.map(({ imgUrl }) => ({ imgUrl }))
+            : [{ imgUrl: defaultImgUrl }],
+        informations,
+        reviews,
+        category: category || '',
+      };
+
+      res.status(200).json({ product: finalProduct });
+    }
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
