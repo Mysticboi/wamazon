@@ -117,7 +117,7 @@ const WishList = () => {
           <p className="text-2xl">Your wishlist is empty</p>
 
           <Link to="shop">
-            <div className="border-2 h-12 border-black text-lg p-4 bg-black text-white shadow-md  w-40 m-auto flex justify-center items-center hover:bg-purple-500 hover:border-purple-500 hover:text-white">
+            <div className="border-2 h-12 border-black text-lg p-4 bg-black text-white shadow-md  w-40 m-auto flex justify-center items-center hover:bg-purple-500 hover:border-purple-500 font-semibold font-sans">
               Add items
             </div>
           </Link>

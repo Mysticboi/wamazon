@@ -2,15 +2,23 @@ import React, { createContext, useState } from 'react';
 
 type Product = {
   _id: string;
+  productName: string;
   price: number;
   quantity: number;
+  imgUrl: string;
 };
 
 type CartContextT = {
   cart: Product[];
   cartLength: number;
   totalPrice: number;
-  addToCart: (productId: string, quantity: number, price: number) => void;
+  addToCart: (
+    productId: string,
+    productName: string,
+    imgUrl: string,
+    quantity: number,
+    price: number
+  ) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
@@ -19,7 +27,7 @@ type CartContextT = {
 export const CartContext = createContext<CartContextT>({
   cart: [],
   cartLength: 0,
-  totalPrice: 0.0,
+  totalPrice: 0,
   addToCart: () => {},
   removeFromCart: () => {},
   updateQuantity: () => {},
@@ -42,12 +50,21 @@ export const CartContextProvider = ({
     0
   );
 
-  const addToCart = (productId: string, quantity: number, price: number) => {
+  const addToCart = (
+    productId: string,
+    productName: string,
+    imgUrl: string,
+    quantity: number,
+    price: number
+  ) => {
     const foundProduct = cart.find(({ _id }) => productId === _id);
     if (foundProduct) {
       updateQuantity(productId, quantity + foundProduct.quantity);
     } else {
-      const newCart = [...cart, { _id: productId, quantity, price }];
+      const newCart = [
+        ...cart,
+        { _id: productId, productName, imgUrl, quantity, price },
+      ];
       localStorage.setItem('cart', JSON.stringify(newCart));
       setCart(newCart);
     }

@@ -27,7 +27,7 @@ const Stock = () => {
   const [update, setUpdate] = useState(false);
 
   // Number of products per page
-  const limit = 2;
+  const limit = 3;
 
   const { token } = useContext(UserContext);
 

@@ -225,11 +225,12 @@ const ProductCard = ({ _id, productName, imgUrl, rating, price }: Product) => {
           >
             <FavoriteBorder style={{ color: 'white' }} />
           </button>
-          <div className="text-white hover:bg-black border border-gray-400 w-full flex justify-center items-center">
-            <Link to={`/product/${_id}`} className="text-lg">
-              View Item
-            </Link>
-          </div>
+          <Link
+            to={`/product/${_id}`}
+            className="text-lg h-full  text-white hover:bg-black border border-gray-400 w-full flex justify-center items-center"
+          >
+            View Item
+          </Link>
         </div>
       </div>
       <div className="text-center w-60">

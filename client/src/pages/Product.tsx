@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { Button, CircularProgress, IconButton } from '@material-ui/core';
-import { Rating } from '@material-ui/lab';
+import {
+  Button,
+  CircularProgress,
+  IconButton,
+  Snackbar,
+  SnackbarCloseReason,
+} from '@material-ui/core';
+import { Rating, Alert } from '@material-ui/lab';
 import { FavoriteBorder } from '@material-ui/icons';
 import axios from 'axios';
 import { Slide } from 'react-slideshow-image';
@@ -39,6 +45,8 @@ const ProductPage = () => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
+  // Becomes true when we add to cart to display snackbar alert of success
+  const [addedToCart, setAddedToCart] = useState(false);
 
   const { addToWishList } = useContext(WishListContext);
   const { addToCart } = useContext(CartContext);
@@ -64,6 +72,15 @@ const ProductPage = () => {
 
     getProduct();
   }, []);
+
+  const handleClose = (
+    event?: React.SyntheticEvent<Element, Event>,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === 'timeout') {
+      setAddedToCart(false);
+    }
+  };
   return (
     <div>
       <div className="text-center text-2xl bg-gray-100 h-20 flex justify-center items-center uppercase">
@@ -134,7 +151,14 @@ const ProductPage = () => {
                   color="primary"
                   onClick={() => {
                     if (product) {
-                      addToCart(productId, quantity, product.price);
+                      addToCart(
+                        productId,
+                        product.productName,
+                        product.images[0].imgUrl,
+                        quantity,
+                        product.price
+                      );
+                      setAddedToCart(true);
                     }
                   }}
                 >
@@ -202,6 +226,16 @@ const ProductPage = () => {
           )}
         </div>
       )}
+
+      <Snackbar
+        open={addedToCart}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <Alert severity="success" elevation={6} variant="filled">
+          Item added to cart
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

@@ -11,7 +11,6 @@
 1. Open a terminal on the working directory: wamazon.
 2. Run `npm install` to install backend dependencies.
 3. `cd client` and `yarn install` to install frontend dependencies.
-4. In _client/node_moduels/@types_ create react-slideshow-image folder and create a file index.d.ts inside of it with the following content: [index.d.ts](https://react-slideshow.herokuapp.com/typescript) (Section 3.Copy and paste)
 
 ### Configuration
 

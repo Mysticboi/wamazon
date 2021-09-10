@@ -7,6 +7,8 @@ module.exports = {
         85: '340px',
         100: '550px',
         200: '800px',
+        250: '1000px',
+        300: '1400px',
       },
       keyframes: {
         wiggle: {

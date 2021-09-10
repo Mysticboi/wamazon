@@ -48,6 +48,7 @@ exports.getStock = async (req, res) => {
     const seller = userId;
 
     let products = await Product.find({ seller })
+      .sort({ nSold: -1 })
       .limit(limit)
       .skip((page - 1) * limit);
 
