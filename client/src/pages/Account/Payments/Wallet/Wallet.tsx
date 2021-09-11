@@ -122,7 +122,7 @@ const Wallet = () => {
                 />
               )}
 
-              {!!creditCards.length && (
+              {creditCards.length > 0 && (
                 <div className="w-2/3">
                   <p className="text-xl mt-2 mb-2">Your credit cards</p>
 

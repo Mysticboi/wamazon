@@ -69,7 +69,7 @@ const AddBankAccount = ({
             authorization: token,
           },
         });
-        setBankAccount(data);
+        setBankAccount({ ...data, iban: iban.slice(0, 8).concat('********') });
         setOpen(false);
         setSuccess(true);
       } catch (error) {

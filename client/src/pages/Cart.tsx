@@ -1,16 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { Close, ShoppingCartOutlined } from '@material-ui/icons';
-import { IconButton, Button, Card } from '@material-ui/core';
+import { IconButton, Button } from '@material-ui/core';
 import { CartContext } from '../context/CartContext';
-
-interface Product {
-  _id: string;
-  productName: string;
-  price: number;
-  quantity: number;
-  imgUrl: string;
-}
 
 const Cart = () => {
   const {
