@@ -21,6 +21,7 @@ type Product = {
   price: number;
   rating: number;
   description: string;
+  quantity: number;
   images: [{ imgUrl: string }];
   informations: [
     {
@@ -50,6 +51,8 @@ const ProductPage = () => {
 
   const { addToWishList } = useContext(WishListContext);
   const { addToCart } = useContext(CartContext);
+
+  const isAvailable = product && product.quantity > 0;
 
   console.log('product', product);
 
@@ -97,7 +100,10 @@ const ProductPage = () => {
             <div className="w-1/2">
               <Slide easing="ease" duration={2500}>
                 {product?.images.map(({ imgUrl }) => (
-                  <div className="each-slide flex justify-center items-center">
+                  <div
+                    className="each-slide flex justify-center items-center"
+                    key={imgUrl}
+                  >
                     <img alt="" src={imgUrl} width={500} height={500} />
                   </div>
                 ))}
@@ -120,7 +126,7 @@ const ProductPage = () => {
                     type="button"
                     className="mr-3 ml-1"
                     onClick={() => {
-                      if (quantity > 1) {
+                      if (isAvailable && quantity > 1) {
                         setQuantity(quantity - 1);
                       }
                     }}
@@ -137,7 +143,7 @@ const ProductPage = () => {
                     type="button"
                     className="ml-3 mr-1"
                     onClick={() => {
-                      if (quantity < 10) {
+                      if (isAvailable && quantity < 10) {
                         setQuantity(quantity + 1);
                       }
                     }}
@@ -146,24 +152,32 @@ const ProductPage = () => {
                   </button>
                 </div>
 
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => {
-                    if (product) {
-                      addToCart(
-                        productId,
-                        product.productName,
-                        product.images[0].imgUrl,
-                        quantity,
-                        product.price
-                      );
-                      setAddedToCart(true);
-                    }
-                  }}
-                >
-                  Add to cart
-                </Button>
+                {isAvailable ? (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                      if (product) {
+                        addToCart(
+                          productId,
+                          product.productName,
+                          product.images[0].imgUrl,
+                          quantity,
+                          product.price
+                        );
+                        setAddedToCart(true);
+                      }
+                    }}
+                  >
+                    Add to cart
+                  </Button>
+                ) : (
+                  <div className="cursor-not-allowed flex justify-center items-center">
+                    <Button variant="contained" disabled fullWidth size="large">
+                      Out of stock
+                    </Button>
+                  </div>
+                )}
 
                 <IconButton
                   title="Add to wishlist"

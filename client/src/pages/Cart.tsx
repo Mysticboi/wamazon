@@ -37,8 +37,8 @@ const Cart = () => {
                     <th className="w-72">Product Name</th>
                     <th className="w-40">Unit price</th>
                     <th className="w-52">Qty</th>
-                    <th className="w-40">Subtotal</th>
-                    <th className="w-20">Action</th>
+                    <th className="w-20">Subtotal</th>
+                    <th className="w-40">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -105,9 +105,18 @@ const Cart = () => {
                       </td>
 
                       <td className="border border-gray-500 px-4 py-2 font-medium">
-                        <div className="flex justify-center items-center">
+                        <div className="flex justify-center items-center space-x-5">
+                          <Link to={`/product/${_id}`}>
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              size="large"
+                            >
+                              View
+                            </Button>
+                          </Link>
                           <IconButton onClick={() => removeFromCart(_id)}>
-                            <Close style={{ color: 'black' }} />
+                            <Close style={{ color: 'red' }} />
                           </IconButton>
                         </div>
                       </td>

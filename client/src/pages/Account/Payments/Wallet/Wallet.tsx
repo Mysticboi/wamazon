@@ -107,7 +107,7 @@ const Wallet = () => {
           <p className="text-3xl">Wallet</p>
 
           {loading ? (
-            <div className="m-auto w-2/3">
+            <div className="m-auto w-2/3 h-96">
               <div className="m-auto w-3/4 mt-20">
                 <CircularProgress color="primary" />
               </div>

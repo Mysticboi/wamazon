@@ -251,6 +251,7 @@ exports.getProduct = async (req, res) => {
         description,
         informations,
         category,
+        quantity,
       } = product;
 
       const finalProduct = {
@@ -258,6 +259,7 @@ exports.getProduct = async (req, res) => {
         productName,
         price,
         rating: getRating(reviews),
+        quantity,
         description,
         images:
           images?.length > 0

@@ -19,6 +19,7 @@ import Addresses from './Addresses/Addresses';
 import AccountNavBar from '../../components/AccountNavBar';
 import Payments from './Payments/Payments';
 import Stock from './Stock';
+import Orders from './Orders';
 
 type Values = {
   oldPassword: string;
@@ -342,6 +343,10 @@ const Account = () => {
 
         <Route path={`${path}/stock`}>
           <Stock />
+        </Route>
+
+        <Route path={`${path}/orders`}>
+          <Orders />
         </Route>
       </Switch>
     </>

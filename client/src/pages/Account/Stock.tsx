@@ -68,7 +68,7 @@ const Stock = () => {
       <p className="text-center text-4xl mt-1">Your Stock</p>
 
       {loading ? (
-        <div className="flex justify-center items-center w-full mt-5">
+        <div className="flex justify-center items-center w-full mt-5 h-96">
           <CircularProgress color="primary" />
         </div>
       ) : (
@@ -98,16 +98,18 @@ const Stock = () => {
               </div>
             </div>
           ) : (
-            <div className="text-center text-xl mt-10 border-2 border-gray-500 w-200 m-auto">
-              <p>You currently have no products to sell.</p>
-              <p>Go to the marketplace to register a new product.</p>
-              <Link
-                to="/marketplace"
-                className="underline text-indigo-600 hover:text-indigo-900 transform"
-              >
-                {' '}
-                Let's start
-              </Link>
+            <div className="h-96 flex justify-center items-center">
+              <div className="text-center text-xl mt-10 border-2 border-gray-500 w-200">
+                <p>You currently have no products to sell.</p>
+                <p>Go to the marketplace to register a new product.</p>
+                <Link
+                  to="/marketplace"
+                  className="underline text-indigo-600 hover:text-indigo-900 transform"
+                >
+                  {' '}
+                  Let's start
+                </Link>
+              </div>
             </div>
           )}
         </div>
