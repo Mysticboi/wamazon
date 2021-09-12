@@ -11,6 +11,8 @@ import { Rating, Alert } from '@material-ui/lab';
 import { FavoriteBorder } from '@material-ui/icons';
 import axios from 'axios';
 import { Slide } from 'react-slideshow-image';
+import { Form, Field } from 'react-final-form';
+import { TextField } from 'final-form-material-ui';
 import { WishListContext } from '../context/WishListContext';
 import { CartContext } from '../context/CartContext';
 import 'react-slideshow-image/dist/styles.css';
@@ -33,21 +35,40 @@ type Product = {
     {
       comment: string;
       rating: number;
+      name?: string;
     }
   ];
   category: string;
+};
+
+// for review form
+type Values = {
+  name: string;
+  rating: number;
+  comment: string;
+};
+
+type Error = {
+  name?: string;
+  rating?: string;
+  comment?: string;
 };
 
 const pages = ['Additionnal Information', 'Reviews'];
 
 const ProductPage = () => {
   const { productId } = useParams<{ productId: string }>();
+
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   // Becomes true when we add to cart to display snackbar alert of success
   const [addedToCart, setAddedToCart] = useState(false);
+
+  // For review form
+  const [errors, setErrors] = useState<Error>({});
+  const [update, setUpdate] = useState(false);
 
   const { addToWishList } = useContext(WishListContext);
   const { addToCart } = useContext(CartContext);
@@ -74,7 +95,7 @@ const ProductPage = () => {
     };
 
     getProduct();
-  }, []);
+  }, [update]);
 
   const handleClose = (
     event?: React.SyntheticEvent<Element, Event>,
@@ -82,6 +103,37 @@ const ProductPage = () => {
   ) => {
     if (reason === 'timeout') {
       setAddedToCart(false);
+    }
+  };
+
+  const onReviewSubmit = async (values: Values) => {
+    const { name, rating, comment } = values;
+    const finalErrors: Error = {};
+    if (!name) {
+      finalErrors.name = 'Empty';
+    }
+    if (!rating) {
+      finalErrors.rating = 'Please select a rating';
+    }
+    if (!comment) {
+      finalErrors.comment = 'Please write a message';
+    }
+
+    setErrors(finalErrors);
+
+    if (Object.keys(finalErrors).length === 0) {
+      // No errors we continue
+      try {
+        await axios.post(
+          `http://localhost:5000/product/review/${product?._id}`,
+          values
+        );
+
+        // For refetching product with updated review
+        setUpdate((prev) => !prev);
+      } catch (error) {
+        console.error('Failed adding review', error);
+      }
     }
   };
   return (
@@ -115,7 +167,12 @@ const ProductPage = () => {
               <p className="text-3xl text-red-500 font-sans font-semibold mt-2">
                 {product?.price.toFixed(2)}€
               </p>
-              <Rating value={product?.rating} readOnly className="mt-5 mb-5" />
+              <Rating
+                value={product?.rating}
+                readOnly
+                className="mt-5 mb-5"
+                precision={0.5}
+              />
               <p className="text-lg">{product?.description}</p>
 
               <div className="w-full h-0.5 bg-gray-200 mt-5 mb-5" />
@@ -212,7 +269,7 @@ const ProductPage = () => {
                   className={className}
                   onClick={handleClick}
                 >
-                  {page}
+                  {index === 0 ? page : `${page}(${product?.reviews.length})`}
                 </button>
               );
             })}
@@ -236,6 +293,109 @@ const ProductPage = () => {
                   No additionnal information provided by the seller.
                 </div>
               )}
+            </div>
+          )}
+
+          {currentPage === 1 && (
+            <div className="flex">
+              <div className="w-2/3">
+                <div>
+                  {product?.reviews.map(({ comment, rating, name }) => (
+                    <div className="mb-7">
+                      <div className="flex">
+                        <p className="text-xl w-56">{name || 'Anonymous'}</p>
+                        <Rating value={rating} readOnly />
+                      </div>
+
+                      <div className="w-3/4 text-lg text-gray-700">
+                        {comment}.
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="w-1/3">
+                <p className="text-xl font-semibold">Add a review</p>
+
+                <Form
+                  onSubmit={onReviewSubmit}
+                  render={({ handleSubmit, form }) => (
+                    <form
+                      onSubmit={(event) => {
+                        handleSubmit(event)?.then(() => form.reset());
+                      }}
+                      className="w-full flex-col flex"
+                      noValidate
+                    >
+                      <div className="w-40">
+                        <Field
+                          name="name"
+                          component={TextField}
+                          type="text"
+                          label="Name"
+                          size="medium"
+                          required
+                          fullWidth
+                        />
+                        {errors?.name && (
+                          <span className="text-red-600 font-bold underline text-sm">
+                            {errors.name}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="mt-5">
+                        <span>Your rating: </span>
+                        <Field name="rating">
+                          {(props) => (
+                            <div>
+                              <Rating
+                                // eslint-disable-next-line react/prop-types
+                                name={props.input.name}
+                                // eslint-disable-next-line react/prop-types
+                                value={props.input.value}
+                                // eslint-disable-next-line react/prop-types
+                                onChange={props.input.onChange}
+                              />
+                            </div>
+                          )}
+                        </Field>
+                        {errors?.rating && (
+                          <span className="text-red-600 font-bold underline text-sm">
+                            {errors.rating}
+                          </span>
+                        )}
+                      </div>
+
+                      <div className="mt-5 border border-gray-400 w-full">
+                        <Field
+                          name="comment"
+                          component="textarea"
+                          placeholder="Message"
+                          className="w-full"
+                        />
+                      </div>
+                      {errors?.comment && (
+                        <span className="text-red-600 font-bold underline text-sm">
+                          {errors.comment}
+                        </span>
+                      )}
+
+                      <div className="mt-10">
+                        <Button
+                          size="large"
+                          variant="contained"
+                          color="primary"
+                          type="submit"
+                          className="hover:scale-110 transform mt-5"
+                        >
+                          Send
+                        </Button>
+                      </div>
+                    </form>
+                  )}
+                />
+              </div>
             </div>
           )}
         </div>

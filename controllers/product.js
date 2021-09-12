@@ -303,3 +303,20 @@ exports.updateStockProduct = async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 };
+
+/** Adding a review */
+exports.addReview = async (req, res) => {
+  const { productId } = req.params;
+  const { name, rating, comment } = req.body;
+  try {
+    await Product.updateOne(
+      { _id: productId },
+      { $push: { reviews: { name, rating, comment } } }
+    );
+
+    res.status(201).json({ message: 'Success adding review' });
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};

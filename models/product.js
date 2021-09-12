@@ -27,6 +27,7 @@ const productSchema = mongoose.Schema({
       _id: false,
       comment: String,
       rating: Number,
+      name: String,
     },
   ],
   nSold: { type: Number, default: 0 },

@@ -11,6 +11,7 @@ const {
   getProductsWishList,
   getProduct,
   updateStockProduct,
+  addReview,
 } = require('../controllers/product');
 
 const router = express.Router();
@@ -25,5 +26,6 @@ router.get('/shop', getProductsShop);
 router.get('/wishList', getProductsWishList);
 router.get('/:productId', getProduct);
 router.put('/stock/:productId', decode, updateStockProduct);
+router.post('/review/:productId', addReview);
 
 module.exports = router;
