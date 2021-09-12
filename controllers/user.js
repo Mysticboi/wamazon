@@ -1,11 +1,11 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
+// const crypto = require('crypto');
 
 const User = require('../models/user');
 const { secret } = require('../config');
 const logger = require('../services/logger');
-const { sendEmail } = require('../services/nodemailer');
+// const { sendEmail } = require('../services/nodemailer');
 
 /** Signing Up the user and crypting his password  */
 exports.signup = async (req, res) => {
@@ -208,21 +208,23 @@ exports.forgotPassword = async (req, res) => {
         .status(404)
         .json({ message: 'Failed forgotPassword', error: 'Email not found' });
     } else {
-      const randomPassword = crypto.randomBytes(5).toString('hex');
-      const hash = await bcrypt.hash(randomPassword, 10);
-      user.password = hash;
-      await user.save();
+      // const randomPassword = crypto.randomBytes(5).toString('hex');
+      // const hash = await bcrypt.hash(randomPassword, 10);
+      // user.password = hash;
+      // await user.save();
 
-      const mailOptions = {
-        from: '"Wamazon" <walidoulderra@hotmail.fr>',
-        to: email,
-        subject: 'Forgotten password on wamazon.com',
-        html: `<h2>Hello ${user.fullName},</h2> <p>Your new password is <b>${randomPassword}</b> .</p> <p>You can use it to login and then go to your account and change your password.</p>`,
-      };
+      // const mailOptions = {
+      //   from: '"Wamazon" <walidoulderra@hotmail.fr>',
+      //   to: email,
+      //   subject: 'Forgotten password on wamazon.com',
+      //   html: `<h2>Hello ${user.fullName},</h2> <p>Your new password is <b>${randomPassword}</b> .</p> <p>You can use it to login and then go to your account and change your password.</p>`,
+      // };
 
-      await sendEmail(mailOptions);
+      // await sendEmail(mailOptions);
 
-      res.status(200).json({ message: 'Email sent to user' });
+      res
+        .status(200)
+        .json({ message: 'Unemplemented because need unpersonnal email' });
     }
   } catch (error) {
     logger.error(error);
