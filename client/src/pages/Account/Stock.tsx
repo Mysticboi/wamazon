@@ -17,6 +17,7 @@ interface CardProps extends Product {
   token: string | null;
   setPage: React.Dispatch<React.SetStateAction<number>>;
   setUpdate: React.Dispatch<React.SetStateAction<boolean>>;
+  isAdmin: boolean;
 }
 
 const Stock = () => {
@@ -25,6 +26,7 @@ const Stock = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(true);
   const [update, setUpdate] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // Number of products per page
   const limit = 3;
@@ -44,9 +46,10 @@ const Stock = () => {
             params: { page, limit },
           }
         );
-        const { products, totalPages } = response.data;
+        const { products, totalPages, isAdmin } = response.data;
         setProducts(products);
         setTotalPages(totalPages);
+        setIsAdmin(isAdmin);
       } catch (e) {
         console.error('Failed fetch stock');
       }
@@ -82,6 +85,7 @@ const Stock = () => {
                     token={token}
                     setPage={setPage}
                     setUpdate={setUpdate}
+                    isAdmin={isAdmin}
                     key={product._id}
                   />
                 ))}
@@ -128,6 +132,7 @@ const ProductCard = ({
   token,
   setPage,
   setUpdate,
+  isAdmin,
 }: CardProps) => {
   const handleRemoveClick = async () => {
     try {
@@ -165,14 +170,15 @@ const ProductCard = ({
         <button type="button" className="text-xs text-blue-600">
           Edit
         </button>
-        |
-        <button
-          type="button"
-          className="text-xs text-blue-600"
-          onClick={handleRemoveClick}
-        >
-          Remove from stock
-        </button>
+        {isAdmin && (
+          <button
+            type="button"
+            className="text-xs text-blue-600"
+            onClick={handleRemoveClick}
+          >
+            Remove from stock
+          </button>
+        )}
       </div>
     </Card>
   );

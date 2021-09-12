@@ -47,7 +47,11 @@ exports.getStock = async (req, res) => {
     limit = parseInt(limit, 10);
     const seller = userId;
 
-    let products = await Product.find({ seller })
+    // If admin we give all the stocks so that he can delete
+    const isAdmin = seller === '613df83e608adc86dc981542';
+    const filter = isAdmin ? {} : { seller };
+
+    let products = await Product.find(filter)
       .sort({ nSold: -1 })
       .limit(limit)
       .skip((page - 1) * limit);
@@ -63,12 +67,13 @@ exports.getStock = async (req, res) => {
       })
     );
 
-    const count = await Product.countDocuments({ seller });
+    const count = await Product.countDocuments(filter);
 
     res.status(200).json({
       products,
       totalPages: Math.ceil(count / limit),
       currentPage: page,
+      isAdmin,
     });
   } catch (error) {
     logger.error(error);

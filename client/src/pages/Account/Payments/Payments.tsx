@@ -94,7 +94,7 @@ const PaymentsNavBar = () => {
 };
 
 const Presentation = () => (
-  <div className="m-auto w-2/3">
+  <div className="m-auto w-2/3 h-96">
     <div className="relative left-9 md:left-60">
       <p className="text-2xl">Presentation</p>
       <div className="mt-7 w-3/4 p-3 border-2 rounded-xl border-gray-300 relative">
