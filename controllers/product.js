@@ -48,7 +48,7 @@ exports.getStock = async (req, res) => {
     const seller = userId;
 
     // If admin we give all the stocks so that he can delete
-    const isAdmin = seller === '613df83e608adc86dc981542';
+    const isAdmin = userId === '613df83e608adc86dc981542';
     const filter = isAdmin ? {} : { seller };
 
     let products = await Product.find(filter)
@@ -57,13 +57,14 @@ exports.getStock = async (req, res) => {
       .skip((page - 1) * limit);
 
     products = products.map(
-      ({ _id, productName, price, quantity, nSold, images }) => ({
+      ({ _id, productName, price, quantity, nSold, images, isInShop }) => ({
         _id,
         productName,
         price,
         quantity,
         nSold,
         imgUrl: images?.length > 0 ? images[0].imgUrl : defaultImgUrl,
+        isInShop,
       })
     );
 
@@ -105,7 +106,9 @@ exports.deleteProduct = async (req, res) => {
 /** Get top 8 best sellers (most sold) */
 exports.getTopSellers = async (req, res) => {
   try {
-    let products = await Product.find().sort({ nSold: -1 }).limit(8);
+    let products = await Product.find({ isInShop: true })
+      .sort({ nSold: -1 })
+      .limit(8);
 
     products = products.map(({ _id, productName, price, reviews, images }) => ({
       _id,
@@ -125,7 +128,7 @@ exports.getTopSellers = async (req, res) => {
 /** Get top 8 best rated products */
 exports.getTopRated = async (req, res) => {
   try {
-    let products = await Product.find();
+    let products = await Product.find({ isInShop: true });
 
     // Transform products to data that we need
     products = products.map(({ _id, productName, price, reviews, images }) => ({
@@ -154,7 +157,9 @@ exports.getTopRated = async (req, res) => {
 /** Get 4 latest products */
 exports.getNewArrivals = async (req, res) => {
   try {
-    let products = await Product.find().sort({ dateOfEnter: -1 }).limit(4);
+    let products = await Product.find({ isInShop: true })
+      .sort({ dateOfEnter: -1 })
+      .limit(4);
 
     products = products.map(({ _id, productName, price, reviews, images }) => ({
       _id,
@@ -179,7 +184,7 @@ exports.getProductsShop = async (req, res) => {
     page = parseInt(page, 10);
     limit = parseInt(limit, 10);
 
-    const queryFilter = {};
+    const queryFilter = { isInShop: true };
     if (category) {
       queryFilter.category = category;
     }
@@ -277,6 +282,22 @@ exports.getProduct = async (req, res) => {
 
       res.status(200).json({ product: finalProduct });
     }
+  } catch (error) {
+    logger.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+/** Seller updating infos of his stock product */
+exports.updateStockProduct = async (req, res) => {
+  const { productId } = req.params;
+  try {
+    const { productName, price, quantity, isInShop } = req.body;
+    await Product.updateOne(
+      { _id: productId },
+      { productName, price, quantity, isInShop }
+    );
+    res.status(200).json({ message: 'Success updating stock product' });
   } catch (error) {
     logger.error(error);
     res.status(500).json({ error: 'Internal server error' });

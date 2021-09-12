@@ -135,16 +135,24 @@ const Cart = () => {
                 </div>
 
                 <Link to="/cart">
-                  <div className="border-2 h-12 border-black w-3/4 m-auto flex justify-center items-center transition-colors duration-1000 hover:bg-purple-500 hover:border-purple-500 hover:text-white">
+                  <button
+                    type="button"
+                    className="border-2 h-12 border-black w-3/4 m-auto flex justify-center items-center transition-colors duration-1000 hover:bg-purple-500 hover:border-purple-500 hover:text-white"
+                    onClick={() => setChecked(false)}
+                  >
                     VIEW CART
-                  </div>
+                  </button>
                 </Link>
 
                 <div className="h-5" />
                 <Link to="/checkout">
-                  <div className="border-2 h-12 border-black w-3/4 m-auto flex justify-center items-center transition-colors duration-1000 hover:bg-purple-500 hover:border-purple-500 hover:text-white">
+                  <button
+                    type="button"
+                    className="border-2 h-12 border-black w-3/4 m-auto flex justify-center items-center transition-colors duration-1000 hover:bg-purple-500 hover:border-purple-500 hover:text-white"
+                    onClick={() => setChecked(false)}
+                  >
                     CHECKOUT
-                  </div>
+                  </button>
                 </Link>
                 <div className="h-4" />
               </div>

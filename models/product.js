@@ -30,6 +30,7 @@ const productSchema = mongoose.Schema({
     },
   ],
   nSold: { type: Number, default: 0 },
+  isInShop: { type: Boolean, default: true },
 });
 
 // Text index for enabling $search query

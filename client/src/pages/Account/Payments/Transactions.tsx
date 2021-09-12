@@ -45,31 +45,37 @@ const Transactions = () => {
             bank account
           </p>
 
-          <div className="w-2/3 text-xl">
-            {transactions.map(({ date, totalAmount, paymentMethod }) => (
-              <div
-                className="border border-gray-500 p-2 rounded-xl mt-5"
-                key={date + totalAmount}
-              >
-                <div className="bg-gray-200">{date}</div>
-                <div>
-                  <span>
-                    <span className="font-bold">
-                      {paymentMethod.type === 'bankAccount'
-                        ? 'Bank Account: '
-                        : 'VISA / Credit Card:'}
+          {transactions.length > 0 ? (
+            <div className="w-2/3 text-xl">
+              {transactions.map(({ date, totalAmount, paymentMethod }) => (
+                <div
+                  className="border border-gray-500 p-2 rounded-xl mt-5"
+                  key={date + totalAmount}
+                >
+                  <div className="bg-gray-200">{date}</div>
+                  <div>
+                    <span>
+                      <span className="font-bold">
+                        {paymentMethod.type === 'bankAccount'
+                          ? 'Bank Account: '
+                          : 'VISA / Credit Card:'}
+                      </span>
+                      {'  '}
+                      <span className="font-sans">{paymentMethod.value}</span>
                     </span>
-                    {'  '}
-                    <span className="font-sans">{paymentMethod.value}</span>
-                  </span>
 
-                  <span className="font-sans font-bold float-right text-xl">
-                    -{totalAmount.toFixed(2)}€
-                  </span>
+                    <span className="font-sans font-bold float-right text-xl">
+                      -{totalAmount.toFixed(2)}€
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="w-2/3 h-32 mt-10">
+              <p className="text-2xl text-center">No transactions yet</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
