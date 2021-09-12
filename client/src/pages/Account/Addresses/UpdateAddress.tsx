@@ -33,14 +33,11 @@ const UpdateAddress = () => {
   useEffect(() => {
     const getAddress = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/user/address/${addressId}`,
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        );
+        const response = await axios.get(`/api/user/address/${addressId}`, {
+          headers: {
+            authorization: token,
+          },
+        });
 
         const adr: Address = response.data.address;
         console.log('address', adr);
@@ -88,15 +85,11 @@ const UpdateAddress = () => {
       // No errors we continue
       const data = { address, city, region, zipCode, phoneNumber };
       try {
-        await axios.put(
-          `http://localhost:5000/user/address/${addressId}`,
-          data,
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        );
+        await axios.put(`/api/user/address/${addressId}`, data, {
+          headers: {
+            authorization: token,
+          },
+        });
 
         history.push('/account/addresses');
       } catch (error) {

@@ -26,7 +26,7 @@ const Balance = () => {
   useEffect(() => {
     const getBalance = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/user/balance', {
+        const response = await axios.get('/api/user/balance', {
           headers: {
             authorization: token,
           },
@@ -61,7 +61,7 @@ const Balance = () => {
     } else {
       try {
         const response = await axios.put(
-          `http://localhost:5000/giftCard/${key}`,
+          `/api/giftCard/${key}`,
           {},
           {
             headers: {

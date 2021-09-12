@@ -48,7 +48,7 @@ const Checkout = () => {
   useEffect(() => {
     const getAddresses = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/user/address', {
+        const response = await axios.get('/api/user/address', {
           headers: {
             authorization: token,
           },
@@ -62,7 +62,7 @@ const Checkout = () => {
 
     const getBankAccount = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/bankAccount', {
+        const response = await axios.get('/api/bankAccount', {
           headers: {
             authorization: token,
           },
@@ -83,7 +83,7 @@ const Checkout = () => {
 
     const getCreditCards = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/creditCard', {
+        const response = await axios.get('/api/creditCard', {
           headers: {
             authorization: token,
           },
@@ -98,7 +98,7 @@ const Checkout = () => {
 
     const getBalance = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/user/balance', {
+        const response = await axios.get('/api/user/balance', {
           headers: {
             authorization: token,
           },
@@ -149,7 +149,7 @@ const Checkout = () => {
           products: cart,
           totalAmount: totalPrice,
         };
-        await axios.post('http://localhost:5000/order', data, {
+        await axios.post('/api/order', data, {
           headers: {
             authorization: token,
           },

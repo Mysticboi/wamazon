@@ -33,12 +33,9 @@ const WishList = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:5000/product/wishList',
-          {
-            params: { productIds: wishList },
-          }
-        );
+        const response = await axios.get('/api/product/wishList', {
+          params: { productIds: wishList },
+        });
 
         setProducts(response.data.products);
       } catch (e) {

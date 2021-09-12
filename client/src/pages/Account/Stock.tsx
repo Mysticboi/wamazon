@@ -67,15 +67,12 @@ const Stock = () => {
     const getStock = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(
-          'http://localhost:5000/product/stock',
-          {
-            headers: {
-              authorization: token,
-            },
-            params: { page, limit },
-          }
-        );
+        const response = await axios.get('/api/product/stock', {
+          headers: {
+            authorization: token,
+          },
+          params: { page, limit },
+        });
         const { products, totalPages, isAdmin } = response.data;
         setProducts(products);
         setTotalPages(totalPages);
@@ -139,15 +136,11 @@ const Stock = () => {
       // No errors we continue
       const data = { productName, price, quantity, isInShop };
       try {
-        await axios.put(
-          `http://localhost:5000/product/stock/${toUpdateProduct}`,
-          data,
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        );
+        await axios.put(`/api/product/stock/${toUpdateProduct}`, data, {
+          headers: {
+            authorization: token,
+          },
+        });
         // Force component rerender to fetch new informations that we just updated
         setUpdate((prev) => !prev);
         setOpenDialog(false);
@@ -342,7 +335,7 @@ const ProductCard = ({
 }: CardProps) => {
   const handleRemoveClick = async () => {
     try {
-      await axios.delete(`http://localhost:5000/product/${_id}`, {
+      await axios.delete(`/api/product/${_id}`, {
         headers: {
           authorization: token,
         },

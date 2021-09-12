@@ -34,9 +34,7 @@ const DailyDeals = () => {
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/${apiPaths[currentPage]}`
-        );
+        const response = await axios.get(`/api/${apiPaths[currentPage]}`);
 
         setProducts(response.data.products);
       } catch (error) {

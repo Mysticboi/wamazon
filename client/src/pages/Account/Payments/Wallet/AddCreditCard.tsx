@@ -73,15 +73,11 @@ const AddCreditCard = ({ setCreditCards }: AddCreditCardProps) => {
       // No errors we continue
       const data = { number, expiry, name, cvc };
       try {
-        const response = await axios.post(
-          'http://localhost:5000/creditCard',
-          data,
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        );
+        const response = await axios.post('/api/creditCard', data, {
+          headers: {
+            authorization: token,
+          },
+        });
         const { creditCardId } = response.data;
 
         const maskedNumber = `***-${number.slice(

@@ -33,7 +33,7 @@ const Orders = () => {
   useEffect(() => {
     const getOrders = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/order', {
+        const response = await axios.get('/api/order', {
           headers: {
             authorization: token,
           },

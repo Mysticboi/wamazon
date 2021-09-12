@@ -75,7 +75,7 @@ const AddAddress = () => {
       // No errors we continue
       const data = { country, address, city, region, zipCode, phoneNumber };
       try {
-        await axios.post('http://localhost:5000/user/address', data, {
+        await axios.post('/api/user/address', data, {
           headers: {
             authorization: token,
           },

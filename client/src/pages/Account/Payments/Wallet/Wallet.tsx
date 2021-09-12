@@ -60,7 +60,7 @@ const Wallet = () => {
   useEffect(() => {
     const getBankAccount = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/bankAccount', {
+        const response = await axios.get('/api/bankAccount', {
           headers: {
             authorization: token,
           },
@@ -81,7 +81,7 @@ const Wallet = () => {
 
     const getCreditCards = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/creditCard', {
+        const response = await axios.get('/api/creditCard', {
           headers: {
             authorization: token,
           },
@@ -178,7 +178,7 @@ const CreditCard = ({
 }: CreditCardProps) => {
   const handleClick = async () => {
     try {
-      await axios.delete(`http://localhost:5000/creditCard/${_id}`, {
+      await axios.delete(`/api/creditCard/${_id}`, {
         headers: {
           authorization: token,
         },
@@ -234,7 +234,7 @@ const BankAccount = ({
 }: BankAccountProps) => {
   const handleClick = async () => {
     try {
-      await axios.delete(`http://localhost:5000/bankAccount`, {
+      await axios.delete(`/api/bankAccount`, {
         headers: {
           authorization: token,
         },

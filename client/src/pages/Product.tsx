@@ -84,9 +84,7 @@ const ProductPage = () => {
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/product/${productId}`
-        );
+        const response = await axios.get(`/api/product/${productId}`);
         setProduct(response.data.product);
         setLoading(false);
       } catch (e) {
@@ -124,10 +122,7 @@ const ProductPage = () => {
     if (Object.keys(finalErrors).length === 0) {
       // No errors we continue
       try {
-        await axios.post(
-          `http://localhost:5000/product/review/${product?._id}`,
-          values
-        );
+        await axios.post(`/api/product/review/${product?._id}`, values);
 
         // For refetching product with updated review
         setUpdate((prev) => !prev);

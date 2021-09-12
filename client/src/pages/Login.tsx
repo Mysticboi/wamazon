@@ -60,10 +60,7 @@ const Login = () => {
     if (Object.keys(finalErrors).length === 0) {
       // No errors we continue
       try {
-        const response = await axios.post(
-          'http://localhost:5000/user/login',
-          values
-        );
+        const response = await axios.post('/api/user/login', values);
         const { fullName, token } = response.data;
 
         userContext.setToken(token);
@@ -114,7 +111,7 @@ const Login = () => {
       try {
         setError('');
         setIsLoading(true);
-        await axios.put('http://localhost:5000/user/forgotPassword', { email });
+        await axios.put('/api/user/forgotPassword', { email });
         setIsLoading(false);
         setOpen(false);
         setSuccessForgot(true);

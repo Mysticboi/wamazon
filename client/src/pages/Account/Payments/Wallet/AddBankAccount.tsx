@@ -64,7 +64,7 @@ const AddBankAccount = ({
       // No errors we continue
       const data = { iban, bic, holder };
       try {
-        await axios.post('http://localhost:5000/bankAccount', data, {
+        await axios.post('/api/bankAccount', data, {
           headers: {
             authorization: token,
           },

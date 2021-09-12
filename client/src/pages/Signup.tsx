@@ -48,7 +48,7 @@ const Signup = () => {
       // No errors we continue
       const data = _.omit(values, ['confirmPassword']);
       try {
-        await axios.post('http://localhost:5000/user/signup', data);
+        await axios.post('/api/user/signup', data);
         history.push('/login');
       } catch (error) {
         if (axios.isAxiosError(error)) {

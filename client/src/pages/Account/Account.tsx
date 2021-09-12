@@ -164,7 +164,7 @@ const UpdatePasswordForm = ({
       // No errors we continue
       try {
         await axios.put(
-          'http://localhost:5000/user/updatePassword',
+          '/api/user/updatePassword',
           { password, oldPassword },
           {
             headers: {

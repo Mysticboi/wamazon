@@ -125,15 +125,11 @@ const Marketplace = () => {
           for (let i = 0; i < images.length; i += 1) {
             formData.append('files', images[i]);
           }
-          const response = await axios.post(
-            'http://localhost:5000/images/upload',
-            formData,
-            {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            }
-          );
+          const response = await axios.post('/api/images/upload', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
           uploadedImages = response.data?.uploadedFiles;
         }
 
@@ -150,7 +146,7 @@ const Marketplace = () => {
           category,
         };
 
-        await axios.post('http://localhost:5000/product', data, {
+        await axios.post('/api/product', data, {
           headers: {
             authorization: token,
           },

@@ -40,7 +40,7 @@ const AddressesPage = ({ path }: { path: string }) => {
   useEffect(() => {
     const getAddresses = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/user/address', {
+        const response = await axios.get('/api/user/address', {
           headers: {
             authorization: token,
           },
@@ -106,7 +106,7 @@ const AddressCard = ({
   const { path } = useRouteMatch();
   const handleClick = async () => {
     try {
-      await axios.delete(`http://localhost:5000/user/address/${_id}`, {
+      await axios.delete(`/api/user/address/${_id}`, {
         headers: {
           authorization: token,
         },

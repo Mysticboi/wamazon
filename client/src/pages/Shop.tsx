@@ -63,7 +63,7 @@ const Shop = () => {
 
   const getProducts = async (search = '') => {
     try {
-      const response = await axios.get('http://localhost:5000/product/shop', {
+      const response = await axios.get('/api/product/shop', {
         params: { page, limit, filter: filter?.value, category, search },
       });
 

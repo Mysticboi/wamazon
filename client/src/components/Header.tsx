@@ -10,7 +10,7 @@ const Header = () => {
   useEffect(() => {
     const verifyTokenExpired = async () => {
       try {
-        await axios.get('http://localhost:5000/user/verifyToken', {
+        await axios.get('/api/user/verifyToken', {
           headers: {
             authorization: token,
           },

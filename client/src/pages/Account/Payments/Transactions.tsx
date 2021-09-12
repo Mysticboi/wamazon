@@ -18,14 +18,11 @@ const Transactions = () => {
   useEffect(() => {
     const getTransactions = async () => {
       try {
-        const response = await axios.get(
-          'http://localhost:5000/order/transaction',
-          {
-            headers: {
-              authorization: token,
-            },
-          }
-        );
+        const response = await axios.get('/api/order/transaction', {
+          headers: {
+            authorization: token,
+          },
+        });
 
         setTransactions(response.data.transactions);
       } catch (e) {
