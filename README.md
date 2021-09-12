@@ -2,7 +2,9 @@
 
 **_A full-stack MERN e-commerce website (built from scratch)_**
 
-<p align="center"><b>Currently in development</b></p>
+## Live demo
+
+I published this project using heroku. [Live Demo Link](https://wamazon.herokuapp.com/)
 
 ## Installation and configuration
 
