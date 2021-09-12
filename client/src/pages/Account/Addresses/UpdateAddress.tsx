@@ -100,7 +100,7 @@ const UpdateAddress = () => {
 
         history.push('/account/addresses');
       } catch (error) {
-        console.error('Failed creating address', error);
+        console.error('Failed updating address', error);
       }
     }
   };
