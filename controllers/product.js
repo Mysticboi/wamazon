@@ -86,8 +86,6 @@ exports.getStock = async (req, res) => {
 exports.deleteProduct = async (req, res) => {
   try {
     const { productId } = req.params;
-    console.log('id', productId);
-
     const { images } = await Product.findById(productId);
     // Deleting all related images first
     if (images?.length > 0) {

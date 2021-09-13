@@ -42,9 +42,6 @@ const Checkout = () => {
 
   const history = useHistory();
 
-  console.log('address', address);
-  console.log('payment', payment);
-
   useEffect(() => {
     const getAddresses = async () => {
       try {

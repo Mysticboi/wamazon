@@ -24,8 +24,6 @@ const Orders = () => {
 
   const [orders, setOrders] = useState<Order[]>([]);
 
-  console.log(orders);
-
   useEffect(() => {
     document.title = 'Your orders';
   }, []);

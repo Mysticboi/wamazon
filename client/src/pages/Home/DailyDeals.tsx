@@ -29,8 +29,6 @@ const DailyDeals = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [products, setProducts] = useState<Product[]>([]);
 
-  console.log('products', products);
-
   useEffect(() => {
     const getProducts = async () => {
       try {

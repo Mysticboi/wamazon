@@ -46,7 +46,6 @@ const AddressesPage = ({ path }: { path: string }) => {
           },
         });
         const { addresses }: { addresses: Address[] } = response.data;
-        console.log('addresess', addresses);
         setAddresses(addresses);
       } catch (error) {
         console.error('Failed fetch addresses:', error);

@@ -40,7 +40,6 @@ const UpdateAddress = () => {
         });
 
         const adr: Address = response.data.address;
-        console.log('address', adr);
         setAddress(adr);
       } catch (error) {
         console.error('Failed getting address', error);

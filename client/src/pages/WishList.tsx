@@ -24,8 +24,6 @@ const WishList = () => {
 
   const history = useHistory();
 
-  console.log(products);
-
   useEffect(() => {
     document.title = 'Wishlist';
   }, []);

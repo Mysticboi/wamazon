@@ -75,8 +75,6 @@ const ProductPage = () => {
 
   const isAvailable = product && product.quantity > 0;
 
-  console.log('product', product);
-
   useEffect(() => {
     document.title = 'Product';
   }, []);
