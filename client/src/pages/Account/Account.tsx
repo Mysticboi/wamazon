@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, lazy, Suspense } from 'react';
 import { Form, Field } from 'react-final-form';
 import { Button, Snackbar, SnackbarCloseReason } from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
@@ -14,12 +14,15 @@ import {
 } from '@material-ui/icons';
 import axios from 'axios';
 import { Link, useRouteMatch, Switch, Route } from 'react-router-dom';
+
 import { UserContext } from '../../context/UserContext';
-import Addresses from './Addresses/Addresses';
 import AccountNavBar from '../../components/AccountNavBar';
-import Payments from './Payments/Payments';
-import Stock from './Stock';
-import Orders from './Orders';
+import FallBack from '../../components/FallBack';
+
+const Addresses = lazy(() => import('./Addresses/Addresses'));
+const Payments = lazy(() => import('./Payments/Payments'));
+const Stock = lazy(() => import('./Stock'));
+const Orders = lazy(() => import('./Orders'));
 
 type Values = {
   oldPassword: string;
@@ -328,27 +331,29 @@ const Account = () => {
   return (
     <>
       <AccountNavBar />
-      <Switch>
-        <Route exact path={path}>
-          <AccountPage />
-        </Route>
+      <Suspense fallback={<FallBack />}>
+        <Switch>
+          <Route exact path={path}>
+            <AccountPage />
+          </Route>
 
-        <Route path={`${path}/addresses`}>
-          <Addresses />
-        </Route>
+          <Route path={`${path}/addresses`}>
+            <Addresses />
+          </Route>
 
-        <Route path={`${path}/payments`}>
-          <Payments />
-        </Route>
+          <Route path={`${path}/payments`}>
+            <Payments />
+          </Route>
 
-        <Route path={`${path}/stock`}>
-          <Stock />
-        </Route>
+          <Route path={`${path}/stock`}>
+            <Stock />
+          </Route>
 
-        <Route path={`${path}/orders`}>
-          <Orders />
-        </Route>
-      </Switch>
+          <Route path={`${path}/orders`}>
+            <Orders />
+          </Route>
+        </Switch>
+      </Suspense>
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
 import axios from 'axios';
 import { Add } from '@material-ui/icons';
 import {
@@ -8,9 +8,12 @@ import {
   useHistory,
   Link,
 } from 'react-router-dom';
+
 import { UserContext } from '../../../context/UserContext';
-import AddAddress from './AddAddress';
-import UpdateAddress from './UpdateAddress';
+import FallBack from '../../../components/FallBack';
+
+const AddAddress = lazy(() => import('./AddAddress'));
+const UpdateAddress = lazy(() => import('./UpdateAddress'));
 
 export interface Address {
   address: string;
@@ -141,19 +144,21 @@ const AddressCard = ({
 const Addresses = () => {
   const { path } = useRouteMatch();
   return (
-    <Switch>
-      <Route exact path={path}>
-        <AddressesPage path={path} />
-      </Route>
+    <Suspense fallback={<FallBack />}>
+      <Switch>
+        <Route exact path={path}>
+          <AddressesPage path={path} />
+        </Route>
 
-      <Route path={`${path}/addAddress`}>
-        <AddAddress />
-      </Route>
+        <Route path={`${path}/addAddress`}>
+          <AddAddress />
+        </Route>
 
-      <Route path={`${path}/:addressId`}>
-        <UpdateAddress />
-      </Route>
-    </Switch>
+        <Route path={`${path}/:addressId`}>
+          <UpdateAddress />
+        </Route>
+      </Switch>
+    </Suspense>
   );
 };
 
