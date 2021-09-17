@@ -83,7 +83,7 @@ const Orders = () => {
                       <div className="border border-gray-500 px-4 py-2 flex space-x-20 flex-wrap items-center">
                         <td className="font-medium h-32 w-32">
                           <Link to={`/product/${_id}`}>
-                            <img alt="" src={imgUrl} />
+                            <img alt="" src={imgUrl} width={200} height={200} />
                           </Link>
                         </td>
 

@@ -46,7 +46,7 @@ const Cart = () => {
                     <tr key={_id}>
                       <td className="border border-gray-500 px-4 py-2 font-medium">
                         <Link to={`/product/${_id}`}>
-                          <img alt="" src={imgUrl} />
+                          <img alt="" src={imgUrl} width="200" height="200" />
                         </Link>
                       </td>
 
