@@ -83,7 +83,13 @@ const Home = () => {
               </Slide>
             </div>
             <div className="">
-              <img src={home1} alt="home1" className="h-200 w-200" />
+              <img
+                src={home1}
+                alt="home1"
+                className="h-200 w-200"
+                width={533}
+                height={533}
+              />
             </div>
 
             <div className="h-200 w-20" />
@@ -117,7 +123,13 @@ const Home = () => {
               </Slide>
             </div>
             <div>
-              <img src={hesitating} alt="hesitating" className="h-200 w-200" />
+              <img
+                src={hesitating}
+                alt="hesitating"
+                className="h-200 w-200"
+                width={533}
+                height={533}
+              />
             </div>
 
             <div className="h-200 w-20" />

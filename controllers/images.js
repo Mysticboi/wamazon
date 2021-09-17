@@ -31,6 +31,9 @@ exports.getImage = async (req, res) => {
     const image = response[0];
 
     const uploadStream = gridFSBucket.openDownloadStreamByName(image.filename);
+
+    // Cache products images (30days) for more performance
+    res.set('Cache-control', 'public, max-age=2592000');
     uploadStream.pipe(res);
   } catch (error) {
     logger.error(error);

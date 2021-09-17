@@ -133,7 +133,7 @@ const ProductCard = ({
   return (
     <div className="border border-gray-300 relative h-36">
       <div className="absolute left-5 top-3 w-32 h-32 flex justify-center items-center">
-        <img alt="" src={imgUrl} width={100} />
+        <img alt="" src={imgUrl} width={100} height={100} />
       </div>
 
       <div className="absolute left-1/4 top-12">

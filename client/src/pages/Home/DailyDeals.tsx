@@ -116,7 +116,7 @@ const ProductCard = ({
       <div className="h-80 flex justify-center items-center relative">
         {currentPage === 0 && (
           <div className="absolute top-6 right-5">
-            <img alt="" src={flame} width={30} />
+            <img alt="" src={flame} width={30} height={30} />
           </div>
         )}
 
