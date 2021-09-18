@@ -4,7 +4,9 @@
 
 ## Live demo
 
-I published this project using heroku. [Live Demo Link](https://wamazon.herokuapp.com/)
+I deployed this project using heroku. [Live Demo Link](https://wamazon.herokuapp.com/)
+
+Since the website is published on heroku, when you first visit the website it may take some time loading that's because the webiste is "sleeping" and needs some time to wake up. The loading time is not related to the code itself but to heroku's free use policy. More information on [Heroku Documentation](https://devcenter.heroku.com/articles/free-dyno-hours)
 
 ## Installation and configuration
 
