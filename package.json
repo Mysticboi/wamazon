@@ -10,8 +10,7 @@
     "build":"cd client && yarn install && yarn build"
   },
   "engines": {
-    "node": "14.19.1",
-    "yarn": "1.22.15"
+    "node": "14.19.1"
   },
   "keywords": [
     "ReactJS",
