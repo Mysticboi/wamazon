@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "heroku-postbuild": "cd client && yarn install && yarn build"
+    "heroku-postbuild": "cd client && yarn install && yarn build",
+    "build:azure":"cd client && yarn install && yarn build",
+    "build":"cd client && yarn install && yarn build"
   },
   "engines": {
     "node": "14.16.1",
