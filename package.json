@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "heroku-postbuild": "cd client && yarn install && yarn build",
-    "postinstall": "cd client && yarn && yarn build"
+    "postinstall": "yarn -v && ls"
   },
   "engines": {
     "node": "14.19.1",
