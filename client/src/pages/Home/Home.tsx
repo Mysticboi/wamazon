@@ -3,7 +3,6 @@ import { Slide } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DailyDeals from './DailyDeals';
 import home1 from '../../images/home1.jpg';
-import hesitating from '../../images/hesitating.jpeg';
 import 'react-slideshow-image/dist/styles.css';
 import icon1 from '../../images/home-icon-1.png';
 import icon2 from '../../images/home-icon-2.png';
@@ -40,7 +39,7 @@ const infos = [
 ];
 
 const Home = () => {
-  const [slide, setSlide] = useState<boolean[]>([true, false]);
+  const [slide] = useState<boolean[]>([true, false]);
 
   useEffect(() => {
     document.title = 'Wamazon';
