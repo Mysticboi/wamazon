@@ -9,8 +9,8 @@
     "postinstall": "cd client && yarn install && yarn build"
   },
   "engines": {
-    "node": "14.19.1",
-    "npm":"8.12.2"
+    "node": "16.20.0",
+    "npm":"8.19.4"
   },
   "keywords": [
     "ReactJS",
