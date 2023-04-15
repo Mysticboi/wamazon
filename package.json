@@ -4,12 +4,10 @@
   "description": "Creating an e-commerce website using MERN stack",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "heroku-postbuild": "cd client && yarn install && yarn build",
-    "postinstall": "cd client && yarn install && yarn build"
+    "start": "node server.js"
   },
   "engines": {
-    "node": "16.20.0",
+    "node": "16.19.0",
     "npm": "8.19.4"
   },
   "keywords": [
