@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import { Button } from '@material-ui/core';
 import { TextField } from 'final-form-material-ui';
@@ -29,7 +29,7 @@ type Error = {
 
 const AddAddress = () => {
   const [errors, setErrors] = useState<Error>({});
-  const history = useHistory();
+  const history = useNavigate();
   const { token } = useContext(UserContext);
 
   const options = countries.map(({ name }) => ({ value: name, label: name }));
@@ -81,7 +81,7 @@ const AddAddress = () => {
           },
         });
 
-        history.push('/account/addresses');
+        history('/account/addresses');
       } catch (error) {
         console.error('Failed creating address', error);
       }
@@ -230,7 +230,7 @@ const AddAddress = () => {
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={() => history.push('/account/addresses')}
+                  onClick={() => history('/account/addresses')}
                 >
                   Cancel
                 </Button>

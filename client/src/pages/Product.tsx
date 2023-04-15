@@ -10,7 +10,6 @@ import {
 import { Rating, Alert } from '@material-ui/lab';
 import { FavoriteBorder } from '@material-ui/icons';
 import axios from 'axios';
-import { Slide } from 'react-slideshow-image';
 import { Form, Field } from 'react-final-form';
 import { TextField } from 'final-form-material-ui';
 import { WishListContext } from '../context/WishListContext';
@@ -143,7 +142,7 @@ const ProductPage = () => {
         <div className="w-3/4  m-auto mt-5">
           <div className="flex w-full">
             <div className="w-1/2">
-              <Slide easing="ease" duration={2500}>
+              <div>
                 {product?.images.map(({ imgUrl }) => (
                   <div
                     className="each-slide flex justify-center items-center"
@@ -152,7 +151,7 @@ const ProductPage = () => {
                     <img alt="" src={imgUrl} width={500} height={500} />
                   </div>
                 ))}
-              </Slide>
+              </div>
             </div>
 
             <div className="w-1/2 ml-3">
@@ -207,7 +206,7 @@ const ProductPage = () => {
                     variant="contained"
                     color="primary"
                     onClick={() => {
-                      if (product) {
+                      if (product && productId) {
                         addToCart(
                           productId,
                           product.productName,
@@ -231,7 +230,11 @@ const ProductPage = () => {
 
                 <IconButton
                   title="Add to wishlist"
-                  onClick={() => addToWishList(productId)}
+                  onClick={() => {
+                    if (productId) {
+                      addToWishList(productId);
+                    }
+                  }}
                 >
                   <FavoriteBorder fontSize="large" color="secondary" />
                 </IconButton>

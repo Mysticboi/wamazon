@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Button, IconButton } from '@material-ui/core';
 import { FavoriteBorder, Close } from '@material-ui/icons';
@@ -22,7 +22,7 @@ const WishList = () => {
 
   const [products, setProducts] = useState<Product[]>([]);
 
-  const history = useHistory();
+  const history = useNavigate();
 
   useEffect(() => {
     document.title = 'Wishlist';
@@ -87,7 +87,7 @@ const WishList = () => {
               <Button
                 color="primary"
                 variant="contained"
-                onClick={() => history.push('/shop')}
+                onClick={() => history('/shop')}
               >
                 Continue shopping
               </Button>
@@ -129,7 +129,7 @@ const ProductCard = ({
   imgUrl,
   handleClickRemove,
 }: CardProps) => {
-  const history = useHistory();
+  const history = useNavigate();
   return (
     <div className="border border-gray-300 relative h-36">
       <div className="absolute left-5 top-3 w-32 h-32 flex justify-center items-center">
@@ -148,7 +148,7 @@ const ProductCard = ({
         <Button
           color="primary"
           variant="contained"
-          onClick={() => history.push(`/product/${_id}`)}
+          onClick={() => history(`/product/${_id}`)}
         >
           View
         </Button>

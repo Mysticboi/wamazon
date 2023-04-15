@@ -1,13 +1,7 @@
 import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
 import axios from 'axios';
 import { Add } from '@material-ui/icons';
-import {
-  useRouteMatch,
-  Switch,
-  Route,
-  useHistory,
-  Link,
-} from 'react-router-dom';
+import { Routes, Route, useNavigate, Link } from 'react-router-dom';
 
 import { UserContext } from '../../../context/UserContext';
 import FallBack from '../../../components/FallBack';
@@ -34,7 +28,7 @@ interface CardProps extends Address {
 const AddressesPage = ({ path }: { path: string }) => {
   const [addresses, setAddresses] = useState<Address[]>([]);
   const { token } = useContext(UserContext);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Your Addresses';
@@ -73,7 +67,7 @@ const AddressesPage = ({ path }: { path: string }) => {
         <div
           className="border-2 border-dashed border-gray-300 w-80 h-60 justify-center items-center flex flex-col cursor-pointer m-1"
           role="presentation"
-          onClick={() => history.push(`${path}/addAddress`)}
+          onClick={() => navigate(`${path}/addAddress`)}
         >
           <Add color="primary" style={{ fontSize: 80 }} />
           <p className="text-2xl text-center text-blue-500">Add Address</p>
@@ -105,7 +99,7 @@ const AddressCard = ({
   addresses,
   setAddresses,
 }: CardProps) => {
-  const { path } = useRouteMatch();
+  const path = window.location.pathname;
   const handleClick = async () => {
     try {
       await axios.delete(`/api/user/address/${_id}`, {
@@ -142,22 +136,16 @@ const AddressCard = ({
 };
 
 const Addresses = () => {
-  const { path } = useRouteMatch();
+  const path = window.location.pathname;
   return (
     <Suspense fallback={<FallBack />}>
-      <Switch>
-        <Route exact path={path}>
-          <AddressesPage path={path} />
-        </Route>
+      <Routes>
+        <Route path={path + '*'} element={<AddressesPage path={path} />} />
 
-        <Route path={`${path}/addAddress`}>
-          <AddAddress />
-        </Route>
+        <Route path={`${path}/addAddress`} element={<AddAddress />} />
 
-        <Route path={`${path}/:addressId`}>
-          <UpdateAddress />
-        </Route>
-      </Switch>
+        <Route path={`${path}/:addressId`} element={<UpdateAddress />} />
+      </Routes>
     </Suspense>
   );
 };

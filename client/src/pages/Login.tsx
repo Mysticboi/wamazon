@@ -18,7 +18,7 @@ import { TextField } from 'final-form-material-ui';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import { Mail, Lock } from '@material-ui/icons';
 import axios from 'axios';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
 
 type Values = {
@@ -37,7 +37,7 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const userContext = useContext(UserContext);
-  const history = useHistory();
+  const history = useNavigate();
   useEffect(() => {
     document.title = 'Login to Wamazon';
   }, []);
@@ -66,7 +66,7 @@ const Login = () => {
         userContext.setToken(token);
         userContext.setUserName(fullName.split(' ')[0]);
 
-        history.push('/');
+        history('/');
       } catch (error) {
         if (axios.isAxiosError(error)) {
           const errorMessage = error.response?.data.error;

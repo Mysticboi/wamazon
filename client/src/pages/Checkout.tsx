@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
   CircularProgress,
@@ -40,7 +40,7 @@ const Checkout = () => {
   const [errors, setErrors] = useState<Error>({});
   const [open, setOpen] = useState(false);
 
-  const history = useHistory();
+  const history = useNavigate();
 
   useEffect(() => {
     const getAddresses = async () => {
@@ -154,7 +154,7 @@ const Checkout = () => {
 
         setOpen(true);
         setTimeout(() => {
-          history.push('/');
+          history('/');
           clearCart();
         }, 1500);
       } catch (error) {

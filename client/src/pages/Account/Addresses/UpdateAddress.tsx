@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import axios from 'axios';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Form, Field } from 'react-final-form';
 import { Button } from '@material-ui/core';
 import { TextField } from 'final-form-material-ui';
@@ -28,7 +28,7 @@ const UpdateAddress = () => {
   const { token } = useContext(UserContext);
   const [address, setAddress] = useState<Partial<Address>>({});
   const [errors, setErrors] = useState<Error>({});
-  const history = useHistory();
+  const history = useNavigate();
 
   useEffect(() => {
     const getAddress = async () => {
@@ -90,7 +90,7 @@ const UpdateAddress = () => {
           },
         });
 
-        history.push('/account/addresses');
+        history('/account/addresses');
       } catch (error) {
         console.error('Failed updating address', error);
       }
@@ -231,7 +231,7 @@ const UpdateAddress = () => {
                 <Button
                   variant="contained"
                   color="secondary"
-                  onClick={() => history.push('/account/addresses')}
+                  onClick={() => history('/account/addresses')}
                 >
                   Cancel
                 </Button>

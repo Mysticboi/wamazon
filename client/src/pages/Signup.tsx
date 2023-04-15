@@ -6,7 +6,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import { AccountCircle, Mail, Lock, LockOpen } from '@material-ui/icons';
 import axios from 'axios';
 import _ from 'lodash';
-import { useHistory, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 type Values = {
   fullName: string;
@@ -19,7 +19,7 @@ type Error = Partial<Values>;
 
 const Signup = () => {
   const [errors, setErrors] = useState<Error>({});
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Sign up';
@@ -49,7 +49,7 @@ const Signup = () => {
       const data = _.omit(values, ['confirmPassword']);
       try {
         await axios.post('/api/user/signup', data);
-        history.push('/login');
+        navigate('/login');
       } catch (error) {
         if (axios.isAxiosError(error)) {
           if (error.response?.data.error === 'Not unique email') {

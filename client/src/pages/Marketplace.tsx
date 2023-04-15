@@ -6,7 +6,7 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import TextFieldCore from '@material-ui/core/TextField';
 import { Euro, Clear } from '@material-ui/icons';
 import Select from 'react-select';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import categories from '../data/categories.json';
@@ -41,7 +41,7 @@ const Marketplace = () => {
   const [informations, setInformations] = useState<Information[]>([]);
   const [success, setSuccess] = useState(false);
   const { token, isUserConnected } = useContext(UserContext);
-  const history = useHistory();
+  const history = useNavigate();
 
   const options = categories.map((category) => ({
     value: category,
@@ -154,7 +154,7 @@ const Marketplace = () => {
 
         setSuccess(true);
 
-        setTimeout(() => history.push('/account/stock'), 2000);
+        setTimeout(() => history('/account/stock'), 2000);
       } catch (e) {
         console.error('Failed creating product');
       }

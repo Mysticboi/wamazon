@@ -1,5 +1,5 @@
 import React, { useEffect, useContext } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Close, ShoppingCartOutlined } from '@material-ui/icons';
 import { IconButton, Button } from '@material-ui/core';
 import { CartContext } from '../context/CartContext';
@@ -14,7 +14,7 @@ const Cart = () => {
     totalPrice,
   } = useContext(CartContext);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = 'Cart';
@@ -133,7 +133,7 @@ const Cart = () => {
               <Button
                 color="primary"
                 variant="contained"
-                onClick={() => history.push('/shop')}
+                onClick={() => navigate('/shop')}
               >
                 Continue shopping
               </Button>
@@ -160,7 +160,7 @@ const Cart = () => {
                 color="primary"
                 variant="contained"
                 fullWidth
-                onClick={() => history.push('/checkout')}
+                onClick={() => navigate('/checkout')}
               >
                 proceed to checkout
               </Button>

@@ -1,11 +1,5 @@
 import React, { useEffect, lazy, Suspense } from 'react';
-import {
-  useRouteMatch,
-  Switch,
-  Route,
-  useLocation,
-  Link,
-} from 'react-router-dom';
+import { Routes, Route, useLocation, Link } from 'react-router-dom';
 
 import giftCard from '../../../images/giftCard.png';
 import FallBack from '../../../components/FallBack';
@@ -114,7 +108,7 @@ const Presentation = () => (
 );
 
 const Payments = () => {
-  const { path } = useRouteMatch();
+  const path = window.location.pathname;
 
   useEffect(() => {
     document.title = 'Your payments';
@@ -124,19 +118,13 @@ const Payments = () => {
       <PaymentsNavBar />
 
       <Suspense fallback={<FallBack />}>
-        <Switch>
-          <Route exact path={path}>
-            <Presentation />
-          </Route>
+        <Routes>
+          <Route path={path + '*'} element={<Presentation />} />
 
-          <Route path={`${path}/wallet`}>
-            <Wallet />
-          </Route>
+          <Route path={`${path}/wallet`} element={<Wallet />} />
 
-          <Route path={`${path}/transactions`}>
-            <Transactions />
-          </Route>
-        </Switch>
+          <Route path={`${path}/transactions`} element={<Transactions />} />
+        </Routes>
       </Suspense>
     </>
   );

@@ -13,7 +13,7 @@ import {
   Store,
 } from '@material-ui/icons';
 import axios from 'axios';
-import { Link, useRouteMatch, Switch, Route } from 'react-router-dom';
+import { Link, Routes, Route } from 'react-router-dom';
 
 import { UserContext } from '../../context/UserContext';
 import AccountNavBar from '../../components/AccountNavBar';
@@ -327,32 +327,22 @@ const Card = ({ title, description, link, icon }: CardProps) => (
   </Link>
 );
 const Account = () => {
-  const { path } = useRouteMatch();
+  const path = window.location.pathname;
   return (
     <>
       <AccountNavBar />
       <Suspense fallback={<FallBack />}>
-        <Switch>
-          <Route exact path={path}>
-            <AccountPage />
-          </Route>
+        <Routes>
+          <Route path={path} element={<AccountPage />} />
 
-          <Route path={`${path}/addresses`}>
-            <Addresses />
-          </Route>
+          <Route path={`${path}/addresses`} element={<Addresses />} />
 
-          <Route path={`${path}/payments`}>
-            <Payments />
-          </Route>
+          <Route path={`${path}/payments`} element={<Payments />} />
 
-          <Route path={`${path}/stock`}>
-            <Stock />
-          </Route>
+          <Route path={`${path}/stock`} element={<Stock />} />
 
-          <Route path={`${path}/orders`}>
-            <Orders />
-          </Route>
-        </Switch>
+          <Route path={`${path}/orders`} element={<Orders />} />
+        </Routes>
       </Suspense>
     </>
   );

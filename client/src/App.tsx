@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import Header from './components/Header';
@@ -66,60 +66,101 @@ const AppDesktop = () => (
             <BrowserRouter>
               <Header />
               <Suspense fallback={<FallBack />}>
-                <Switch>
-                  <Route exact path="/">
-                    <NavBar />
-                    <Home />
-                  </Route>
+                <Routes>
+                  <Route
+                    path="/*"
+                    element={
+                      <>
+                        <NavBar />
+                        <Home />
+                      </>
+                    }
+                  />
+                  <Route path="/signup" element={<Signup />} />
 
-                  <Route path="/signup">
-                    <Signup />
-                  </Route>
+                  <Route path="/login" element={<Login />} />
 
-                  <Route path="/login">
-                    <Login />
-                  </Route>
+                  <Route
+                    path="/account"
+                    element={
+                      <>
+                        <NavBar />
+                        <Account />
+                      </>
+                    }
+                  />
 
-                  <Route path="/account">
-                    <NavBar />
-                    <Account />
-                  </Route>
+                  <Route
+                    path="/shop"
+                    element={
+                      <>
+                        <NavBar />
+                        <Shop />
+                      </>
+                    }
+                  />
 
-                  <Route path="/shop">
-                    <NavBar />
-                    <Shop />
-                  </Route>
+                  <Route
+                    path="/marketplace"
+                    element={
+                      <>
+                        <NavBar />
+                        <Marketplace />
+                      </>
+                    }
+                  />
 
-                  <Route path="/marketplace">
-                    <NavBar />
-                    <Marketplace />
-                  </Route>
+                  <Route
+                    path="/cart"
+                    element={
+                      <>
+                        <NavBar />
+                        <Cart />
+                      </>
+                    }
+                  />
 
-                  <Route path="/cart">
-                    <NavBar />
-                    <Cart />
-                  </Route>
+                  <Route
+                    path="/checkout"
+                    element={
+                      <>
+                        <NavBar />
+                        <Checkout />
+                      </>
+                    }
+                  />
 
-                  <Route path="/checkout">
-                    <NavBar />
-                    <Checkout />
-                  </Route>
+                  <Route
+                    path="/wishlist"
+                    element={
+                      <>
+                        <NavBar />
+                        <WishList />
+                      </>
+                    }
+                  />
 
-                  <Route path="/wishlist">
-                    <NavBar />
-                    <WishList />
-                  </Route>
+                  <Route
+                    path="/product/:productId"
+                    element={
+                      <>
+                        {' '}
+                        <NavBar />
+                        <Product />
+                      </>
+                    }
+                  />
 
-                  <Route path="/product/:productId">
-                    <NavBar />
-                    <Product />
-                  </Route>
-
-                  <Route path="/contact">
-                    <NavBar />
-                    <Contact />
-                  </Route>
-                </Switch>
+                  <Route
+                    path="/contact"
+                    element={
+                      <>
+                        <NavBar />
+                        <Contact />
+                      </>
+                    }
+                  />
+                </Routes>
               </Suspense>
 
               <Footer />
