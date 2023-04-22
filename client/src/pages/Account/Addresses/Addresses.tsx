@@ -25,7 +25,7 @@ interface CardProps extends Address {
   setAddresses: React.Dispatch<React.SetStateAction<Address[]>>;
 }
 
-const AddressesPage = ({ path }: { path: string }) => {
+const AddressesPage = () => {
   const [addresses, setAddresses] = useState<Address[]>([]);
   const { token } = useContext(UserContext);
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ const AddressesPage = ({ path }: { path: string }) => {
         <div
           className="border-2 border-dashed border-gray-300 w-80 h-60 justify-center items-center flex flex-col cursor-pointer m-1"
           role="presentation"
-          onClick={() => navigate(`${path}/addAddress`)}
+          onClick={() => navigate('addAddress')}
         >
           <Add color="primary" style={{ fontSize: 80 }} />
           <p className="text-2xl text-center text-blue-500">Add Address</p>
@@ -136,15 +136,14 @@ const AddressCard = ({
 };
 
 const Addresses = () => {
-  const path = window.location.pathname;
   return (
     <Suspense fallback={<FallBack />}>
       <Routes>
-        <Route path={path + '*'} element={<AddressesPage path={path} />} />
+        <Route path={''} element={<AddressesPage />} />
 
-        <Route path={`${path}/addAddress`} element={<AddAddress />} />
+        <Route path={'/addAddress'} element={<AddAddress />} />
 
-        <Route path={`${path}/:addressId`} element={<UpdateAddress />} />
+        <Route path={'/:addressId'} element={<UpdateAddress />} />
       </Routes>
     </Suspense>
   );

@@ -8,7 +8,7 @@
     "postinstall": "cd client && yarn && yarn build"
   },
   "engines": {
-    "node": "16.19.0",
+    "node": "16.20.0",
     "npm": "8.19.4"
   },
   "keywords": [

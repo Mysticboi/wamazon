@@ -108,8 +108,6 @@ const Presentation = () => (
 );
 
 const Payments = () => {
-  const path = window.location.pathname;
-
   useEffect(() => {
     document.title = 'Your payments';
   }, []);
@@ -119,11 +117,11 @@ const Payments = () => {
 
       <Suspense fallback={<FallBack />}>
         <Routes>
-          <Route path={path + '*'} element={<Presentation />} />
+          <Route path={''} element={<Presentation />} />
 
-          <Route path={`${path}/wallet`} element={<Wallet />} />
+          <Route path={'wallet'} element={<Wallet />} />
 
-          <Route path={`${path}/transactions`} element={<Transactions />} />
+          <Route path={'transactions'} element={<Transactions />} />
         </Routes>
       </Suspense>
     </>

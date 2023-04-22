@@ -328,20 +328,21 @@ const Card = ({ title, description, link, icon }: CardProps) => (
 );
 const Account = () => {
   const path = window.location.pathname;
+  console.log('path', path);
   return (
     <>
       <AccountNavBar />
       <Suspense fallback={<FallBack />}>
         <Routes>
-          <Route path={path} element={<AccountPage />} />
+          <Route path={''} element={<AccountPage />} />
 
-          <Route path={`${path}/addresses`} element={<Addresses />} />
+          <Route path={'addresses/*'} element={<Addresses />} />
 
-          <Route path={`${path}/payments`} element={<Payments />} />
+          <Route path={'payments/*'} element={<Payments />} />
 
-          <Route path={`${path}/stock`} element={<Stock />} />
+          <Route path={'stock'} element={<Stock />} />
 
-          <Route path={`${path}/orders`} element={<Orders />} />
+          <Route path={'orders'} element={<Orders />} />
         </Routes>
       </Suspense>
     </>

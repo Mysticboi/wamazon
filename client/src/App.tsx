@@ -81,7 +81,7 @@ const AppDesktop = () => (
                   <Route path="/login" element={<Login />} />
 
                   <Route
-                    path="/account"
+                    path="/account/*"
                     element={
                       <>
                         <NavBar />
