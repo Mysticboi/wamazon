@@ -4,7 +4,8 @@
   "description": "Creating an e-commerce website using MERN stack",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "postinstall": "cd client && yarn && yarn build"
   },
   "engines": {
     "node": "16.19.0",
