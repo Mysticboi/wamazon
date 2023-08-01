@@ -4,7 +4,7 @@
 
 ## Live demo
 
-I deployed this project using ~~heroku~~ Microsoft Azure [Live Demo Link](https://wamazon.azurewebsites.net/)
+I deployed this project using ~~Heroku~~ Microsoft Azure [Live Demo Link](https://woulderra.live/) on my own domain with SSL/HTTPS support.
 
 No more laoding time when you first visit the website ! 
 
